@@ -1,0 +1,1 @@
+Act as a documentation assistant for HW04 of student 23127027. Inspect only the existing ai-audit directory. Propose one concise Markdown audit-entry template with exactly five fields: AI tool, ISO date/time, Exact prompt, Exact AI output, Human review/action. Do not modify files and do not invent evidence.
