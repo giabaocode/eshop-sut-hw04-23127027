@@ -20,7 +20,7 @@ Only the three feature selections are carried over from HW02. HW02 test cases, e
 2. Documentation and API specification in the current official SUT.
 3. Current observable web UI behavior.
 4. HW02 report only as proof of feature selection.
-5. Formal feature SRS: EVIDENCE MISSING.
+5. Formal feature SRS: README.md (version 2.0, updated 2026-05-14).
 
 ## Evidence policy
 All test executions, HTML reports, timestamps, screenshots, pass/fail counts, and bug evidence must be generated again from genuine HW04 runs. Unverified behavior must not be reported as a defect.
