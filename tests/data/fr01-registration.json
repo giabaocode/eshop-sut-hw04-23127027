@@ -339,5 +339,239 @@
       "registrationEndpoint": "/api/register",
       "registrationRequestCount": 0
     }
+  },
+  "password_missing_allowed_special": {
+    "id": "FR01-TC09",
+    "title": "password requires an allowed special character.",
+    "registrationPath": "/register",
+    "fieldsToFill": [
+      "fullName",
+      "email",
+      "password"
+    ],
+    "input": {
+      "fullName": "Nguyễn Văn An",
+      "emailTemplate": "fr01-tc09-{{unique}}@example.test",
+      "password": "Abcdefg1"
+    },
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "registrationEndpoint": "/api/register",
+      "registrationRequestCount": 0
+    }
+  },
+  "password_each_allowed_special": {
+    "id": "FR01-TC10",
+    "title": "each of @, $, !, %, *, ?, & satisfies the special-character rule.",
+    "registrationPath": "/register",
+    "fieldsToFill": [
+      "fullName",
+      "email",
+      "password"
+    ],
+    "rows": [
+      {
+        "name": "at_sign",
+        "symbol": "@",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc10-at-{{unique}}@example.test",
+          "password": "Abcdef1@"
+        },
+        "expected": {
+          "registrationRequestCount": 1
+        }
+      },
+      {
+        "name": "dollar_sign",
+        "symbol": "$",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc10-dollar-{{unique}}@example.test",
+          "password": "Abcdef1$"
+        },
+        "expected": {
+          "registrationRequestCount": 1
+        }
+      },
+      {
+        "name": "exclamation_mark",
+        "symbol": "!",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc10-exclamation-{{unique}}@example.test",
+          "password": "Abcdef1!"
+        },
+        "expected": {
+          "registrationRequestCount": 1
+        }
+      },
+      {
+        "name": "percent_sign",
+        "symbol": "%",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc10-percent-{{unique}}@example.test",
+          "password": "Abcdef1%"
+        },
+        "expected": {
+          "registrationRequestCount": 1
+        }
+      },
+      {
+        "name": "asterisk",
+        "symbol": "*",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc10-asterisk-{{unique}}@example.test",
+          "password": "Abcdef1*"
+        },
+        "expected": {
+          "registrationRequestCount": 1
+        }
+      },
+      {
+        "name": "question_mark",
+        "symbol": "?",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc10-question-{{unique}}@example.test",
+          "password": "Abcdef1?"
+        },
+        "expected": {
+          "registrationRequestCount": 1
+        }
+      },
+      {
+        "name": "ampersand",
+        "symbol": "&",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc10-ampersand-{{unique}}@example.test",
+          "password": "Abcdef1&"
+        },
+        "expected": {
+          "registrationRequestCount": 1
+        }
+      }
+    ],
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "registrationEndpoint": "/api/register",
+      "loginDestination": {
+        "heading": "Đăng nhập",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "submit": "Đăng nhập"
+      }
+    }
+  },
+  "confirmation_match_matrix": {
+    "id": "FR01-TC11",
+    "title": "confirmation equal-versus-unequal decision table and error placement.",
+    "registrationPath": "/register",
+    "fieldsToFill": [
+      "fullName",
+      "email",
+      "password",
+      "confirmationPassword"
+    ],
+    "rows": [
+      {
+        "name": "unequal",
+        "passwordsMatch": false,
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc11-unequal-{{unique}}@example.test",
+          "password": "Abcdef1!",
+          "confirmationPassword": "Abcdef1?"
+        },
+        "expected": {
+          "registrationRequestCount": 0
+        }
+      },
+      {
+        "name": "equal",
+        "passwordsMatch": true,
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc11-equal-{{unique}}@example.test",
+          "password": "Abcdef1!",
+          "confirmationPassword": "Abcdef1!"
+        },
+        "expected": {
+          "registrationRequestCount": 1
+        }
+      }
+    ],
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "confirmationControl": {
+        "requiredAttribute": "",
+        "type": "password"
+      },
+      "registrationEndpoint": "/api/register",
+      "loginDestination": {
+        "heading": "Đăng nhập",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "submit": "Đăng nhập"
+      }
+    }
+  },
+  "api_unique_then_duplicate": {
+    "id": "FR01-TC12",
+    "title": "unique-email registration followed by duplicate registration through the API.",
+    "endpoint": "/api/register",
+    "firstEmailReferenceToken": "{{firstGeneratedEmail}}",
+    "records": [
+      {
+        "name": "first_unique_registration",
+        "input": {
+          "name": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc12-{{unique}}@example.test",
+          "password": "Abcdef1!"
+        }
+      },
+      {
+        "name": "second_duplicate_registration",
+        "input": {
+          "name": "Nguyễn Văn An Duplicate",
+          "emailTemplate": "{{firstGeneratedEmail}}",
+          "password": "Abcdef1!"
+        }
+      }
+    ],
+    "expected": {
+      "first": {
+        "status": 200,
+        "message": "User registered successfully",
+        "idType": "number"
+      },
+      "second": {
+        "successful": false
+      }
+    }
   }
 }

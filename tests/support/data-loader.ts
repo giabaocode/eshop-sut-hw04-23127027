@@ -123,6 +123,77 @@ export interface PasswordRuleRejectionCase extends RegistrationCaseBase {
   };
 }
 
+interface PasswordAllowedSpecialRow {
+  name: string;
+  symbol: string;
+  input: RegistrationFillInput;
+  expected: {
+    registrationRequestCount: number;
+  };
+}
+
+interface PasswordEachAllowedSpecialCase extends RegistrationCaseBase {
+  fieldsToFill: RegistrationFieldKey[];
+  rows: PasswordAllowedSpecialRow[];
+  expected: {
+    labels: RegistrationLabels;
+    registrationEndpoint: string;
+    loginDestination: LoginDestinationLabels;
+  };
+}
+
+interface ConfirmationMatchRow {
+  name: string;
+  passwordsMatch: boolean;
+  input: RegistrationFillInput;
+  expected: {
+    registrationRequestCount: number;
+  };
+}
+
+interface ConfirmationMatchMatrixCase extends RegistrationCaseBase {
+  fieldsToFill: RegistrationFieldKey[];
+  rows: [ConfirmationMatchRow, ConfirmationMatchRow];
+  expected: {
+    labels: RegistrationLabels;
+    confirmationControl: {
+      requiredAttribute: string;
+      type: string;
+    };
+    registrationEndpoint: string;
+    loginDestination: LoginDestinationLabels;
+  };
+}
+
+interface ApiRegistrationInput {
+  name: string;
+  emailTemplate: string;
+  password: string;
+}
+
+interface ApiRegistrationRecord {
+  name: string;
+  input: ApiRegistrationInput;
+}
+
+interface ApiUniqueThenDuplicateCase {
+  id: string;
+  title: string;
+  endpoint: string;
+  firstEmailReferenceToken: string;
+  records: [ApiRegistrationRecord, ApiRegistrationRecord];
+  expected: {
+    first: {
+      status: number;
+      message: string;
+      idType: string;
+    };
+    second: {
+      successful: boolean;
+    };
+  };
+}
+
 export interface Fr01RegistrationData {
   valid_registration_ui: ValidRegistrationCase;
   required_field_omissions: RequiredFieldOmissionsCase;
@@ -132,6 +203,10 @@ export interface Fr01RegistrationData {
   password_missing_uppercase: PasswordRuleRejectionCase;
   password_missing_lowercase: PasswordRuleRejectionCase;
   password_missing_digit: PasswordRuleRejectionCase;
+  password_missing_allowed_special: PasswordRuleRejectionCase;
+  password_each_allowed_special: PasswordEachAllowedSpecialCase;
+  confirmation_match_matrix: ConfirmationMatchMatrixCase;
+  api_unique_then_duplicate: ApiUniqueThenDuplicateCase;
 }
 
 export function loadJsonFile<T>(workspaceRelativePath: string): T {

@@ -22,6 +22,11 @@ const passwordLengthBoundaryCase = data.password_length_boundary;
 const passwordMissingUppercaseCase = data.password_missing_uppercase;
 const passwordMissingLowercaseCase = data.password_missing_lowercase;
 const passwordMissingDigitCase = data.password_missing_digit;
+const passwordMissingAllowedSpecialCase =
+  data.password_missing_allowed_special;
+const passwordEachAllowedSpecialCase = data.password_each_allowed_special;
+const confirmationMatchMatrixCase = data.confirmation_match_matrix;
+const apiUniqueThenDuplicateCase = data.api_unique_then_duplicate;
 
 async function submitAndAssertPasswordRejection(
   page: Page,
@@ -393,5 +398,241 @@ test.describe('FR-01 account registration — reviewed increment 2', () => {
       testCase.expected.registrationRequestCount,
       testCase.id,
     );
+  });
+});
+
+test.describe('FR-01 account registration — reviewed increment 3', () => {
+  test(`${passwordMissingAllowedSpecialCase.id} ${passwordMissingAllowedSpecialCase.title}`, async ({
+    page,
+  }) => {
+    const testCase = passwordMissingAllowedSpecialCase;
+    const registration = new RegistrationPage(page, testCase.expected.labels);
+
+    await submitAndAssertPasswordRejection(
+      page,
+      registration,
+      testCase.registrationPath,
+      testCase.input,
+      testCase.fieldsToFill,
+      testCase.expected.registrationEndpoint,
+      testCase.expected.registrationRequestCount,
+      testCase.id,
+    );
+  });
+
+  test(`${passwordEachAllowedSpecialCase.id} ${passwordEachAllowedSpecialCase.title}`, async ({
+    page,
+  }) => {
+    test.slow();
+    const testCase = passwordEachAllowedSpecialCase;
+    const registration = new RegistrationPage(page, testCase.expected.labels);
+
+    for (const row of testCase.rows) {
+      await test.step(`${row.name}: ${row.symbol}`, async () => {
+        await registration.goto(testCase.registrationPath);
+        const registrationRequests =
+          registration.observeRegistrationPostRequests(
+            testCase.expected.registrationEndpoint,
+          );
+
+        try {
+          const email = generateCollisionSafeEmail(row.input.emailTemplate);
+          await registration.fillSelectedFields(
+            row.input,
+            email,
+            testCase.fieldsToFill,
+          );
+          await registration.submit();
+
+          await Promise.all([
+            expect.soft(
+              registration.loginHeading(testCase.expected.loginDestination),
+              `${row.name} must reach the documented login heading`,
+            ).toBeVisible(),
+            expect.soft(
+              registration.loginForm(testCase.expected.loginDestination),
+              `${row.name} must reach the documented login form`,
+            ).toBeVisible(),
+            expect.soft(
+              registration.loginEmailInput(testCase.expected.loginDestination),
+              `${row.name} login destination must show its email control`,
+            ).toBeVisible(),
+            expect.soft(
+              registration.loginPasswordInput(
+                testCase.expected.loginDestination,
+              ),
+              `${row.name} login destination must show its password control`,
+            ).toBeVisible(),
+          ]);
+          expect.soft(
+            registrationRequests.count(),
+            `${row.name} must submit exactly one registration request`,
+          ).toBe(row.expected.registrationRequestCount);
+        } finally {
+          registrationRequests.stop();
+        }
+      });
+    }
+  });
+
+  test(`${confirmationMatchMatrixCase.id} ${confirmationMatchMatrixCase.title}`, async ({
+    page,
+  }) => {
+    const testCase = confirmationMatchMatrixCase;
+    const registration = new RegistrationPage(page, testCase.expected.labels);
+
+    await registration.goto(testCase.registrationPath);
+    await expect(registration.confirmationPasswordInput).toBeVisible();
+    await expect(registration.confirmationPasswordInput).toHaveAttribute(
+      'required',
+      testCase.expected.confirmationControl.requiredAttribute,
+    );
+    await expect(registration.confirmationPasswordInput).toHaveAttribute(
+      'type',
+      testCase.expected.confirmationControl.type,
+    );
+
+    const [unequalRow, equalRow] = testCase.rows;
+    expect(
+      unequalRow.input.password === unequalRow.input.confirmationPassword,
+      `${unequalRow.name} decision-table input must match its external decision value`,
+    ).toBe(unequalRow.passwordsMatch);
+    expect(
+      equalRow.input.password === equalRow.input.confirmationPassword,
+      `${equalRow.name} decision-table input must match its external decision value`,
+    ).toBe(equalRow.passwordsMatch);
+
+    await test.step(unequalRow.name, async () => {
+      await submitAndAssertPasswordRejection(
+        page,
+        registration,
+        testCase.registrationPath,
+        unequalRow.input,
+        testCase.fieldsToFill,
+        testCase.expected.registrationEndpoint,
+        unequalRow.expected.registrationRequestCount,
+        unequalRow.name,
+      );
+    });
+
+    await test.step(equalRow.name, async () => {
+      await registration.goto(testCase.registrationPath);
+      const registrationRequests =
+        registration.observeRegistrationPostRequests(
+          testCase.expected.registrationEndpoint,
+        );
+
+      try {
+        const email = generateCollisionSafeEmail(equalRow.input.emailTemplate);
+        await registration.fillSelectedFields(
+          equalRow.input,
+          email,
+          testCase.fieldsToFill,
+        );
+        await registration.submit();
+
+        await expect(
+          registration.loginHeading(testCase.expected.loginDestination),
+        ).toBeVisible();
+        await expect(
+          registration.loginForm(testCase.expected.loginDestination),
+        ).toBeVisible();
+        await expect(
+          registration.loginEmailInput(testCase.expected.loginDestination),
+        ).toBeVisible();
+        await expect(
+          registration.loginPasswordInput(testCase.expected.loginDestination),
+        ).toBeVisible();
+        expect(
+          registrationRequests.count(),
+          `${equalRow.name} must submit exactly one registration request`,
+        ).toBe(equalRow.expected.registrationRequestCount);
+      } finally {
+        registrationRequests.stop();
+      }
+    });
+  });
+
+  test(`${apiUniqueThenDuplicateCase.id} ${apiUniqueThenDuplicateCase.title}`, async ({
+    request,
+  }) => {
+    const testCase = apiUniqueThenDuplicateCase;
+    const [firstRecord, secondRecord] = testCase.records;
+    const apiBaseUrl = process.env.PW_API_URL ?? 'http://localhost:3000';
+    const registrationUrl = `${apiBaseUrl.replace(/\/$/, '')}/${testCase.endpoint.replace(/^\//, '')}`;
+    const firstEmail = generateCollisionSafeEmail(
+      firstRecord.input.emailTemplate,
+    );
+    const secondEmail = secondRecord.input.emailTemplate.replaceAll(
+      testCase.firstEmailReferenceToken,
+      firstEmail,
+    );
+    const firstRequestBody = {
+      name: firstRecord.input.name,
+      email: firstEmail,
+      password: firstRecord.input.password,
+    };
+    const secondRequestBody = {
+      name: secondRecord.input.name,
+      email: secondEmail,
+      password: secondRecord.input.password,
+    };
+
+    expect(
+      secondEmail,
+      `${secondRecord.name} must reuse the generated email from ${firstRecord.name}`,
+    ).toBe(firstEmail);
+
+    const firstResponse = await request.post(registrationUrl, {
+      data: firstRequestBody,
+    });
+    const firstResponseText = await firstResponse.text();
+    let firstResponseBody: unknown;
+
+    try {
+      firstResponseBody = JSON.parse(firstResponseText) as unknown;
+    } catch {
+      firstResponseBody = firstResponseText;
+    }
+
+    const firstDiagnostics = JSON.stringify(firstResponseBody);
+    expect(
+      firstResponse.status(),
+      `${firstRecord.name} status; response body: ${firstDiagnostics}`,
+    ).toBe(testCase.expected.first.status);
+    expect(
+      firstResponseBody,
+      `${firstRecord.name} must return a JSON object; response body: ${firstDiagnostics}`,
+    ).not.toBeNull();
+    expect(
+      typeof firstResponseBody,
+      `${firstRecord.name} must return a JSON object; response body: ${firstDiagnostics}`,
+    ).toBe('object');
+
+    const firstResponseRecord = firstResponseBody as Record<string, unknown>;
+    expect(
+      firstResponseRecord.message,
+      `${firstRecord.name} success message; response body: ${firstDiagnostics}`,
+    ).toBe(testCase.expected.first.message);
+    expect(
+      typeof firstResponseRecord.id,
+      `${firstRecord.name} id type; response body: ${firstDiagnostics}`,
+    ).toBe(testCase.expected.first.idType);
+
+    const firstId = firstResponseRecord.id;
+    if (typeof firstId !== 'number') {
+      throw new Error(
+        `${firstRecord.name} did not return the required numeric id; response body: ${firstDiagnostics}`,
+      );
+    }
+
+    const secondResponse = await request.post(registrationUrl, {
+      data: secondRequestBody,
+    });
+    const secondResponseText = await secondResponse.text();
+    expect(
+      secondResponse.ok(),
+      `${secondRecord.name} reused email from created id ${firstId}; status: ${secondResponse.status()}; response body: ${secondResponseText}`,
+    ).toBe(testCase.expected.second.successful);
   });
 });
