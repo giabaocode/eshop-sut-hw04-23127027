@@ -207,5 +207,137 @@
         "submit"
       ]
     }
+  },
+  "password_length_boundary": {
+    "id": "FR01-TC05",
+    "title": "password minimum length rejects seven characters and accepts eight",
+    "registrationPath": "/register",
+    "fieldsToFill": [
+      "fullName",
+      "email",
+      "password"
+    ],
+    "variants": {
+      "sevenCharacterInvalid": {
+        "name": "seven_character_invalid_boundary",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc05-seven-{{unique}}@example.test",
+          "password": "Aa1!bbb"
+        },
+        "expected": {
+          "registrationRequestCount": 0
+        }
+      },
+      "eightCharacterValid": {
+        "name": "eight_character_valid_boundary",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc05-eight-{{unique}}@example.test",
+          "password": "Aa1!bbbb"
+        },
+        "expected": {
+          "registrationRequestCount": 1
+        }
+      }
+    },
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "registrationEndpoint": "/api/register",
+      "loginDestination": {
+        "heading": "Đăng nhập",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "submit": "Đăng nhập"
+      }
+    }
+  },
+  "password_missing_uppercase": {
+    "id": "FR01-TC06",
+    "title": "password validation rejects a value without an uppercase letter",
+    "registrationPath": "/register",
+    "fieldsToFill": [
+      "fullName",
+      "email",
+      "password"
+    ],
+    "input": {
+      "fullName": "Nguyễn Văn An",
+      "emailTemplate": "fr01-tc06-{{unique}}@example.test",
+      "password": "abcdef1!"
+    },
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "registrationEndpoint": "/api/register",
+      "registrationRequestCount": 0
+    }
+  },
+  "password_missing_lowercase": {
+    "id": "FR01-TC07",
+    "title": "password validation rejects a value without a lowercase letter",
+    "registrationPath": "/register",
+    "fieldsToFill": [
+      "fullName",
+      "email",
+      "password"
+    ],
+    "input": {
+      "fullName": "Nguyễn Văn An",
+      "emailTemplate": "fr01-tc07-{{unique}}@example.test",
+      "password": "ABCDEF1!"
+    },
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "registrationEndpoint": "/api/register",
+      "registrationRequestCount": 0
+    }
+  },
+  "password_missing_digit": {
+    "id": "FR01-TC08",
+    "title": "password validation rejects a value without a digit",
+    "registrationPath": "/register",
+    "fieldsToFill": [
+      "fullName",
+      "email",
+      "password"
+    ],
+    "input": {
+      "fullName": "Nguyễn Văn An",
+      "emailTemplate": "fr01-tc08-{{unique}}@example.test",
+      "password": "Abcdefg!"
+    },
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "registrationEndpoint": "/api/register",
+      "registrationRequestCount": 0
+    }
   }
 }

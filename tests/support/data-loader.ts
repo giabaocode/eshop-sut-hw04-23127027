@@ -19,10 +19,14 @@ export interface RegistrationLabels {
   submit: string;
 }
 
-export interface RegistrationInputTemplate {
+export interface RegistrationFillInput {
   fullName: string;
   emailTemplate: string;
   password: string;
+  confirmationPassword?: string;
+}
+
+export interface RegistrationInputTemplate extends RegistrationFillInput {
   confirmationPassword: string;
 }
 
@@ -88,11 +92,46 @@ interface RegistrationFormSemanticsCase extends RegistrationCaseBase {
   };
 }
 
+interface PasswordBoundaryVariant {
+  name: string;
+  input: RegistrationFillInput;
+  expected: {
+    registrationRequestCount: number;
+  };
+}
+
+interface PasswordLengthBoundaryCase extends RegistrationCaseBase {
+  fieldsToFill: RegistrationFieldKey[];
+  variants: {
+    sevenCharacterInvalid: PasswordBoundaryVariant;
+    eightCharacterValid: PasswordBoundaryVariant;
+  };
+  expected: {
+    labels: RegistrationLabels;
+    registrationEndpoint: string;
+    loginDestination: LoginDestinationLabels;
+  };
+}
+
+export interface PasswordRuleRejectionCase extends RegistrationCaseBase {
+  fieldsToFill: RegistrationFieldKey[];
+  input: RegistrationFillInput;
+  expected: {
+    labels: RegistrationLabels;
+    registrationEndpoint: string;
+    registrationRequestCount: number;
+  };
+}
+
 export interface Fr01RegistrationData {
   valid_registration_ui: ValidRegistrationCase;
   required_field_omissions: RequiredFieldOmissionsCase;
   email_format_partitions: EmailFormatPartitionsCase;
   registration_form_semantics: RegistrationFormSemanticsCase;
+  password_length_boundary: PasswordLengthBoundaryCase;
+  password_missing_uppercase: PasswordRuleRejectionCase;
+  password_missing_lowercase: PasswordRuleRejectionCase;
+  password_missing_digit: PasswordRuleRejectionCase;
 }
 
 export function loadJsonFile<T>(workspaceRelativePath: string): T {

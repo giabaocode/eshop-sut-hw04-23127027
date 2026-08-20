@@ -1,15 +1,20 @@
-import type { Locator, Page } from '@playwright/test';
+import type { Locator, Page, Request } from '@playwright/test';
 import type {
   LoginDestinationLabels,
   RegistrationFieldKey,
+  RegistrationFillInput,
   RegistrationFocusKey,
-  RegistrationInputTemplate,
   RegistrationLabels,
 } from '../support/data-loader.js';
 
 export interface SubmitColorAssessment {
   cssValue: string;
   isBlue: boolean;
+}
+
+export interface RegistrationRequestObserver {
+  count(): number;
+  stop(): void;
 }
 
 function escapeRegularExpression(value: string): string {
@@ -76,18 +81,52 @@ export class RegistrationPage {
   }
 
   async fillSelectedFields(
-    input: RegistrationInputTemplate,
+    input: RegistrationFillInput,
     email: string,
     fields: RegistrationFieldKey[],
   ): Promise<void> {
     for (const field of fields) {
       const value = field === 'email' ? email : input[field];
+
+      if (value === undefined) {
+        throw new Error(`No external test-data value was provided for ${field}.`);
+      }
+
       await this.inputFor(field).fill(value);
     }
   }
 
   async submit(): Promise<void> {
     await this.submitButton.click();
+  }
+
+  observeRegistrationPostRequests(
+    registrationEndpoint: string,
+  ): RegistrationRequestObserver {
+    let requestCount = 0;
+    let isObserving = true;
+    const listener = (request: Request): void => {
+      const pathname = new URL(request.url()).pathname;
+
+      if (
+        request.method() === 'POST' &&
+        pathname === registrationEndpoint
+      ) {
+        requestCount += 1;
+      }
+    };
+
+    this.page.on('request', listener);
+
+    return {
+      count: () => requestCount,
+      stop: () => {
+        if (isObserving) {
+          this.page.off('request', listener);
+          isObserving = false;
+        }
+      },
+    };
   }
 
   inputFor(field: RegistrationFieldKey): Locator {
@@ -174,6 +213,13 @@ export class RegistrationPage {
     return this.inputNextToLabel(form, destination.password);
   }
 
+  visibleNonEmptyApplicationError(): Locator {
+    return this.applicationErrorCandidates()
+      .filter({ visible: true })
+      .filter({ hasText: /\S/ })
+      .first();
+  }
+
   async visibleApplicationErrors(): Promise<Locator[]> {
     const semanticCandidates = this.formContainer.locator(
       '[role="alert"], [aria-live="assertive"], [aria-live="polite"], ' +
@@ -196,6 +242,19 @@ export class RegistrationPage {
     }
 
     return visibleErrors;
+  }
+
+  private applicationErrorCandidates(): Locator {
+    const semanticCandidates = this.formContainer.locator(
+      '[role="alert"], [aria-live="assertive"], [aria-live="polite"], ' +
+        '[data-error], [data-testid*="error" i], .error-message',
+    );
+    const precedingNonHeadingSibling = this.form.locator(
+      'xpath=preceding-sibling::*[1][normalize-space()]' +
+        '[not(self::h1 or self::h2 or self::h3 or self::h4 or self::h5 or self::h6)]',
+    );
+
+    return semanticCandidates.or(precedingNonHeadingSibling);
   }
 
   async applicationErrorIsAboveSubmit(error: Locator): Promise<boolean> {
