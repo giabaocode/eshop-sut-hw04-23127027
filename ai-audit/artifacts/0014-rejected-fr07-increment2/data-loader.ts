@@ -394,6 +394,7 @@ interface QuantityDecrementAboveMinimumCase extends Fr07CaseBase {
     controls: {
       decrement: string;
     };
+    totalLabel: string;
     currency: CartCurrencyRules;
     counts: {
       rows: number;
@@ -431,6 +432,7 @@ interface DeletableItemCase extends Fr07CaseBase {
   };
   expected: {
     columns: CartColumnLabels;
+    totalLabel: string;
     currency: CartCurrencyRules;
     dangerousColorCategory: 'red';
     total: number;
@@ -461,6 +463,7 @@ interface DeletionCancelCase extends Fr07CaseBase {
   };
   expected: {
     columns: CartColumnLabels;
+    totalLabel: string;
     currency: CartCurrencyRules;
     total: number;
     lineAmountSum: number;
@@ -500,6 +503,7 @@ interface DeletionConfirmCase extends Fr07CaseBase {
   };
   expected: {
     columns: CartColumnLabels;
+    totalLabel: string;
     currency: CartCurrencyRules;
     initialTotal: number;
     finalTotal: number;

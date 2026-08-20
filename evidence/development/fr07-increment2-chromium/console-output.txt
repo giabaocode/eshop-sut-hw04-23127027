@@ -1,0 +1,151 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium] › tests/features/fr07-cart.spec.ts:453:7 › FR-07 shopping cart — increment 2 › FR07-TC05 decrement quantity from 2 to 1 and recalculate totals (196ms)
+  ✘  2 [chromium] › tests/features/fr07-cart.spec.ts:696:7 › FR-07 shopping cart — increment 2 › FR07-TC06 dangerous delete action is red and opens confirmation before removal (88ms)
+  ✘  3 [chromium] › tests/features/fr07-cart.spec.ts:850:7 › FR-07 shopping cart — increment 2 › FR07-TC07 cancelling deletion preserves the complete cart state (87ms)
+  ✘  4 [chromium] › tests/features/fr07-cart.spec.ts:976:7 › FR-07 shopping cart — increment 2 › FR07-TC08 confirming deletion removes only the selected row and updates total and cart badge (101ms)
+
+
+  1) [chromium] › tests/features/fr07-cart.spec.ts:453:7 › FR-07 shopping cart — increment 2 › FR07-TC05 decrement quantity from 2 to 1 and recalculate totals 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/
+    Call log:
+      - navigating to "http://127.0.0.1:5173/", waiting until "load"
+
+
+       at pages/catalog.page.ts:15
+
+      13 |
+      14 |   async goto(homePath: string): Promise<void> {
+    > 15 |     await this.page.goto(homePath);
+         |                     ^
+      16 |   }
+      17 |
+      18 |   productHeading(productName: string): Locator {
+        at CatalogPage.goto (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/catalog.page.ts:15:21)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:466:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-52970-to-1-and-recalculate-totals-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-52970-to-1-and-recalculate-totals-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-52970-to-1-and-recalculate-totals-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-52970-to-1-and-recalculate-totals-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/features/fr07-cart.spec.ts:696:7 › FR-07 shopping cart — increment 2 › FR07-TC06 dangerous delete action is red and opens confirmation before removal 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/
+    Call log:
+      - navigating to "http://127.0.0.1:5173/", waiting until "load"
+
+
+       at pages/catalog.page.ts:15
+
+      13 |
+      14 |   async goto(homePath: string): Promise<void> {
+    > 15 |     await this.page.goto(homePath);
+         |                     ^
+      16 |   }
+      17 |
+      18 |   productHeading(productName: string): Locator {
+        at CatalogPage.goto (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/catalog.page.ts:15:21)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:703:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-054e2-confirmation-before-removal-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-054e2-confirmation-before-removal-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-054e2-confirmation-before-removal-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-054e2-confirmation-before-removal-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/features/fr07-cart.spec.ts:850:7 › FR-07 shopping cart — increment 2 › FR07-TC07 cancelling deletion preserves the complete cart state 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/
+    Call log:
+      - navigating to "http://127.0.0.1:5173/", waiting until "load"
+
+
+       at pages/catalog.page.ts:15
+
+      13 |
+      14 |   async goto(homePath: string): Promise<void> {
+    > 15 |     await this.page.goto(homePath);
+         |                     ^
+      16 |   }
+      17 |
+      18 |   productHeading(productName: string): Locator {
+        at CatalogPage.goto (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/catalog.page.ts:15:21)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:857:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-8a7f8-ves-the-complete-cart-state-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-8a7f8-ves-the-complete-cart-state-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-8a7f8-ves-the-complete-cart-state-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-8a7f8-ves-the-complete-cart-state-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/features/fr07-cart.spec.ts:976:7 › FR-07 shopping cart — increment 2 › FR07-TC08 confirming deletion removes only the selected row and updates total and cart badge 
+
+    Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5173/
+    Call log:
+      - navigating to "http://127.0.0.1:5173/", waiting until "load"
+
+
+       at pages/catalog.page.ts:15
+
+      13 |
+      14 |   async goto(homePath: string): Promise<void> {
+    > 15 |     await this.page.goto(homePath);
+         |                     ^
+      16 |   }
+      17 |
+      18 |   productHeading(productName: string): Locator {
+        at CatalogPage.goto (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/catalog.page.ts:15:21)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:988:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-9aaf7-pdates-total-and-cart-badge-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-9aaf7-pdates-total-and-cart-badge-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-9aaf7-pdates-total-and-cart-badge-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment2-chromium/features-fr07-cart-FR-07-s-9aaf7-pdates-total-and-cart-badge-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/features/fr07-cart.spec.ts:453:7 › FR-07 shopping cart — increment 2 › FR07-TC05 decrement quantity from 2 to 1 and recalculate totals 
+    [chromium] › tests/features/fr07-cart.spec.ts:696:7 › FR-07 shopping cart — increment 2 › FR07-TC06 dangerous delete action is red and opens confirmation before removal 
+    [chromium] › tests/features/fr07-cart.spec.ts:850:7 › FR-07 shopping cart — increment 2 › FR07-TC07 cancelling deletion preserves the complete cart state 
+    [chromium] › tests/features/fr07-cart.spec.ts:976:7 › FR-07 shopping cart — increment 2 › FR07-TC08 confirming deletion removes only the selected row and updates total and cart badge 
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report playwright-report/dev/fr07-increment2-chromium[39m
+[36m[39m

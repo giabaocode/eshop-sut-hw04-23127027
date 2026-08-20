@@ -1,0 +1,78 @@
+Correct the rejected FR-07 increment 2 proposal for exactly FR07-TC05 through FR07-TC08.
+
+Read and preserve:
+- docs/hw04-traceability-test-matrix.md
+- README.md
+- playwright.config.ts
+- frontend-web/src/App.jsx
+- frontend-web/src/context/CartContext.jsx
+- frontend-web/src/pages/Home.jsx
+- frontend-web/src/pages/ProductDetail.jsx
+- frontend-web/src/pages/Cart.jsx
+- ai-audit/prompts/0014-fr07-cart-controls-delete.txt
+- ai-audit/artifacts/0014-rejected-fr07-increment2/fr07-cart.json
+- ai-audit/artifacts/0014-rejected-fr07-increment2/fr07-cart.spec.ts
+- ai-audit/artifacts/0014-rejected-fr07-increment2/cart.page.ts
+- ai-audit/artifacts/0014-rejected-fr07-increment2/catalog.page.ts
+- ai-audit/artifacts/0014-rejected-fr07-increment2/product-detail.page.ts
+- ai-audit/artifacts/0014-rejected-fr07-increment2/data-loader.ts
+- tests/data/fr07-cart.json
+- tests/features/fr07-cart.spec.ts
+- tests/pages/cart.page.ts
+- tests/pages/catalog.page.ts
+- tests/pages/product-detail.page.ts
+- tests/support/data-loader.ts
+
+The 0014 proposal was rejected because TC05-TC08 used the exact required label "Tổng cộng" to locate the displayed cart total before their target actions. That exact-label requirement belongs to FR07-TC10. On a SUT using another label, TC06-TC08 would stop before exercising their dialog, cancel, confirm, and badge oracles.
+
+Modify only these automation files when necessary:
+- tests/data/fr07-cart.json
+- tests/features/fr07-cart.spec.ts
+- tests/pages/cart.page.ts
+- tests/pages/catalog.page.ts
+- tests/pages/product-detail.page.ts
+- tests/support/data-loader.ts
+
+Do not modify SUT source, FR-01 automation, documentation, configuration, package files, database, evidence, or ai-audit files. Do not run browser or API tests.
+
+Correction requirements:
+
+1. Preserve exactly eight FR07 test declarations total and exactly one declaration for each FR07-TC05 through FR07-TC08. Keep IDs, titles, fixtures, prices, quantities, expected numeric totals, expected row counts, dialog action vocabulary, and badge counts in external JSON.
+
+2. Preserve FR07-TC01 through FR07-TC04 unchanged in intent and assertion strength.
+
+3. TC05-TC08 must read and compare the displayed cart summary amount without asserting or requiring an exact summary label. Do not use expected.totalLabel, "Tổng cộng", or "Tổng tạm tính" as the prerequisite locator for these four tests.
+
+4. Keep the summary locator scoped to the cart view and distinguish the summary amount from table line amounts. Avoid brittle CSS chains and arbitrary positional selectors. Prefer web-first assertions before Page Object value reads.
+
+5. Do not encode "Tổng tạm tính" as accepted expected behavior. FR07-TC10 will independently assert that the exact required label is "Tổng cộng".
+
+6. TC05 must keep its visible Product Detail quantity fixture, quantity 2, and exactly one Add-to-cart activation. Do not retry, double-click, compensate, inject storage, or access React internals. If that visible fixture does not create the required cart state, its decrement action and later assertions must remain EVIDENCE NOT REACHED rather than being bypassed.
+
+7. TC05 must retain the two-product fixture and hard prerequisites, then require the row-scoped minus control and verify only the target changes from quantity 2 to 1, its line amount halves, the comparison row remains unchanged, row count remains unchanged, and displayed cart total equals the remaining line sum and expected numeric delta.
+
+8. TC06 must retain the red dangerous-action assessment and require an accessible dialog before deletion. The selected row and complete numeric cart state must remain unchanged while the dialog awaits a decision and after dismissing it.
+
+9. TC07 must retain semantic cancel/dismiss discovery and verify the dialog closes while row identity, quantity, line amount, line sum, and displayed cart total remain unchanged.
+
+10. TC08 must retain semantic confirm discovery and verify only the selected row disappears after confirmation, the comparison row remains unchanged, displayed cart total equals the remaining line sum and expected numeric total, and the visible cart badge has the expected count.
+
+11. Keep row-scoped controls, accessible dialog roles, semantic dialog actions, dangerous red-color assessment, cart badge behavior, and stable state reads in Page Objects. Keep TypeScript strict-compatible and Playwright 1.62.1-compatible.
+
+12. Do not use waitForTimeout, arbitrary sleeps, test.skip, test.fixme, conditional requirement bypasses, retries that compensate for SUT behavior, getByLabel for unlabeled DOM, exact dialog wording, unsupported matchers, or direct SUT-state injection.
+
+Perform static validation only:
+- parse the JSON and verify fixture arithmetic;
+- run npm run typecheck;
+- list the four increment-2 tests without executing them;
+- confirm exactly eight FR07 declarations;
+- confirm forbidden patterns are absent;
+- confirm no SUT, FR-01, audit, evidence, database, configuration, documentation, or package file changed.
+
+After editing, report:
+- exact automation files changed relative to the current rejected proposal;
+- how the cart summary amount is located without asserting its label;
+- confirmation that TC05 still performs exactly one visible Add activation;
+- the retained TC05-TC08 oracles;
+- static validation performed;
+- confirmation that no tests were run and no prohibited file was modified.

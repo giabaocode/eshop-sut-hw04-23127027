@@ -13,13 +13,6 @@ function exactAccessibleName(name: string): RegExp {
   return new RegExp(`^\\s*${escapeRegularExpression(name)}\\s*$`, 'i');
 }
 
-function displayedCurrencyOnlyPattern(currency: CartCurrencyRules): RegExp {
-  return new RegExp(
-    `^\\s*-?\\s*\\d(?:[\\d.,\\s]*\\d)?\\s*${escapeRegularExpression(currency.symbol)}\\s*$`,
-    'u',
-  );
-}
-
 export function parseDisplayedCurrency(
   displayedValue: string,
   currency: CartCurrencyRules,
@@ -158,10 +151,6 @@ export class CartPage {
     return this.table.getByRole('row').filter({
       has: this.page.getByRole('cell'),
     });
-  }
-
-  cartView(): Locator {
-    return this.page.getByRole('main').filter({ has: this.table });
   }
 
   incrementButton(row: Locator, accessibleName: string): Locator {
@@ -331,20 +320,6 @@ export class CartPage {
     return parseDisplayedCurrency(await this.cartTotalText(totalLabel), currency);
   }
 
-  cartSummaryAmount(currency: CartCurrencyRules): Locator {
-    return this.cartView()
-      .locator('*')
-      .filter({ hasText: displayedCurrencyOnlyPattern(currency) })
-      .locator('xpath=self::*[not(ancestor::table)]');
-  }
-
-  async cartSummaryTotal(currency: CartCurrencyRules): Promise<number> {
-    return parseDisplayedCurrency(
-      await this.cartSummaryAmount(currency).innerText(),
-      currency,
-    );
-  }
-
   async sumDisplayedLineAmounts(
     columns: CartColumnLabels,
     currency: CartCurrencyRules,
@@ -380,17 +355,6 @@ export class CartPage {
     return {
       rowCount: await this.dataRows().count(),
       total: await this.cartTotal(totalLabel, currency),
-      lineAmountSum: await this.sumDisplayedLineAmounts(columns, currency),
-    };
-  }
-
-  async readCartStateFromSummary(
-    columns: CartColumnLabels,
-    currency: CartCurrencyRules,
-  ): Promise<DisplayedCartState> {
-    return {
-      rowCount: await this.dataRows().count(),
-      total: await this.cartSummaryTotal(currency),
       lineAmountSum: await this.sumDisplayedLineAmounts(columns, currency),
     };
   }

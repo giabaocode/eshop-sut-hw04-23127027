@@ -1,0 +1,177 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium] › tests/features/fr07-cart.spec.ts:453:7 › FR-07 shopping cart — increment 2 › FR07-TC05 decrement quantity from 2 to 1 and recalculate totals (5.5s)
+  ✘  2 [chromium] › tests/features/fr07-cart.spec.ts:696:7 › FR-07 shopping cart — increment 2 › FR07-TC06 dangerous delete action is red and opens confirmation before removal (5.3s)
+  ✘  3 [chromium] › tests/features/fr07-cart.spec.ts:850:7 › FR-07 shopping cart — increment 2 › FR07-TC07 cancelling deletion preserves the complete cart state (5.3s)
+  ✘  4 [chromium] › tests/features/fr07-cart.spec.ts:976:7 › FR-07 shopping cart — increment 2 › FR07-TC08 confirming deletion removes only the selected row and updates total and cart badge (5.3s)
+
+
+  1) [chromium] › tests/features/fr07-cart.spec.ts:453:7 › FR-07 shopping cart — increment 2 › FR07-TC05 decrement quantity from 2 to 1 and recalculate totals 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('table').getByRole('row').filter({ has: getByRole('cell') })
+    Expected: 2
+    Received: 1
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByRole('table').getByRole('row').filter({ has: getByRole('cell') })
+        - locator resolved to 0 elements
+        - unexpected value "0"
+        13 × locator resolved to 1 element
+           - unexpected value "1"
+
+
+      523 |
+      524 |     const dataRows = cart.dataRows();
+    > 525 |     await expect(dataRows).toHaveCount(testCase.expected.counts.rows);
+          |                            ^
+      526 |     await expect(cart.productRows(testCase.targetProduct.name)).toHaveCount(
+      527 |       testCase.expected.counts.rowsForTargetProduct,
+      528 |     );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:525:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-52970-to-1-and-recalculate-totals-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-52970-to-1-and-recalculate-totals-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-52970-to-1-and-recalculate-totals-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-52970-to-1-and-recalculate-totals-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/features/fr07-cart.spec.ts:696:7 › FR-07 shopping cart — increment 2 › FR07-TC06 dangerous delete action is red and opens confirmation before removal 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('dialog').or(getByRole('alertdialog'))
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByRole('dialog').or(getByRole('alertdialog'))
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      774 |
+      775 |     const dialog = cart.confirmationDialog();
+    > 776 |     await expect(dialog).toHaveCount(testCase.expected.counts.dialogs);
+          |                          ^
+      777 |     await expect(dialog).toBeVisible();
+      778 |     await expect(dataRows).toHaveCount(baselineCart.rowCount);
+      779 |     await expect(cart.productRows(testCase.product.name)).toHaveCount(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:776:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-054e2-confirmation-before-removal-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-054e2-confirmation-before-removal-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-054e2-confirmation-before-removal-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-054e2-confirmation-before-removal-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/features/fr07-cart.spec.ts:850:7 › FR-07 shopping cart — increment 2 › FR07-TC07 cancelling deletion preserves the complete cart state 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('dialog').or(getByRole('alertdialog'))
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByRole('dialog').or(getByRole('alertdialog'))
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      925 |     await deleteButton.click();
+      926 |     const dialog = cart.confirmationDialog();
+    > 927 |     await expect(dialog).toHaveCount(testCase.expected.counts.dialogs);
+          |                          ^
+      928 |     await expect(dialog).toBeVisible();
+      929 |     const cancelAction = cart.semanticDialogAction(
+      930 |       dialog,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:927:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-8a7f8-ves-the-complete-cart-state-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-8a7f8-ves-the-complete-cart-state-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-8a7f8-ves-the-complete-cart-state-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-8a7f8-ves-the-complete-cart-state-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/features/fr07-cart.spec.ts:976:7 › FR-07 shopping cart — increment 2 › FR07-TC08 confirming deletion removes only the selected row and updates total and cart badge 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('dialog').or(getByRole('alertdialog'))
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByRole('dialog').or(getByRole('alertdialog'))
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      1101 |     await deleteButton.click();
+      1102 |     const dialog = cart.confirmationDialog();
+    > 1103 |     await expect(dialog).toHaveCount(testCase.expected.counts.dialogs);
+           |                          ^
+      1104 |     await expect(dialog).toBeVisible();
+      1105 |     const confirmAction = cart.semanticDialogAction(
+      1106 |       dialog,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1103:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-9aaf7-pdates-total-and-cart-badge-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-9aaf7-pdates-total-and-cart-badge-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-9aaf7-pdates-total-and-cart-badge-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment2-corrected-chromium/features-fr07-cart-FR-07-s-9aaf7-pdates-total-and-cart-badge-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/features/fr07-cart.spec.ts:453:7 › FR-07 shopping cart — increment 2 › FR07-TC05 decrement quantity from 2 to 1 and recalculate totals 
+    [chromium] › tests/features/fr07-cart.spec.ts:696:7 › FR-07 shopping cart — increment 2 › FR07-TC06 dangerous delete action is red and opens confirmation before removal 
+    [chromium] › tests/features/fr07-cart.spec.ts:850:7 › FR-07 shopping cart — increment 2 › FR07-TC07 cancelling deletion preserves the complete cart state 
+    [chromium] › tests/features/fr07-cart.spec.ts:976:7 › FR-07 shopping cart — increment 2 › FR07-TC08 confirming deletion removes only the selected row and updates total and cart badge 
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report playwright-report/dev/fr07-increment2-corrected-chromium[39m
+[36m[39m

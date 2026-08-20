@@ -548,7 +548,9 @@ test.describe('FR-07 shopping cart — increment 2', () => {
       comparisonRow,
       testCase.expected.columns,
     );
-    const summaryAmount = cart.cartSummaryAmount(testCase.expected.currency);
+    const cartTotalContainer = cart.cartTotalContainer(
+      testCase.expected.totalLabel,
+    );
     const decrementButton = cart.decrementButton(
       targetRow,
       testCase.expected.controls.decrement,
@@ -562,7 +564,7 @@ test.describe('FR-07 shopping cart — increment 2', () => {
     );
     await expect(targetLineAmountCell).toBeVisible();
     await expect(comparisonLineAmountCell).toBeVisible();
-    await expect(summaryAmount).toBeVisible();
+    await expect(cartTotalContainer).toBeVisible();
     await expect(targetLineAmountCell).toHaveText(
       displayedCurrencyAmountPattern(
         testCase.targetProduct.initialLineAmount,
@@ -575,7 +577,7 @@ test.describe('FR-07 shopping cart — increment 2', () => {
         testCase.expected.currency,
       ),
     );
-    await expect(summaryAmount).toHaveText(
+    await expect(cartTotalContainer).toContainText(
       displayedCurrencyAmountPattern(
         testCase.expected.initialTotal,
         testCase.expected.currency,
@@ -586,8 +588,9 @@ test.describe('FR-07 shopping cart — increment 2', () => {
     );
     await expect(decrementButton).toBeVisible();
 
-    const beforeCart = await cart.readCartStateFromSummary(
+    const beforeCart = await cart.readCartState(
       testCase.expected.columns,
+      testCase.expected.totalLabel,
       testCase.expected.currency,
     );
     const beforeTarget = await cart.readRowState(
@@ -629,7 +632,7 @@ test.describe('FR-07 shopping cart — increment 2', () => {
     );
     await expect(targetLineAmountCell).toBeVisible();
     await expect(comparisonLineAmountCell).toBeVisible();
-    await expect(summaryAmount).toBeVisible();
+    await expect(cartTotalContainer).toBeVisible();
     await expect(targetLineAmountCell).toHaveText(
       displayedCurrencyAmountPattern(
         testCase.targetProduct.finalLineAmount,
@@ -642,15 +645,16 @@ test.describe('FR-07 shopping cart — increment 2', () => {
         testCase.expected.currency,
       ),
     );
-    await expect(summaryAmount).toHaveText(
+    await expect(cartTotalContainer).toContainText(
       displayedCurrencyAmountPattern(
         testCase.expected.finalTotal,
         testCase.expected.currency,
       ),
     );
 
-    const afterCart = await cart.readCartStateFromSummary(
+    const afterCart = await cart.readCartState(
       testCase.expected.columns,
+      testCase.expected.totalLabel,
       testCase.expected.currency,
     );
     const afterTarget = await cart.readRowState(
@@ -727,21 +731,23 @@ test.describe('FR-07 shopping cart — increment 2', () => {
       targetRow,
       testCase.expected.columns,
     );
-    const summaryAmount = cart.cartSummaryAmount(testCase.expected.currency);
+    const cartTotalContainer = cart.cartTotalContainer(
+      testCase.expected.totalLabel,
+    );
     const deleteButton = cart.deleteButton(targetRow, testCase.actions.delete);
 
     await expect(targetQuantityCell).toHaveText(
       String(testCase.product.quantity),
     );
     await expect(targetLineAmountCell).toBeVisible();
-    await expect(summaryAmount).toBeVisible();
+    await expect(cartTotalContainer).toBeVisible();
     await expect(targetLineAmountCell).toHaveText(
       displayedCurrencyAmountPattern(
         testCase.product.lineAmount,
         testCase.expected.currency,
       ),
     );
-    await expect(summaryAmount).toHaveText(
+    await expect(cartTotalContainer).toContainText(
       displayedCurrencyAmountPattern(
         testCase.expected.total,
         testCase.expected.currency,
@@ -755,8 +761,9 @@ test.describe('FR-07 shopping cart — increment 2', () => {
       testCase.expected.dangerousColorCategory,
     );
 
-    const baselineCart = await cart.readCartStateFromSummary(
+    const baselineCart = await cart.readCartState(
       testCase.expected.columns,
+      testCase.expected.totalLabel,
       testCase.expected.currency,
     );
     const baselineTarget = await cart.readRowState(
@@ -783,22 +790,23 @@ test.describe('FR-07 shopping cart — increment 2', () => {
       String(baselineTarget.quantity),
     );
     await expect(targetLineAmountCell).toBeVisible();
-    await expect(summaryAmount).toBeVisible();
+    await expect(cartTotalContainer).toBeVisible();
     await expect(targetLineAmountCell).toHaveText(
       displayedCurrencyAmountPattern(
         testCase.product.lineAmount,
         testCase.expected.currency,
       ),
     );
-    await expect(summaryAmount).toHaveText(
+    await expect(cartTotalContainer).toContainText(
       displayedCurrencyAmountPattern(
         testCase.expected.total,
         testCase.expected.currency,
       ),
     );
 
-    const awaitingDecisionCart = await cart.readCartStateFromSummary(
+    const awaitingDecisionCart = await cart.readCartState(
       testCase.expected.columns,
+      testCase.expected.totalLabel,
       testCase.expected.currency,
     );
     const awaitingDecisionTarget = await cart.readRowState(
@@ -833,15 +841,16 @@ test.describe('FR-07 shopping cart — increment 2', () => {
         testCase.expected.currency,
       ),
     );
-    await expect(summaryAmount).toHaveText(
+    await expect(cartTotalContainer).toContainText(
       displayedCurrencyAmountPattern(
         testCase.expected.total,
         testCase.expected.currency,
       ),
     );
     expect(
-      await cart.readCartStateFromSummary(
+      await cart.readCartState(
         testCase.expected.columns,
+        testCase.expected.totalLabel,
         testCase.expected.currency,
       ),
     ).toEqual(baselineCart);
@@ -881,21 +890,23 @@ test.describe('FR-07 shopping cart — increment 2', () => {
       targetRow,
       testCase.expected.columns,
     );
-    const summaryAmount = cart.cartSummaryAmount(testCase.expected.currency);
+    const cartTotalContainer = cart.cartTotalContainer(
+      testCase.expected.totalLabel,
+    );
     const deleteButton = cart.deleteButton(targetRow, testCase.actions.delete);
 
     await expect(targetQuantityCell).toHaveText(
       String(testCase.product.quantity),
     );
     await expect(targetLineAmountCell).toBeVisible();
-    await expect(summaryAmount).toBeVisible();
+    await expect(cartTotalContainer).toBeVisible();
     await expect(targetLineAmountCell).toHaveText(
       displayedCurrencyAmountPattern(
         testCase.product.lineAmount,
         testCase.expected.currency,
       ),
     );
-    await expect(summaryAmount).toHaveText(
+    await expect(cartTotalContainer).toContainText(
       displayedCurrencyAmountPattern(
         testCase.expected.total,
         testCase.expected.currency,
@@ -906,8 +917,9 @@ test.describe('FR-07 shopping cart — increment 2', () => {
     );
     await expect(deleteButton).toBeVisible();
 
-    const baselineCart = await cart.readCartStateFromSummary(
+    const baselineCart = await cart.readCartState(
       testCase.expected.columns,
+      testCase.expected.totalLabel,
       testCase.expected.currency,
     );
     const baselineTarget = await cart.readRowState(
@@ -945,22 +957,23 @@ test.describe('FR-07 shopping cart — increment 2', () => {
       String(baselineTarget.quantity),
     );
     await expect(targetLineAmountCell).toBeVisible();
-    await expect(summaryAmount).toBeVisible();
+    await expect(cartTotalContainer).toBeVisible();
     await expect(targetLineAmountCell).toHaveText(
       displayedCurrencyAmountPattern(
         testCase.product.lineAmount,
         testCase.expected.currency,
       ),
     );
-    await expect(summaryAmount).toHaveText(
+    await expect(cartTotalContainer).toContainText(
       displayedCurrencyAmountPattern(
         testCase.expected.total,
         testCase.expected.currency,
       ),
     );
 
-    const afterCancelCart = await cart.readCartStateFromSummary(
+    const afterCancelCart = await cart.readCartState(
       testCase.expected.columns,
+      testCase.expected.totalLabel,
       testCase.expected.currency,
     );
     const afterCancelTarget = await cart.readRowState(
@@ -1034,7 +1047,9 @@ test.describe('FR-07 shopping cart — increment 2', () => {
       remainingRow,
       testCase.expected.columns,
     );
-    const summaryAmount = cart.cartSummaryAmount(testCase.expected.currency);
+    const cartTotalContainer = cart.cartTotalContainer(
+      testCase.expected.totalLabel,
+    );
     const deleteButton = cart.deleteButton(
       selectedRow,
       testCase.actions.delete,
@@ -1048,7 +1063,7 @@ test.describe('FR-07 shopping cart — increment 2', () => {
     );
     await expect(selectedLineAmountCell).toBeVisible();
     await expect(remainingLineAmountCell).toBeVisible();
-    await expect(summaryAmount).toBeVisible();
+    await expect(cartTotalContainer).toBeVisible();
     await expect(selectedLineAmountCell).toHaveText(
       displayedCurrencyAmountPattern(
         selectedProduct.lineAmount,
@@ -1061,7 +1076,7 @@ test.describe('FR-07 shopping cart — increment 2', () => {
         testCase.expected.currency,
       ),
     );
-    await expect(summaryAmount).toHaveText(
+    await expect(cartTotalContainer).toContainText(
       displayedCurrencyAmountPattern(
         testCase.expected.initialTotal,
         testCase.expected.currency,
@@ -1072,8 +1087,9 @@ test.describe('FR-07 shopping cart — increment 2', () => {
     );
     await expect(deleteButton).toBeVisible();
 
-    const baselineCart = await cart.readCartStateFromSummary(
+    const baselineCart = await cart.readCartState(
       testCase.expected.columns,
+      testCase.expected.totalLabel,
       testCase.expected.currency,
     );
     const baselineSelected = await cart.readRowState(
@@ -1127,22 +1143,23 @@ test.describe('FR-07 shopping cart — increment 2', () => {
       String(baselineRemaining.quantity),
     );
     await expect(remainingLineAmountCell).toBeVisible();
-    await expect(summaryAmount).toBeVisible();
+    await expect(cartTotalContainer).toBeVisible();
     await expect(remainingLineAmountCell).toHaveText(
       displayedCurrencyAmountPattern(
         remainingProduct.lineAmount,
         testCase.expected.currency,
       ),
     );
-    await expect(summaryAmount).toHaveText(
+    await expect(cartTotalContainer).toContainText(
       displayedCurrencyAmountPattern(
         testCase.expected.finalTotal,
         testCase.expected.currency,
       ),
     );
 
-    const afterConfirmCart = await cart.readCartStateFromSummary(
+    const afterConfirmCart = await cart.readCartState(
       testCase.expected.columns,
+      testCase.expected.totalLabel,
       testCase.expected.currency,
     );
     const afterConfirmRemaining = await cart.readRowState(

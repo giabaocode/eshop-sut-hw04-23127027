@@ -227,6 +227,7 @@
       "controls": {
         "decrement": "-"
       },
+      "totalLabel": "Tổng cộng",
       "currency": {
         "symbol": "₫",
         "requireThousandsSeparator": true
@@ -287,6 +288,7 @@
         "lineAmount": "Thành tiền",
         "action": "Thao tác"
       },
+      "totalLabel": "Tổng cộng",
       "currency": {
         "symbol": "₫",
         "requireThousandsSeparator": true
@@ -340,6 +342,7 @@
         "lineAmount": "Thành tiền",
         "action": "Thao tác"
       },
+      "totalLabel": "Tổng cộng",
       "currency": {
         "symbol": "₫",
         "requireThousandsSeparator": true
@@ -406,6 +409,7 @@
         "lineAmount": "Thành tiền",
         "action": "Thao tác"
       },
+      "totalLabel": "Tổng cộng",
       "currency": {
         "symbol": "₫",
         "requireThousandsSeparator": true
