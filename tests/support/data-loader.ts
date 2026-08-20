@@ -209,6 +209,155 @@ export interface Fr01RegistrationData {
   api_unique_then_duplicate: ApiUniqueThenDuplicateCase;
 }
 
+export interface CartPaths {
+  home: string;
+  cart: string;
+}
+
+export interface CartNavigationLabels {
+  cartLink: string;
+  addToCartButton: string;
+}
+
+export interface CartColumnLabels {
+  product: string;
+  unitPrice: string;
+  quantity: string;
+  lineAmount: string;
+  action: string;
+}
+
+export interface CartCurrencyRules {
+  symbol: string;
+  requireThousandsSeparator: boolean;
+}
+
+export interface CartProductFixture {
+  id: number;
+  name: string;
+  unitPrice: number;
+  quantity: number;
+}
+
+interface Fr07CaseBase {
+  id: string;
+  title: string;
+}
+
+interface PopulatedCartTwoProductsCase extends Fr07CaseBase {
+  paths: CartPaths;
+  navigation: CartNavigationLabels;
+  products: [CartProductFixture, CartProductFixture];
+  expected: {
+    heading: string;
+    columns: CartColumnLabels;
+    controls: {
+      increment: string;
+      decrement: string;
+    };
+    currency: CartCurrencyRules;
+    counts: {
+      distinctProducts: number;
+      addActionsPerProduct: number;
+      rows: number;
+      levelOneHeadings: number;
+      rowsPerProduct: number;
+      incrementControlsPerRow: number;
+      decrementControlsPerRow: number;
+    };
+  };
+}
+
+interface InvalidAuthenticationPartition {
+  name: string;
+  tokenClass: string;
+  authorizationHeader: string | null;
+}
+
+interface CartInvalidAuthenticationCase extends Fr07CaseBase {
+  endpoints: {
+    login: string;
+    cart: string;
+  };
+  headers: {
+    authorization: string;
+    bearerScheme: string;
+  };
+  loginCredentials: {
+    email: string;
+    password: string;
+  };
+  tokenPartitions: [
+    InvalidAuthenticationPartition,
+    InvalidAuthenticationPartition,
+    InvalidAuthenticationPartition,
+  ];
+  postRequestBody: {
+    id: number;
+    name: string;
+    price: number;
+    quantity: number;
+  };
+  expected: {
+    tokenProperty: string;
+    tokenPartitionCount: number;
+    requestsPerPartition: number;
+    rejectionResponseCount: number;
+    loginSuccessful: boolean;
+    baselineGetSuccessful: boolean;
+    finalGetSuccessful: boolean;
+  };
+}
+
+interface SameProductUiAdditionCase extends Fr07CaseBase {
+  paths: CartPaths;
+  navigation: CartNavigationLabels;
+  product: CartProductFixture;
+  addActionCount: number;
+  expected: {
+    columns: CartColumnLabels;
+    totalLabel: string;
+    currency: CartCurrencyRules;
+    counts: {
+      rows: number;
+      rowsForProduct: number;
+    };
+  };
+}
+
+interface QuantityIncrementCase extends Fr07CaseBase {
+  paths: CartPaths;
+  navigation: CartNavigationLabels;
+  product: {
+    id: number;
+    name: string;
+    unitPrice: number;
+    initialQuantity: number;
+    incrementedQuantity: number;
+  };
+  addActionCount: number;
+  expected: {
+    columns: CartColumnLabels;
+    controls: {
+      increment: string;
+    };
+    totalLabel: string;
+    currency: CartCurrencyRules;
+    counts: {
+      rows: number;
+      rowsForProduct: number;
+      incrementControlsForProduct: number;
+    };
+  };
+}
+
+export interface Fr07CartData {
+  populated_cart_two_products: PopulatedCartTwoProductsCase;
+  cart_invalid_authentication: CartInvalidAuthenticationCase;
+  same_product_ui_addition: SameProductUiAdditionCase;
+  quantity_increment: QuantityIncrementCase;
+}
+
 export function loadJsonFile<T>(workspaceRelativePath: string): T {
   const absolutePath = resolve(process.cwd(), workspaceRelativePath);
 

@@ -1,0 +1,182 @@
+{
+  "populated_cart_two_products": {
+    "id": "FR07-TC01",
+    "title": "populated cart structure, currency, and one descriptive h1",
+    "paths": {
+      "home": "/",
+      "cart": "/cart"
+    },
+    "navigation": {
+      "cartLink": "Giỏ hàng",
+      "addToCartButton": "Thêm vào giỏ"
+    },
+    "products": [
+      {
+        "id": 1,
+        "name": "iPhone 15 Pro Max",
+        "unitPrice": 30000000,
+        "quantity": 1
+      },
+      {
+        "id": 2,
+        "name": "Samsung Galaxy S24 Ultra",
+        "unitPrice": 28000000,
+        "quantity": 1
+      }
+    ],
+    "expected": {
+      "heading": "Giỏ hàng",
+      "columns": {
+        "product": "Sản phẩm",
+        "unitPrice": "Đơn giá",
+        "quantity": "Số lượng",
+        "lineAmount": "Thành tiền",
+        "action": "Thao tác"
+      },
+      "controls": {
+        "increment": "+",
+        "decrement": "-"
+      },
+      "currency": {
+        "symbol": "₫",
+        "requireThousandsSeparator": true
+      },
+      "counts": {
+        "distinctProducts": 2,
+        "addActionsPerProduct": 1,
+        "rows": 2,
+        "levelOneHeadings": 1,
+        "rowsPerProduct": 1,
+        "incrementControlsPerRow": 1,
+        "decrementControlsPerRow": 1
+      }
+    }
+  },
+  "cart_invalid_authentication": {
+    "id": "FR07-TC02",
+    "title": "invalid cart API authentication partitions",
+    "endpoints": {
+      "login": "/api/login",
+      "cart": "/api/cart"
+    },
+    "headers": {
+      "authorization": "Authorization",
+      "bearerScheme": "Bearer"
+    },
+    "loginCredentials": {
+      "email": "test@eshop.com",
+      "password": "Test1234!"
+    },
+    "tokenPartitions": [
+      {
+        "name": "missing token",
+        "tokenClass": "missing",
+        "authorizationHeader": null
+      },
+      {
+        "name": "malformed token",
+        "tokenClass": "malformed",
+        "authorizationHeader": "Bearer malformed.jwt.token"
+      },
+      {
+        "name": "expired token",
+        "tokenClass": "expired",
+        "authorizationHeader": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6InVzZXIiLCJleHAiOjk0NjY4NDgwMH0.knN9aXvwcQzUKJVe-0PyNfOGTCCZ_RLWxJ0j_muXS34"
+      }
+    ],
+    "postRequestBody": {
+      "id": 5,
+      "name": "Bàn phím cơ Keychron Q1",
+      "price": 4000000,
+      "quantity": 1
+    },
+    "expected": {
+      "tokenProperty": "token",
+      "tokenPartitionCount": 3,
+      "requestsPerPartition": 2,
+      "rejectionResponseCount": 6,
+      "loginSuccessful": true,
+      "baselineGetSuccessful": true,
+      "finalGetSuccessful": true
+    }
+  },
+  "same_product_ui_addition": {
+    "id": "FR07-TC03",
+    "title": "adding the same product twice produces one row with quantity two",
+    "paths": {
+      "home": "/",
+      "cart": "/cart"
+    },
+    "navigation": {
+      "cartLink": "Giỏ hàng",
+      "addToCartButton": "Thêm vào giỏ"
+    },
+    "product": {
+      "id": 3,
+      "name": "MacBook Pro M3",
+      "unitPrice": 45000000,
+      "quantity": 2
+    },
+    "addActionCount": 2,
+    "expected": {
+      "columns": {
+        "product": "Sản phẩm",
+        "unitPrice": "Đơn giá",
+        "quantity": "Số lượng",
+        "lineAmount": "Thành tiền",
+        "action": "Thao tác"
+      },
+      "totalLabel": "Tổng cộng",
+      "currency": {
+        "symbol": "₫",
+        "requireThousandsSeparator": true
+      },
+      "counts": {
+        "rows": 1,
+        "rowsForProduct": 1
+      }
+    }
+  },
+  "quantity_increment": {
+    "id": "FR07-TC04",
+    "title": "the plus control increments only the selected row and recalculates totals",
+    "paths": {
+      "home": "/",
+      "cart": "/cart"
+    },
+    "navigation": {
+      "cartLink": "Giỏ hàng",
+      "addToCartButton": "Thêm vào giỏ"
+    },
+    "product": {
+      "id": 4,
+      "name": "Tai nghe AirPods Pro 2",
+      "unitPrice": 6000000,
+      "initialQuantity": 1,
+      "incrementedQuantity": 2
+    },
+    "addActionCount": 1,
+    "expected": {
+      "columns": {
+        "product": "Sản phẩm",
+        "unitPrice": "Đơn giá",
+        "quantity": "Số lượng",
+        "lineAmount": "Thành tiền",
+        "action": "Thao tác"
+      },
+      "controls": {
+        "increment": "+"
+      },
+      "totalLabel": "Tổng cộng",
+      "currency": {
+        "symbol": "₫",
+        "requireThousandsSeparator": true
+      },
+      "counts": {
+        "rows": 1,
+        "rowsForProduct": 1,
+        "incrementControlsForProduct": 1
+      }
+    }
+  }
+}

@@ -1,0 +1,260 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium] › tests/features/fr07-cart.spec.ts:82:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC01 populated cart structure, currency, and one descriptive h1 (30.0s)
+  ✓  2 [chromium] › tests/features/fr07-cart.spec.ts:189:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC02 invalid cart API authentication partitions (41ms)
+  ✘  3 [chromium] › tests/features/fr07-cart.spec.ts:290:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC03 adding the same product twice produces one row with quantity two (5.3s)
+  ✘  4 [chromium] › tests/features/fr07-cart.spec.ts:345:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC04 the plus control increments only the selected row and recalculates totals (213ms)
+
+
+  1) [chromium] › tests/features/fr07-cart.spec.ts:82:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC01 populated cart structure, currency, and one descriptive h1 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('heading', { level: 1 })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "soft toHaveCount" with timeout 5000ms
+      - waiting for getByRole('heading', { level: 1 })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      110 |
+      111 |     await expect.soft(cart.table).toBeVisible();
+    > 112 |     await expect.soft(cart.allLevelOneHeadings).toHaveCount(
+          |                                                 ^
+      113 |       testCase.expected.counts.levelOneHeadings,
+      114 |     );
+      115 |     await expect.soft(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:112:49
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: /^\s*Giỏ hàng\s*$/i, level: 1 })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "soft toBeVisible" with timeout 5000ms
+      - waiting for getByRole('heading', { name: /^\s*Giỏ hàng\s*$/i, level: 1 })
+
+
+      115 |     await expect.soft(
+      116 |       cart.descriptiveHeading(testCase.expected.heading),
+    > 117 |     ).toBeVisible();
+          |       ^
+      118 |
+      119 |     for (const columnLabel of Object.values(testCase.expected.columns)) {
+      120 |       await expect.soft(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:117:7
+
+    Error: Required cart column "Đơn giá"
+
+    expect(locator).toBeVisible() failed
+
+    Locator: getByRole('table').getByRole('columnheader', { name: /^\s*Đơn giá\s*$/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Required cart column "Đơn giá" with timeout 5000ms
+      - waiting for getByRole('table').getByRole('columnheader', { name: /^\s*Đơn giá\s*$/i })
+
+
+      121 |         cart.columnHeader(columnLabel),
+      122 |         `Required cart column ${JSON.stringify(columnLabel)}`,
+    > 123 |       ).toBeVisible();
+          |         ^
+      124 |     }
+      125 |
+      126 |     await expect.soft(cart.dataRows()).toHaveCount(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:123:9
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('table').getByRole('row').filter({ has: getByRole('cell', { name: /^\s*iPhone 15 Pro Max\s*$/i }) }).getByRole('button', { name: /^\s*\+\s*$/i })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "soft toHaveCount" with timeout 5000ms
+      - waiting for getByRole('table').getByRole('row').filter({ has: getByRole('cell', { name: /^\s*iPhone 15 Pro Max\s*$/i }) }).getByRole('button', { name: /^\s*\+\s*$/i })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      180 |       await expect.soft(
+      181 |         cart.incrementButton(row, testCase.expected.controls.increment),
+    > 182 |       ).toHaveCount(testCase.expected.counts.incrementControlsPerRow);
+          |         ^
+      183 |       await expect.soft(
+      184 |         cart.decrementButton(row, testCase.expected.controls.decrement),
+      185 |       ).toHaveCount(testCase.expected.counts.decrementControlsPerRow);
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:182:9
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('table').getByRole('row').filter({ has: getByRole('cell', { name: /^\s*iPhone 15 Pro Max\s*$/i }) }).getByRole('button', { name: /^\s*-\s*$/i })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "soft toHaveCount" with timeout 5000ms
+      - waiting for getByRole('table').getByRole('row').filter({ has: getByRole('cell', { name: /^\s*iPhone 15 Pro Max\s*$/i }) }).getByRole('button', { name: /^\s*-\s*$/i })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      183 |       await expect.soft(
+      184 |         cart.decrementButton(row, testCase.expected.controls.decrement),
+    > 185 |       ).toHaveCount(testCase.expected.counts.decrementControlsPerRow);
+          |         ^
+      186 |     }
+      187 |   });
+      188 |
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:185:9
+
+    Test timeout of 30000ms exceeded.
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('table').getByRole('row').filter({ has: getByRole('cell', { name: /^\s*Samsung Galaxy S24 Ultra\s*$/i }) }).getByRole('button', { name: /^\s*\+\s*$/i })
+    Expected: 1
+    Received: 0
+
+    Call log:
+      - Expect "soft toHaveCount" with timeout 5000ms
+      - waiting for getByRole('table').getByRole('row').filter({ has: getByRole('cell', { name: /^\s*Samsung Galaxy S24 Ultra\s*$/i }) }).getByRole('button', { name: /^\s*\+\s*$/i })
+        13 × locator resolved to 0 elements
+           - unexpected value "0"
+      - Test ended.
+
+
+      180 |       await expect.soft(
+      181 |         cart.incrementButton(row, testCase.expected.controls.increment),
+    > 182 |       ).toHaveCount(testCase.expected.counts.incrementControlsPerRow);
+          |         ^
+      183 |       await expect.soft(
+      184 |         cart.decrementButton(row, testCase.expected.controls.decrement),
+      185 |       ).toHaveCount(testCase.expected.counts.decrementControlsPerRow);
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:182:9
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('table').getByRole('row').filter({ has: getByRole('cell', { name: /^\s*Samsung Galaxy S24 Ultra\s*$/i }) }).getByRole('button', { name: /^\s*-\s*$/i })
+    Expected: 1
+    Received: undefined
+
+
+      183 |       await expect.soft(
+      184 |         cart.decrementButton(row, testCase.expected.controls.decrement),
+    > 185 |       ).toHaveCount(testCase.expected.counts.decrementControlsPerRow);
+          |         ^
+      186 |     }
+      187 |   });
+      188 |
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:185:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/features-fr07-cart-FR-07-s-c8d37-ency-and-one-descriptive-h1-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/features-fr07-cart-FR-07-s-c8d37-ency-and-one-descriptive-h1-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/features-fr07-cart-FR-07-s-c8d37-ency-and-one-descriptive-h1-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/features-fr07-cart-FR-07-s-c8d37-ency-and-one-descriptive-h1-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/features/fr07-cart.spec.ts:290:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC03 adding the same product twice produces one row with quantity two 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('table').getByRole('row').filter({ has: getByRole('cell') })
+    Expected: 1
+    Received: 2
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByRole('table').getByRole('row').filter({ has: getByRole('cell') })
+        - locator resolved to 0 elements
+        - unexpected value "0"
+        13 × locator resolved to 2 elements
+           - unexpected value "2"
+
+
+      305 |     await assertCurrentPath(page, testCase.paths.cart);
+      306 |
+    > 307 |     await expect(cart.dataRows()).toHaveCount(testCase.expected.counts.rows);
+          |                                   ^
+      308 |     await expect(cart.productRows(testCase.product.name)).toHaveCount(
+      309 |       testCase.expected.counts.rowsForProduct,
+      310 |     );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:307:35
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/features-fr07-cart-FR-07-s-d433d-s-one-row-with-quantity-two-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/features-fr07-cart-FR-07-s-d433d-s-one-row-with-quantity-two-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/features-fr07-cart-FR-07-s-d433d-s-one-row-with-quantity-two-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/features-fr07-cart-FR-07-s-d433d-s-one-row-with-quantity-two-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/features/fr07-cart.spec.ts:345:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC04 the plus control increments only the selected row and recalculates totals 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      361 |
+      362 |     const beforeRowCount = await cart.dataRows().count();
+    > 363 |     expect(beforeRowCount).toBe(testCase.expected.counts.rows);
+          |                            ^
+      364 |     await expect(cart.productRows(testCase.product.name)).toHaveCount(
+      365 |       testCase.expected.counts.rowsForProduct,
+      366 |     );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:363:28
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/features-fr07-cart-FR-07-s-43294-row-and-recalculates-totals-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/features-fr07-cart-FR-07-s-43294-row-and-recalculates-totals-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/features-fr07-cart-FR-07-s-43294-row-and-recalculates-totals-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/features-fr07-cart-FR-07-s-43294-row-and-recalculates-totals-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3 failed
+    [chromium] › tests/features/fr07-cart.spec.ts:82:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC01 populated cart structure, currency, and one descriptive h1 
+    [chromium] › tests/features/fr07-cart.spec.ts:290:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC03 adding the same product twice produces one row with quantity two 
+    [chromium] › tests/features/fr07-cart.spec.ts:345:7 › FR-07 shopping cart — reviewed increment 1 › FR07-TC04 the plus control increments only the selected row and recalculates totals 
+  1 passed (36.6s)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report playwright-report/dev/fr07-increment1-chromium[39m
+[36m[39m

@@ -1,0 +1,13 @@
+Correct only tests/features/fr07-cart.spec.ts after the first FR-07 increment 1 Chromium development run.
+
+Do not modify JSON data, page objects, support code, FR-01 automation, SUT source, database, evidence, configuration, documentation, packages, or ai-audit files. Do not run Playwright tests and do not start or stop the SUT. TypeScript typechecking is allowed.
+
+Make exactly these two corrections:
+
+1. FR07-TC01 accumulated multiple independent soft missing-locator assertions and reached the default 30-second test timeout before every soft assertion finished. Add test.slow() inside FR07-TC01 so Playwright provides the standard extended test budget. Preserve every existing soft assertion, locator, expected count, ID, title, fixture action, and requirement oracle. Do not reduce assertion timeouts, remove assertions, convert failures to warnings, or otherwise weaken the test.
+
+2. FR07-TC04 used an immediate locator.count() followed by a synchronous expect and observed zero rows even though the failure DOM snapshot already contained the seeded AirPods row. Replace the initial row-count check with a web-first await expect(cart.dataRows()).toHaveCount(testCase.expected.counts.rows), then capture beforeRowCount from the same locator for the later unchanged-row-count comparison. Preserve the product-row assertion, exact row-scoped plus-button hard prerequisite, quantities, prices, line totals, cart-total assertions, and every post-click state-delta oracle.
+
+Do not change any other line or file. Do not claim a pass, failure, or defect because no corrected execution is authorized in this interaction.
+
+After editing, report the exact file changed, the exact two corrections, confirmation that all four FR07 test declarations and all existing assertions remain, and confirmation that no Playwright test or SUT was run.
