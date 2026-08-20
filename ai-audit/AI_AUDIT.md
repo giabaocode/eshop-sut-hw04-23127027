@@ -165,3 +165,150 @@ No prohibited files were edited.
 
 ## Human review/action
 Tôi đã review package.json, Playwright config, TypeScript config, environment example và infrastructure smoke spec. Typecheck thành công, test listing có đúng ba browser projects và smoke execution thật pass 3/3. Tôi đã mở HTML report và xác nhận hiển thị Run by: 23127027, ISO timestamp 2026-08-18T07:20:21.847Z cùng kết quả Chromium, Firefox và WebKit. Report này chỉ dùng kiểm chứng infrastructure, không được tính vào chín feature-browser reports cuối và không có source SUT nào bị sửa.
+
+
+# Interaction 0006
+
+## AI tool
+
+OpenAI Codex CLI 0.147.0
+
+## ISO date/time
+2026-08-18T12:20:40Z
+
+## Exact prompt
+
+````text
+Implement only the first reviewed FR-01 Playwright increment for HW04 student 23127027. You may create exactly these files: tests/data/fr01-registration.json, tests/support/data-loader.ts, tests/pages/registration.page.ts, tests/features/fr01-registration.spec.ts. Do not modify any existing file, SUT source, configuration, package, documentation, or audit file. Use the authoritative requirements and docs/hw04-traceability-test-matrix.md. Implement exactly logical IDs FR01-TC01 through FR01-TC04; every test title must begin with its ID. Put all case-specific inputs, expected labels, omission variants, and email templates in the JSON file. The spec must not contain inline test-case arrays or objects. Load JSON from disk through a typed reusable loader. Generate collision-safe emails at runtime from external templates without committing live credentials. Create a registration page object with form-scoped Playwright locators and action methods; do not use fixed sleeps. TC01 must cover valid registration destination plus one h1, Vietnamese registration content, and blue positive submit behavior without inventing an exact shade. TC02 must cover required controls, visible asterisk markers, blank/one-field omission rejection, and application-error placement above submit when such an error is produced. TC03 must cover input type=email plus invalid and valid email-format partitions while avoiding assertions on browser-specific native validation wording. TC04 must cover the confirmation-password control, both password controls using type=password, exactly one h1, and top-to-bottom keyboard focus order. Missing required UI must cause clear failing assertions; do not conditionally bypass it. Do not use test.skip, test.fail, weak placeholder assertions, source-code assertions, or post-edit evidence. Do not run tests, servers, package installation, Git commands, or commits. After editing, summarize exactly the allowed files created and any design assumptions.
+````
+
+## Exact AI output
+````text
+Implemented exactly FR01-TC01 through FR01-TC04 and created only:
+
+- [fr01-registration.json](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/data/fr01-registration.json)
+- [data-loader.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/data-loader.ts)
+- [registration.page.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/registration.page.ts)
+- [fr01-registration.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts)
+
+Design assumptions:
+
+- Login destination is verified semantically through login-form content, since the exact redirect URL is unspecified.
+- “Blue” means the computed color’s blue channel is dominant; no exact shade is asserted.
+- Email partitions use native validity state, never browser-specific messages.
+- Application-error placement is checked whenever an application error is rendered; native validation need not produce one.
+- Focus traversal begins at the first form control and verifies visual and Tab order through submit.
+- No documented safe account-deletion interface exists, so created accounts use collision-safe runtime emails from external templates.
+
+Per instruction, I did not run tests, servers, package commands, Git commands, or post-edit verification.
+````
+
+## Human review/action
+Tôi đã review code trước khi chạy và phát hiện locator getByLabel không phù hợp DOM hiện tại, exact button name có thể làm mất form locator, fill luôn phụ thuộc confirmation làm nhiễu TC03, ID/title chưa nằm trong JSON và error locator có thể bỏ sót error thật. Tôi yêu cầu sửa automation để locator form-scoped theo cấu trúc label-parent-input, dùng accessible-name case-insensitive, cho phép điền đúng tập field cần kiểm tra, lấy ID/title từ external JSON và phát hiện error mà không sửa SUT hoặc né assertion. Chưa có test execution hoặc defect claim.
+
+
+# Interaction 0007
+
+## AI tool
+
+OpenAI Codex CLI 0.147.0
+
+## ISO date/time
+2026-08-18T12:32:41Z
+
+## Exact prompt
+
+````text
+Act as a correction-only editor for the rejected FR-01 increment. Modify exactly these four files and no others: tests/data/fr01-registration.json, tests/support/data-loader.ts, tests/pages/registration.page.ts, tests/features/fr01-registration.spec.ts. Preserve logical scope FR01-TC01 through FR01-TC04 and all hard requirement assertions. Apply these human-reviewed fixes only. Add id and title to each of the four top-level external JSON cases, type them, and construct every Playwright test title from those JSON values rather than hardcoding IDs/titles in the spec. Replace getByLabel-based registration and login input locators: source labels are unassociated siblings, so locate each label inside its form using an escaped anchored case-insensitive pattern, move to its containing element, and then locate the corresponding input. Use anchored case-insensitive accessible-name patterns for form submit buttons and headings so capitalization does not make the form locator empty; do not weaken actual required text assertions. Replace the unconditional fill method with a selected-field method whose field list comes from external JSON. TC01, TC02, and TC04 must still clearly assert the required confirmation control; TC03 must fill only the externally configured fields needed to isolate email validity and must not fail first because confirmation is absent. Improve application-error discovery to include visible non-heading siblings immediately before the form as well as semantic alert/live/error candidates, without relying on exact undocumented error wording; placement above submit must still be asserted whenever such an application error exists. Keep data external, collision-safe email generation, no fixed sleeps, no inline test-case arrays/objects, and no test.skip/test.fail/conditional pass. Do not modify SUT source or weaken assertions to match the current implementation. Do not run tests, servers, package commands, Git commands, or commits. Summarize exact corrections.
+````
+
+## Exact AI output
+````text
+Corrected exactly these four files:
+
+- [fr01-registration.json](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/data/fr01-registration.json)
+  - Added external `id`, `title`, and selected `fieldsToFill` data.
+  - Configured TC03 to fill every required non-email-validity control, including confirmation.
+
+- [data-loader.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/data-loader.ts)
+  - Typed case identity and field-selection properties.
+
+- [registration.page.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/registration.page.ts)
+  - Replaced registration/login `getByLabel` locators with anchored, escaped, case-insensitive label-to-container-to-input locators.
+  - Added anchored case-insensitive accessible-name patterns for headings and submit buttons.
+  - Replaced unconditional filling with externally driven selected-field filling.
+  - Expanded application-error discovery to semantic candidates and the visible non-heading sibling immediately preceding the form.
+
+- [fr01-registration.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts)
+  - Builds all four test titles from external JSON `id` and `title`.
+  - Uses external field selections.
+  - Explicitly asserts the required confirmation control in TC01, TC02, and TC04.
+  - Preserves all existing requirement assertions and error-placement checks.
+
+No tests, servers, package commands, Git commands, or commits were run.
+````
+
+## Human review/action
+Tôi đã đối chiếu correction với prompt và phát hiện email_format_partitions.fieldsToFill vẫn chứa confirmationPassword, nên TC03 chưa cô lập đúng email validity. Tôi yêu cầu bỏ confirmationPassword khỏi riêng field list của TC03, giữ nguyên confirmation assertions ở TC01, TC02 và TC04, không thay đổi requirement assertions hoặc source SUT. Chưa chạy test và chưa có defect claim.
+
+
+# Interaction 0008
+
+## AI tool
+
+OpenAI Codex CLI 0.147.0 (model: gpt-5.6-sol)
+
+## ISO date/time
+2026-08-18T12:45:38Z
+
+## Exact prompt
+
+````text
+Correct only tests/data/fr01-registration.json. In the email_format_partitions object, change fieldsToFill to exactly ["fullName", "email", "password"] so FR01-TC03 isolates email validity without depending on the missing confirmation field. Do not change any other JSON value, case ID, title, variant, assertion, test code, support code, page object, SUT source, or audit file. Do not run tests. Report the exact file and change made.
+````
+
+## Exact AI output
+````text
+Updated [tests/data/fr01-registration.json](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/data/fr01-registration.json): changed `email_format_partitions.fieldsToFill` to exactly `["fullName", "email", "password"]`.
+
+No other values changed. Tests were not run.
+````
+
+## Human review/action
+Tôi đã kiểm tra toàn bộ execution output và final diff. Codex ban đầu sửa nhầm fieldsToFill của TC01 nhưng đã tự hoàn tác trước khi hoàn thành; final diff chỉ loại confirmationPassword khỏi email_format_partitions.fieldsToFill của TC03. Ba file TypeScript không thay đổi, TC01/TC02/TC04 vẫn giữ confirmation assertions, chưa chạy test, chưa có defect claim và source SUT không bị sửa.
+
+
+# Interaction 0009
+
+## AI tool
+
+OpenAI Codex CLI 0.147.0 (model: gpt-5.6-sol)
+
+## ISO date/time
+2026-08-18T12:52:15Z
+
+## Exact prompt
+
+````text
+Fix only tests/features/fr01-registration.spec.ts. Typecheck showed exactly four errors because Playwright 1.62.1 does not provide expect(locator).toBeRequired(). Replace exactly those four matcher calls with the supported assertion toHaveAttribute("required", ""), preserving each locator, custom assertion message, test ID, title, test flow, and the requirement that the control must be required. Do not change any other assertion or file. Do not modify test data, page objects, support code, SUT source, or audit files. Do not run tests. Report the exact replacements made.
+````
+
+## Exact AI output
+````text
+Updated only [fr01-registration.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts).
+
+Exact replacements:
+
+- Lines 29, 67, and 189:
+  `expect(registration.confirmationPasswordInput).toBeRequired()`
+  → `expect(registration.confirmationPasswordInput).toHaveAttribute("required", "")`
+
+- Line 72:
+  `expect(input, \`Required ${field} control must be marked required\`).toBeRequired()`
+  → `expect(input, \`Required ${field} control must be marked required\`).toHaveAttribute("required", "")`
+
+No tests were run. No other assertions or files were changed.
+````
+
+## Human review/action
+Tôi đã review final diff và xác nhận Codex chỉ thay đúng bốn matcher toBeRequired không được Playwright 1.62.1 hỗ trợ bằng toHaveAttribute("required", ""), không làm yếu requirement assertion. FR01 JSON, page object và data loader không thay đổi. Typecheck đã thành công và Playwright liệt kê đúng bốn test FR01-TC01 đến FR01-TC04 trên Chromium. Chưa thực thi browser test, chưa có pass/fail hoặc defect claim và source SUT không bị sửa.

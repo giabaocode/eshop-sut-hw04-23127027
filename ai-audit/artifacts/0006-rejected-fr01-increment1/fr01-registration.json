@@ -1,0 +1,187 @@
+{
+  "valid_registration_ui": {
+    "registrationPath": "/register",
+    "input": {
+      "fullName": "Nguyễn Văn An",
+      "emailTemplate": "fr01-tc01-{{unique}}@example.test",
+      "password": "ValidPass1!",
+      "confirmationPassword": "ValidPass1!"
+    },
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "vietnameseContent": [
+        "Đăng ký tài khoản",
+        "Họ Tên",
+        "Email",
+        "Mật khẩu",
+        "Xác nhận mật khẩu",
+        "Đăng ký",
+        "Đã có tài khoản?",
+        "Đăng nhập"
+      ],
+      "loginDestination": {
+        "heading": "Đăng nhập",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "submit": "Đăng nhập"
+      }
+    }
+  },
+  "required_field_omissions": {
+    "registrationPath": "/register",
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "requiredMarker": "*",
+      "requiredFields": [
+        "fullName",
+        "email",
+        "password",
+        "confirmationPassword"
+      ]
+    },
+    "variants": [
+      {
+        "name": "all_blank",
+        "omittedFields": [
+          "fullName",
+          "email",
+          "password",
+          "confirmationPassword"
+        ],
+        "input": {
+          "fullName": "",
+          "emailTemplate": "",
+          "password": "",
+          "confirmationPassword": ""
+        }
+      },
+      {
+        "name": "omit_full_name",
+        "omittedFields": ["fullName"],
+        "input": {
+          "fullName": "",
+          "emailTemplate": "fr01-tc02-name-{{unique}}@example.test",
+          "password": "ValidPass1!",
+          "confirmationPassword": "ValidPass1!"
+        }
+      },
+      {
+        "name": "omit_email",
+        "omittedFields": ["email"],
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "",
+          "password": "ValidPass1!",
+          "confirmationPassword": "ValidPass1!"
+        }
+      },
+      {
+        "name": "omit_password",
+        "omittedFields": ["password"],
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc02-password-{{unique}}@example.test",
+          "password": "",
+          "confirmationPassword": "ValidPass1!"
+        }
+      },
+      {
+        "name": "omit_confirmation_password",
+        "omittedFields": ["confirmationPassword"],
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc02-confirmation-{{unique}}@example.test",
+          "password": "ValidPass1!",
+          "confirmationPassword": ""
+        }
+      }
+    ]
+  },
+  "email_format_partitions": {
+    "registrationPath": "/register",
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "emailType": "email"
+    },
+    "invalid": [
+      {
+        "name": "missing_at_sign",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc03-{{unique}}.example.test",
+          "password": "ValidPass1!",
+          "confirmationPassword": "ValidPass1!"
+        }
+      },
+      {
+        "name": "missing_domain",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01-tc03-{{unique}}@",
+          "password": "ValidPass1!",
+          "confirmationPassword": "ValidPass1!"
+        }
+      },
+      {
+        "name": "embedded_whitespace",
+        "input": {
+          "fullName": "Nguyễn Văn An",
+          "emailTemplate": "fr01 tc03 {{unique}}@example.test",
+          "password": "ValidPass1!",
+          "confirmationPassword": "ValidPass1!"
+        }
+      }
+    ],
+    "valid": {
+      "name": "documented_shape_control",
+      "input": {
+        "fullName": "Nguyễn Văn An",
+        "emailTemplate": "fr01-tc03-valid-{{unique}}@example.test",
+        "password": "ValidPass1!",
+        "confirmationPassword": "ValidPass1!"
+      }
+    }
+  },
+  "registration_form_semantics": {
+    "registrationPath": "/register",
+    "expected": {
+      "labels": {
+        "heading": "Đăng ký tài khoản",
+        "fullName": "Họ Tên",
+        "email": "Email",
+        "password": "Mật khẩu",
+        "confirmationPassword": "Xác nhận mật khẩu",
+        "submit": "Đăng ký"
+      },
+      "passwordType": "password",
+      "focusOrder": [
+        "fullName",
+        "email",
+        "password",
+        "confirmationPassword",
+        "submit"
+      ]
+    }
+  }
+}
