@@ -1,0 +1,14 @@
+
+Running 4 tests using 1 worker
+
+  ✓  1 [chromium] › tests/features/fr12-access-control.spec.ts:99:7 › FR-12 access control — reviewed increment 1 › FR12-TC01 fresh unauthenticated visitor sees only the Admin login boundary (295ms)
+  ✓  2 [chromium] › tests/features/fr12-access-control.spec.ts:171:7 › FR-12 access control — reviewed increment 1 › FR12-TC02 valid ordinary-user credentials are denied Admin UI authorization (204ms)
+  ✓  3 [chromium] › tests/features/fr12-access-control.spec.ts:261:7 › FR-12 access control — reviewed increment 1 › FR12-TC03 valid seeded admin reaches the protected Dashboard (190ms)
+  ✓  4 [chromium] › tests/features/fr12-access-control.spec.ts:341:7 › FR-12 access control — reviewed increment 1 › FR12-TC04 every documented Admin route rejects a missing token without mutation (47ms)
+
+  4 passed (1.2s)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report playwright-report/dev/fr12-increment1-chromium[39m
+[36m[39m

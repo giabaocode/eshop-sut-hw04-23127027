@@ -1543,3 +1543,381 @@ No browser/API test ran, and no prohibited file was changed.
 ## Human review/action
 
 Chấp nhận output 0018. Human action: Tôi đã review final correction và xác nhận chỉ tests/features/fr07-cart.spec.ts thay đổi so với rejected artifact 0017, tại đúng quantity prerequisite block của FR07-TC12. Quantity control được yêu cầu đúng external count, visible và có displayed value bằng String(targetProduct.quantity) dưới hard web-first assertions trước feedback baseline và đúng một addToCartOnce activation. Feedback before/after transition, semantic badge association, guarded reads, test.slow, image-alt và badge-delta oracles được giữ nguyên. Năm automation file còn lại byte-identical với artifact 0017; FR07-TC01 đến FR07-TC11 không thay đổi. Spec vẫn có đúng 12 FR07 declarations, typecheck thành công, Playwright chỉ liệt kê đúng TC09-TC12, forbidden-pattern và whitespace checks đều sạch. Chưa chạy Playwright browser/API test và không sửa SUT, FR-01, database, evidence, configuration, documentation hoặc package files.
+
+# Interaction 0019
+
+## AI tool
+
+OpenAI Codex CLI 0.148.0 (model: gpt-5.6-sol)
+
+## ISO date/time
+
+2026-08-21T02:21:03Z
+
+
+## Exact prompt
+
+```text
+Implement the first reviewed FR-12 Playwright automation increment covering exactly FR12-TC01 through FR12-TC04.
+
+Read and preserve:
+- README.md
+- api_specification.md
+- docs/hw04-traceability-test-matrix.md
+- playwright.config.ts
+- frontend-admin/vite.config.js
+- frontend-admin/src/App.jsx
+- frontend-web/src/App.jsx
+- frontend-web/src/pages/Login.jsx
+- frontend-web/src/context/AuthContext.jsx
+- backend/database.js
+- backend/server.js
+- tests/data/fr01-registration.json
+- tests/data/fr07-cart.json
+- tests/features/fr01-registration.spec.ts
+- tests/features/fr07-cart.spec.ts
+- tests/pages/registration.page.ts
+- tests/support/data-loader.ts
+
+Implement exactly these external JSON records and generated test IDs:
+- admin_ui_no_token -> FR12-TC01
+- admin_ui_ordinary_user -> FR12-TC02
+- admin_ui_admin -> FR12-TC03
+- admin_route_inventory_missing_token -> FR12-TC04
+
+Create or modify only:
+- tests/data/fr12-access-control.json
+- tests/features/fr12-access-control.spec.ts
+- tests/pages/admin-access.page.ts
+- tests/support/fr12-api.ts
+- tests/support/data-loader.ts
+
+Do not modify:
+- SUT source;
+- FR01 or FR07 data, specs, Page Objects, or helpers;
+- audit files;
+- evidence;
+- database;
+- Playwright configuration;
+- documentation;
+- package files.
+
+General requirements:
+- Add exactly four FR12 test declarations.
+- Keep all paths, credentials, labels, expected counts, route inventory, HTTP methods, safe IDs, payloads, mutation markers, and expected authorization partitions in external JSON.
+- Use PW_ADMIN_URL with fallback http://localhost:5174 for the admin origin; keep the admin entry path `/` in external JSON.
+- Use PW_API_URL with fallback http://localhost:3000 for API requests.
+- Do not inject localStorage or sessionStorage.
+- Do not access React internals, mock the SUT, retry target actions, compensate for ignored actions, use arbitrary waits, or alter the runtime database directly.
+- Prefer accessible locators and Playwright web-first assertions.
+- Do not invent exact denial wording, exact denial status codes, or exact response bodies where the matrix says EVIDENCE MISSING.
+- Distinguish authentication from authorization.
+- Keep independent observations reachable with soft assertions and guarded reads where appropriate.
+- Remain strict TypeScript-compatible and Playwright 1.62.1-compatible.
+
+FR12-TC01:
+- Start with a natural fresh browser context and visit the external admin entry path directly.
+- Do not read or write browser storage.
+- Assert that the visible Admin login form is available using externally defined identity and controls.
+- Assert that protected admin identity/content is not visible.
+- Observe requests during the direct visit and assert that no admin mutation request is issued.
+- Treat this as authentication coverage.
+
+FR12-TC02:
+- Use the externally defined seeded ordinary-user credentials.
+- Visit the Admin login UI and submit the visible login form exactly once.
+- Do not obtain or inject a token outside the UI.
+- Require deterministic evidence that the ordinary user is denied Admin UI access without inventing denial wording. An accessible browser dialog, remaining on the login form, and absence of protected admin identity are acceptable independent observations.
+- Handle any browser dialog deterministically.
+- Assert no admin mutation request is issued.
+- Treat this as authorization coverage: the credentials are valid, but the role is not admin.
+
+FR12-TC03:
+- Use the externally defined seeded admin credentials.
+- Visit the Admin login UI and submit the visible login form exactly once.
+- Do not obtain or inject a token outside the UI.
+- Assert that the protected Admin identity and externally defined Dashboard identity become visible.
+- Assert the login form is no longer visible.
+- Keep the success identity observations independent.
+- Perform no admin mutation.
+
+FR12-TC04:
+- Exercise every registered and documented `/api/admin/*` route from external JSON with no Authorization header:
+  - POST /api/admin/import-products
+  - POST /api/admin/coupons
+  - DELETE /api/admin/coupons/:id
+  - GET /api/admin/users
+  - DELETE /api/admin/users/:id
+  - GET /api/admin/orders
+  - PUT /api/admin/orders/:id/status
+- Use non-destructive denial probes.
+- Mutation-shaped POST probes must use valid-looking externally defined payloads with unique deterministic markers so reaching mutation code would be externally detectable.
+- DELETE and PUT probes must use externally defined non-existing safe IDs.
+- Do not assert exact 401/403 values because the matrix marks exact status as EVIDENCE MISSING. Assert a non-success response and that protected collections/data are not returned.
+- Establish controlled pre/post state snapshots through supported read APIs using an independently acquired seeded-admin API session only for snapshot setup and verification. The target seven route probes themselves must contain no Authorization header.
+- Snapshot representative users, orders, products, and coupons before the probes and compare them after all probes.
+- Guard snapshot-dependent assertions so a snapshot acquisition failure is recorded without hiding independent denial results for the seven routes.
+- Assert each route result independently.
+- Assert that no controlled mutation marker appears and no protected record changes.
+- Do not mutate or restore the SQLite file directly.
+- Treat this as authentication coverage.
+
+Page Object and helper requirements:
+- AdminAccessPage must scope the login form, email control, password control, submit button, protected Admin identity, and Dashboard identity.
+- The login helper must perform exactly one visible submit activation.
+- Request-observation helpers must classify mutation requests by external method/path data.
+- FR12 API helpers must build requests from external route records, omit Authorization for target missing-token probes, parse responses defensively, and compare normalized snapshots.
+- Do not place inline test-case arrays or route inventories in the spec.
+
+Static validation only:
+- Parse and validate the FR12 JSON.
+- Confirm exactly four unique sequential IDs FR12-TC01 through FR12-TC04.
+- Run npm run typecheck.
+- Use Playwright --list to list only FR12-TC01 through FR12-TC04 without executing them.
+- Confirm exactly four FR12 declarations.
+- Confirm FR01 and FR07 tracked files remain byte-identical to HEAD.
+- Confirm TC02 and TC03 each contain exactly one visible login submit activation.
+- Confirm all seven TC04 target probes omit Authorization.
+- Confirm TC04 contains all seven required admin routes exactly once.
+- Scan for waitForTimeout, test.skip, test.fixme, retries, storage injection, mocks, React-internal access, duplicate-submit helpers, and direct SQLite access.
+- Run whitespace checks.
+- Confirm no prohibited file changed.
+
+After editing, report:
+- exact files created or changed;
+- four JSON keys and IDs;
+- TC01 authentication oracles;
+- TC02 ordinary-user authorization oracles;
+- TC03 positive admin authorization oracles;
+- TC04 seven-route denial and no-mutation design;
+- evidence guards;
+- static validation performed;
+- confirmation that no browser/API test ran and no prohibited file changed.
+```
+
+## Exact AI output
+
+```text
+Implemented the first FR-12 increment with exactly four declarations.
+
+Files:
+
+- Created [fr12-access-control.json](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/data/fr12-access-control.json)
+- Created [fr12-access-control.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:53)
+- Created [admin-access.page.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/admin-access.page.ts:56)
+- Created [fr12-api.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/fr12-api.ts:128)
+- Modified [data-loader.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/data-loader.ts:657)
+
+JSON mappings:
+
+- `admin_ui_no_token` → `FR12-TC01`
+- `admin_ui_ordinary_user` → `FR12-TC02`
+- `admin_ui_admin` → `FR12-TC03`
+- `admin_route_inventory_missing_token` → `FR12-TC04`
+
+Coverage:
+
+- TC01 authentication: natural fresh context, direct `/` visit, visible scoped login form and controls, protected Admin/Dashboard identities absent, no login or admin mutation request.
+- TC02 authorization: exactly one visible login submission, successful ordinary-user login response observed without reading its body/token, dialog deterministically dismissed without asserting wording, login form remains, protected identities remain absent, no admin mutation.
+- TC03 positive authorization: exactly one visible login submission, successful login response, independent Admin and Dashboard visibility assertions, login form and controls removed, no mutation.
+- TC04 authentication: all seven required routes are probed once without `Authorization`; POST probes use marked valid-looking payloads, while DELETE/PUT use non-existing safe IDs. Each response is independently checked for non-success and absence of protected data without asserting exact status or body.
+
+TC04 captures users, orders, products, and coupons through a separately acquired seeded-admin snapshot session. Pre/post snapshots are normalized before comparison, markers are scanned across controlled state, and snapshot failures are recorded with soft assertions while all seven denial probes remain reachable.
+
+Static validation passed:
+
+- JSON parsing, exact keys, sequential unique IDs, route inventory, markers, safe IDs, and null authorization configuration
+- `npm run typecheck`
+- FR12-only Playwright `--list`: four declarations across three configured projects
+- Exactly one TC02 and one TC03 login-helper call; helper contains one click
+- FR01/FR07 tracked files byte-identical to `HEAD`
+- Forbidden-pattern and whitespace scans
+- `git diff --check`
+- Required/reference and prohibited files unchanged
+
+No browser or API test was executed—only TypeScript checking and Playwright discovery. No database, SUT, configuration, documentation, evidence, package, or audit file was modified; the two pre-existing untracked audit files were left untouched.
+```
+
+## Human review/action
+
+Từ chối output 0019. Human action: Tôi đã review toàn bộ FR-12 increment 1 diff và xác nhận bốn external JSON key/ID, inventory đủ bảy /api/admin/* routes, target probes không truyền Authorization, snapshot session tách biệt, và mỗi TC02/TC03 chỉ có một loginOnce activation. Tuy nhiên TC02 và TC03 dùng soft login-form/control prerequisites rồi thực hiện loginOnce vô điều kiện, nên authorization evidence có thể được thu dưới fixture UI không hợp lệ hoặc hết test budget. TC01 đến TC03 cũng lặp soft count/visibility trên locator bị thiếu mà không guard. Ngoài ra TC04 chỉ phát hiện unexpected mutation qua snapshot/marker nhưng không cleanup product/coupon sentinel nếu SUT cho phép mutation, có thể làm bẩn runtime database. Cần lưu proposal hiện tại làm rejected artifact, sửa TC02/TC03 thành hard visible login prerequisites, guard các independent UI observations hoặc dùng test.slow phù hợp, và cleanup controlled mutations qua API trong finally mà không sửa SQLite trực tiếp. Chưa chạy Playwright browser/API test và SUT không bị sửa.
+
+# Interaction 0020
+
+## AI tool
+
+OpenAI Codex CLI 0.148.0 (model: gpt-5.6-sol)
+
+## ISO date/time
+
+2026-08-21T02:52:09Z
+
+## Exact prompt
+
+```text
+Correct the rejected FR-12 increment 1 proposal covering exactly FR12-TC01 through FR12-TC04.
+
+Read and preserve:
+- README.md
+- api_specification.md
+- docs/hw04-traceability-test-matrix.md
+- playwright.config.ts
+- frontend-admin/vite.config.js
+- frontend-admin/src/App.jsx
+- backend/database.js
+- backend/server.js
+- ai-audit/prompts/0019-add-fr12-access-control-increment1.txt
+- ai-audit/outputs/0019-add-fr12-access-control-increment1.md
+- ai-audit/entries/0019-add-fr12-access-control-increment1.md
+- ai-audit/artifacts/0019-rejected-fr12-increment1/fr12-access-control.json
+- ai-audit/artifacts/0019-rejected-fr12-increment1/fr12-access-control.spec.ts
+- ai-audit/artifacts/0019-rejected-fr12-increment1/admin-access.page.ts
+- ai-audit/artifacts/0019-rejected-fr12-increment1/fr12-api.ts
+- ai-audit/artifacts/0019-rejected-fr12-increment1/data-loader.ts
+- tests/data/fr12-access-control.json
+- tests/features/fr12-access-control.spec.ts
+- tests/pages/admin-access.page.ts
+- tests/support/fr12-api.ts
+- tests/support/data-loader.ts
+
+The 0019 proposal was rejected for these reasons:
+1. TC02 and TC03 use soft login-form/control prerequisites and then call loginOnce unconditionally, so authorization evidence can be collected under an invalid UI fixture or the test can exhaust its timeout.
+2. TC01 through TC03 repeat soft count and visibility waits on missing locators without guards.
+3. TC04 detects unexpected mutation but does not clean controlled product/coupon sentinels through the API, so a failing access-control implementation can contaminate runtime state.
+
+Modify only when necessary:
+- tests/data/fr12-access-control.json
+- tests/features/fr12-access-control.spec.ts
+- tests/support/fr12-api.ts
+- tests/support/data-loader.ts
+
+Keep tests/pages/admin-access.page.ts byte-identical to the 0019 rejected artifact unless an unavoidable backward-compatible correction is required and explicitly justified.
+
+Required UI corrections:
+
+TC01:
+- Keep the natural fresh context, direct Admin entry visit, login-boundary observations, protected-content absence, and no-mutation observation.
+- Add test.slow() because independent soft evidence is intentionally collected.
+- Do not perform unconditional toBeVisible after a soft count assertion has shown that a locator is absent.
+- Guard visibility observations behind the externally expected count using immediate guarded reads or an equivalent evidence-budget-safe approach.
+
+TC02 and TC03:
+- Add test.slow().
+- Before loginOnce, make the externally expected login form, email control, password control, and submit control counts hard web-first fixture prerequisites.
+- Hard-require each scoped control to be visible.
+- Only after all hard prerequisites pass, call loginOnce exactly once.
+- Do not retry or compensate if the single login submission is ignored.
+- Keep post-action denial/success observations soft and independently reachable.
+- Guard post-action visibility reads behind observed expected counts; do not repeat full web-first waits for already missing locators.
+- Preserve TC02 valid-login-response, deterministic dialog handling, login-boundary persistence, protected-content absence, and no-mutation oracles.
+- Preserve TC03 successful-login response, protected Admin identity, Dashboard identity, login-form disappearance, and no-mutation oracles.
+
+Required TC04 cleanup correction:
+- Preserve the exact seven target route probes, their order-independent denial assertions, missing Authorization configuration, payload markers, safe IDs, protected-data checks, and pre/post snapshot defect evidence.
+- Keep every target probe free of Authorization.
+- Add controlled cleanup configuration to external JSON for only the two possible POST sentinels:
+  - imported product identified by exact external marker field/value and removed through an external cleanup method/path template;
+  - coupon identified by exact external marker field/value and removed through an external cleanup method/path template.
+- Cleanup discovery must use successful post-probe snapshots and exact marker-field equality, not substring matching across arbitrary records.
+- Extract only strict externally configured identifier fields from matching controlled records.
+- Perform cleanup with the separately acquired seeded-admin snapshot session.
+- Run cleanup in a finally block after probes so it is attempted even when an assertion/helper unexpectedly throws.
+- Never delete an uncontrolled record.
+- Never modify SQLite directly.
+- Record the original pre-cleanup mutation evidence before cleanup; cleanup must not erase or weaken the defect oracle.
+- Capture a final post-cleanup snapshot and assert that controlled markers are absent and controlled state is restored to the pre-probe snapshot where snapshots are available.
+- If cleanup or final snapshot acquisition fails, record a failure with diagnostics.
+- If no controlled marker exists, cleanup performs zero mutations and final verification still runs.
+- Keep users/orders safe-ID probes non-mutating; do not invent cleanup mutations for records that were never controlled.
+
+External-data requirements:
+- Preserve exactly these keys and IDs:
+  - admin_ui_no_token -> FR12-TC01
+  - admin_ui_ordinary_user -> FR12-TC02
+  - admin_ui_admin -> FR12-TC03
+  - admin_route_inventory_missing_token -> FR12-TC04
+- Keep paths, credentials, labels, counts, methods, route inventory, payloads, safe IDs, marker fields, identifier fields, cleanup methods/paths, and expected cleanup outcomes in JSON.
+- Keep strict TypeScript interfaces in data-loader.
+- Do not add inline test-case arrays or cleanup route objects to the spec.
+
+Preservation:
+- Keep exactly four FR12 declarations.
+- Preserve all accepted 0019 assertions and helpers unless this correction strictly requires adjustment.
+- Preserve FR01 and FR07 byte-for-byte.
+- Do not modify SUT, audit, evidence, database, Playwright configuration, documentation, or package files.
+- Do not add waits, retries, skips, fixmes, storage injection, mocks, React-internal access, duplicate login actions, or direct database access.
+- Remain compatible with strict TypeScript and Playwright 1.62.1.
+
+Static validation only:
+- Parse and validate FR12 JSON, four unique sequential IDs, seven unique target routes, two unique controlled cleanup definitions, exact marker fields, and safe identifiers.
+- Run npm run typecheck.
+- Use Playwright --list for FR12-TC01 through FR12-TC04 without executing tests.
+- Confirm exactly four FR12 declarations.
+- Confirm TC02 and TC03 hard visible prerequisites occur before exactly one loginOnce call.
+- Confirm TC01 through TC03 use test.slow and guarded post-count visibility observations.
+- Confirm all seven target probes still omit Authorization.
+- Confirm cleanup uses exact controlled marker fields, authenticated API cleanup, and a finally block.
+- Confirm original post-probe mutation evidence occurs before cleanup and final restoration evidence occurs after cleanup.
+- Confirm admin-access.page.ts is byte-identical to the 0019 artifact unless explicitly justified.
+- Confirm FR01 and FR07 remain byte-identical to HEAD.
+- Scan forbidden patterns and run whitespace checks.
+- Confirm no prohibited file changed beyond pre-existing audit changes.
+
+After editing, report:
+- exact automation files changed relative to the 0019 rejected artifact;
+- hard TC02/TC03 login prerequisite sequence;
+- guarded evidence-budget correction;
+- TC04 controlled cleanup and finally behavior;
+- retained TC01-TC04 oracles;
+- static validation performed;
+- confirmation that no browser/API test ran and no prohibited file was modified.
+```
+
+## Exact AI output
+
+```text
+Corrected the rejected FR-12 increment 1 proposal for exactly FR12-TC01–FR12-TC04.
+
+### Changed relative to 0019
+
+- [fr12-access-control.json](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/data/fr12-access-control.json:96)
+- [fr12-access-control.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:60)
+- [fr12-api.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/fr12-api.ts:165)
+- [data-loader.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/data-loader.ts:737)
+
+[admin-access.page.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/admin-access.page.ts) remains byte-identical to the rejected artifact; no correction was necessary.
+
+### Corrections
+
+- TC01–TC03 now use `test.slow()`.
+- TC02/TC03 hard prerequisite sequence is: form count → form visible → email count → email visible → password count → password visible → submit count → submit visible → exactly one `loginOnce`.
+- Soft count/visibility evidence now uses a web-first count followed by an immediate count read; visibility is checked only when the expected positive count is present.
+- TC04 retains all seven no-Authorization probes and records original post-probe mutation evidence before cleanup.
+- Exact `name` and `code` marker equality discovers controlled product/coupon records. Only strict positive-integer configured `id` fields are deleted through the authenticated seeded-admin session.
+- Cleanup runs in nested `finally` teardown. Zero markers cause zero cleanup mutations, while final snapshot and restoration verification still run.
+- Cleanup/discovery/final-snapshot failures produce diagnostic soft failures.
+
+All original TC01–TC04 login-boundary, authorization, dialog, protected-content, response, no-mutation, snapshot, marker, and identity oracles remain.
+
+### Static validation
+
+Passed:
+
+- FR12 JSON parsing, four sequential unique IDs, seven unique routes, safe IDs, two cleanup definitions, and exact marker fields
+- `npm run typecheck`
+- FR12-only Playwright `--list`: four declarations across Chromium, Firefox, and WebKit
+- Login prerequisite ordering and single submissions
+- Guarded visibility and `test.slow()` checks
+- No Authorization in all target probes
+- Exact-marker authenticated cleanup, `finally` teardown, and evidence ordering
+- FR01/FR07 byte equality with `HEAD`
+- Page Object equality with 0019
+- Forbidden-pattern, trailing-whitespace, and `git diff --check` scans
+- Required SUT, documentation, configuration, database, and audit paths preserved
+
+No browser or API test was executed. The pre-existing audit changes were untouched, and no prohibited file was modified.
+```
+
+## Human review/action
+
+Chấp nhận output 0020. Human action: Tôi đã review toàn bộ correction diff FR-12 increment 1 và xác nhận TC02/TC03 hard-require đúng external login form/control counts cùng visibility trước đúng một loginOnce activation; không có retry hoặc compensating submit. TC01 đến TC03 dùng test.slow và guarded post-count visibility để bảo toàn evidence budget. TC04 giữ nguyên đủ bảy missing-token probes không truyền Authorization, ghi nhận post-probe snapshot/marker defect evidence trước cleanup, rồi chỉ tìm product/coupon sentinel bằng exact marker-field equality và strict positive-integer ID. Controlled cleanup dùng seeded-admin API session trong nested finally; zero marker không tạo cleanup mutation, còn final snapshots kiểm tra marker vắng mặt và state trở lại pre-probe baseline. Admin Page Object byte-identical với rejected artifact 0019; FR01/FR07 không thay đổi. External JSON có đúng bốn sequential IDs, bảy unique target routes và hai controlled cleanup definitions. Typecheck thành công, Playwright chỉ liệt kê đúng bốn TC01-TC04 trên Chromium, declaration count là 4, forbidden-pattern, whitespace và diff checks đều sạch. Chưa chạy Playwright browser/API test và không sửa SUT, database, evidence, configuration, documentation hoặc package files.

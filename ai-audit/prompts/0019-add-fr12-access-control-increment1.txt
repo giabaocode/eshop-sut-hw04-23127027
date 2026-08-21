@@ -1,0 +1,135 @@
+Implement the first reviewed FR-12 Playwright automation increment covering exactly FR12-TC01 through FR12-TC04.
+
+Read and preserve:
+- README.md
+- api_specification.md
+- docs/hw04-traceability-test-matrix.md
+- playwright.config.ts
+- frontend-admin/vite.config.js
+- frontend-admin/src/App.jsx
+- frontend-web/src/App.jsx
+- frontend-web/src/pages/Login.jsx
+- frontend-web/src/context/AuthContext.jsx
+- backend/database.js
+- backend/server.js
+- tests/data/fr01-registration.json
+- tests/data/fr07-cart.json
+- tests/features/fr01-registration.spec.ts
+- tests/features/fr07-cart.spec.ts
+- tests/pages/registration.page.ts
+- tests/support/data-loader.ts
+
+Implement exactly these external JSON records and generated test IDs:
+- admin_ui_no_token -> FR12-TC01
+- admin_ui_ordinary_user -> FR12-TC02
+- admin_ui_admin -> FR12-TC03
+- admin_route_inventory_missing_token -> FR12-TC04
+
+Create or modify only:
+- tests/data/fr12-access-control.json
+- tests/features/fr12-access-control.spec.ts
+- tests/pages/admin-access.page.ts
+- tests/support/fr12-api.ts
+- tests/support/data-loader.ts
+
+Do not modify:
+- SUT source;
+- FR01 or FR07 data, specs, Page Objects, or helpers;
+- audit files;
+- evidence;
+- database;
+- Playwright configuration;
+- documentation;
+- package files.
+
+General requirements:
+- Add exactly four FR12 test declarations.
+- Keep all paths, credentials, labels, expected counts, route inventory, HTTP methods, safe IDs, payloads, mutation markers, and expected authorization partitions in external JSON.
+- Use PW_ADMIN_URL with fallback http://localhost:5174 for the admin origin; keep the admin entry path `/` in external JSON.
+- Use PW_API_URL with fallback http://localhost:3000 for API requests.
+- Do not inject localStorage or sessionStorage.
+- Do not access React internals, mock the SUT, retry target actions, compensate for ignored actions, use arbitrary waits, or alter the runtime database directly.
+- Prefer accessible locators and Playwright web-first assertions.
+- Do not invent exact denial wording, exact denial status codes, or exact response bodies where the matrix says EVIDENCE MISSING.
+- Distinguish authentication from authorization.
+- Keep independent observations reachable with soft assertions and guarded reads where appropriate.
+- Remain strict TypeScript-compatible and Playwright 1.62.1-compatible.
+
+FR12-TC01:
+- Start with a natural fresh browser context and visit the external admin entry path directly.
+- Do not read or write browser storage.
+- Assert that the visible Admin login form is available using externally defined identity and controls.
+- Assert that protected admin identity/content is not visible.
+- Observe requests during the direct visit and assert that no admin mutation request is issued.
+- Treat this as authentication coverage.
+
+FR12-TC02:
+- Use the externally defined seeded ordinary-user credentials.
+- Visit the Admin login UI and submit the visible login form exactly once.
+- Do not obtain or inject a token outside the UI.
+- Require deterministic evidence that the ordinary user is denied Admin UI access without inventing denial wording. An accessible browser dialog, remaining on the login form, and absence of protected admin identity are acceptable independent observations.
+- Handle any browser dialog deterministically.
+- Assert no admin mutation request is issued.
+- Treat this as authorization coverage: the credentials are valid, but the role is not admin.
+
+FR12-TC03:
+- Use the externally defined seeded admin credentials.
+- Visit the Admin login UI and submit the visible login form exactly once.
+- Do not obtain or inject a token outside the UI.
+- Assert that the protected Admin identity and externally defined Dashboard identity become visible.
+- Assert the login form is no longer visible.
+- Keep the success identity observations independent.
+- Perform no admin mutation.
+
+FR12-TC04:
+- Exercise every registered and documented `/api/admin/*` route from external JSON with no Authorization header:
+  - POST /api/admin/import-products
+  - POST /api/admin/coupons
+  - DELETE /api/admin/coupons/:id
+  - GET /api/admin/users
+  - DELETE /api/admin/users/:id
+  - GET /api/admin/orders
+  - PUT /api/admin/orders/:id/status
+- Use non-destructive denial probes.
+- Mutation-shaped POST probes must use valid-looking externally defined payloads with unique deterministic markers so reaching mutation code would be externally detectable.
+- DELETE and PUT probes must use externally defined non-existing safe IDs.
+- Do not assert exact 401/403 values because the matrix marks exact status as EVIDENCE MISSING. Assert a non-success response and that protected collections/data are not returned.
+- Establish controlled pre/post state snapshots through supported read APIs using an independently acquired seeded-admin API session only for snapshot setup and verification. The target seven route probes themselves must contain no Authorization header.
+- Snapshot representative users, orders, products, and coupons before the probes and compare them after all probes.
+- Guard snapshot-dependent assertions so a snapshot acquisition failure is recorded without hiding independent denial results for the seven routes.
+- Assert each route result independently.
+- Assert that no controlled mutation marker appears and no protected record changes.
+- Do not mutate or restore the SQLite file directly.
+- Treat this as authentication coverage.
+
+Page Object and helper requirements:
+- AdminAccessPage must scope the login form, email control, password control, submit button, protected Admin identity, and Dashboard identity.
+- The login helper must perform exactly one visible submit activation.
+- Request-observation helpers must classify mutation requests by external method/path data.
+- FR12 API helpers must build requests from external route records, omit Authorization for target missing-token probes, parse responses defensively, and compare normalized snapshots.
+- Do not place inline test-case arrays or route inventories in the spec.
+
+Static validation only:
+- Parse and validate the FR12 JSON.
+- Confirm exactly four unique sequential IDs FR12-TC01 through FR12-TC04.
+- Run npm run typecheck.
+- Use Playwright --list to list only FR12-TC01 through FR12-TC04 without executing them.
+- Confirm exactly four FR12 declarations.
+- Confirm FR01 and FR07 tracked files remain byte-identical to HEAD.
+- Confirm TC02 and TC03 each contain exactly one visible login submit activation.
+- Confirm all seven TC04 target probes omit Authorization.
+- Confirm TC04 contains all seven required admin routes exactly once.
+- Scan for waitForTimeout, test.skip, test.fixme, retries, storage injection, mocks, React-internal access, duplicate-submit helpers, and direct SQLite access.
+- Run whitespace checks.
+- Confirm no prohibited file changed.
+
+After editing, report:
+- exact files created or changed;
+- four JSON keys and IDs;
+- TC01 authentication oracles;
+- TC02 ordinary-user authorization oracles;
+- TC03 positive admin authorization oracles;
+- TC04 seven-route denial and no-mutation design;
+- evidence guards;
+- static validation performed;
+- confirmation that no browser/API test ran and no prohibited file changed.

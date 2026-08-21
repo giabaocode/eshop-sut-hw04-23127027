@@ -1,0 +1,358 @@
+{
+  "admin_ui_no_token": {
+    "id": "FR12-TC01",
+    "title": "fresh unauthenticated visitor sees only the Admin login boundary",
+    "adminEntryPath": "/",
+    "initialState": {
+      "naturalFreshBrowserContext": true,
+      "browserStorageAccess": "none"
+    },
+    "labels": {
+      "loginHeading": "Admin Login",
+      "emailControl": "Email",
+      "passwordControl": "Password",
+      "submitButton": "Login",
+      "protectedAdminIdentity": "EShop Admin",
+      "dashboardIdentity": "Dashboard"
+    },
+    "accessPartition": {
+      "authentication": "missing_token",
+      "authorization": "not_evaluated"
+    },
+    "requestObservation": {
+      "login": {
+        "method": "POST",
+        "path": "/api/login"
+      },
+      "mutations": {
+        "methods": ["POST", "PUT", "DELETE"],
+        "pathTemplates": [
+          "/api/admin/*",
+          "/api/products",
+          "/api/products/:id",
+          "/api/categories",
+          "/api/categories/:id"
+        ]
+      }
+    },
+    "expected": {
+      "counts": {
+        "loginForms": 1,
+        "loginHeadings": 1,
+        "emailControls": 1,
+        "passwordControls": 1,
+        "submitButtons": 1,
+        "protectedAdminIdentities": 0,
+        "dashboardIdentities": 0,
+        "loginSubmitActivations": 0,
+        "loginResponses": 0,
+        "successfulLoginResponses": 0,
+        "dialogs": 0,
+        "adminMutationRequests": 0
+      }
+    }
+  },
+  "admin_ui_ordinary_user": {
+    "id": "FR12-TC02",
+    "title": "valid ordinary-user credentials are denied Admin UI authorization",
+    "adminEntryPath": "/",
+    "credentials": {
+      "email": "test@eshop.com",
+      "password": "Test1234!"
+    },
+    "labels": {
+      "loginHeading": "Admin Login",
+      "emailControl": "Email",
+      "passwordControl": "Password",
+      "submitButton": "Login",
+      "protectedAdminIdentity": "EShop Admin",
+      "dashboardIdentity": "Dashboard"
+    },
+    "accessPartition": {
+      "authentication": "valid_credentials",
+      "authorization": "ordinary_user_denied"
+    },
+    "requestObservation": {
+      "login": {
+        "method": "POST",
+        "path": "/api/login"
+      },
+      "mutations": {
+        "methods": ["POST", "PUT", "DELETE"],
+        "pathTemplates": [
+          "/api/admin/*",
+          "/api/products",
+          "/api/products/:id",
+          "/api/categories",
+          "/api/categories/:id"
+        ]
+      }
+    },
+    "dialog": {
+      "allowedTypes": ["alert"],
+      "requireNonEmptyMessage": true,
+      "action": "dismiss"
+    },
+    "loginPrerequisites": {
+      "counts": {
+        "loginForms": 1,
+        "emailControls": 1,
+        "passwordControls": 1,
+        "submitButtons": 1
+      }
+    },
+    "expected": {
+      "counts": {
+        "loginForms": 1,
+        "loginHeadings": 1,
+        "emailControls": 1,
+        "passwordControls": 1,
+        "submitButtons": 1,
+        "protectedAdminIdentities": 0,
+        "dashboardIdentities": 0,
+        "loginSubmitActivations": 1,
+        "loginResponses": 1,
+        "successfulLoginResponses": 1,
+        "dialogs": 1,
+        "adminMutationRequests": 0
+      }
+    }
+  },
+  "admin_ui_admin": {
+    "id": "FR12-TC03",
+    "title": "valid seeded admin reaches the protected Dashboard",
+    "adminEntryPath": "/",
+    "credentials": {
+      "email": "admin@eshop.com",
+      "password": "Admin123!"
+    },
+    "labels": {
+      "loginHeading": "Admin Login",
+      "emailControl": "Email",
+      "passwordControl": "Password",
+      "submitButton": "Login",
+      "protectedAdminIdentity": "EShop Admin",
+      "dashboardIdentity": "Dashboard"
+    },
+    "accessPartition": {
+      "authentication": "valid_credentials",
+      "authorization": "admin_allowed"
+    },
+    "requestObservation": {
+      "login": {
+        "method": "POST",
+        "path": "/api/login"
+      },
+      "mutations": {
+        "methods": ["POST", "PUT", "DELETE"],
+        "pathTemplates": [
+          "/api/admin/*",
+          "/api/products",
+          "/api/products/:id",
+          "/api/categories",
+          "/api/categories/:id"
+        ]
+      }
+    },
+    "loginPrerequisites": {
+      "counts": {
+        "loginForms": 1,
+        "emailControls": 1,
+        "passwordControls": 1,
+        "submitButtons": 1
+      }
+    },
+    "expected": {
+      "counts": {
+        "loginForms": 0,
+        "loginHeadings": 0,
+        "emailControls": 0,
+        "passwordControls": 0,
+        "submitButtons": 0,
+        "protectedAdminIdentities": 1,
+        "dashboardIdentities": 1,
+        "loginSubmitActivations": 1,
+        "loginResponses": 1,
+        "successfulLoginResponses": 1,
+        "dialogs": 0,
+        "adminMutationRequests": 0
+      }
+    }
+  },
+  "admin_route_inventory_missing_token": {
+    "id": "FR12-TC04",
+    "title": "every documented Admin route rejects a missing token without mutation",
+    "accessPartition": {
+      "authentication": "missing_token",
+      "authorization": "not_evaluated"
+    },
+    "apiSession": {
+      "login": {
+        "method": "POST",
+        "path": "/api/login",
+        "credentials": {
+          "email": "admin@eshop.com",
+          "password": "Admin123!"
+        },
+        "tokenProperty": "token"
+      },
+      "authorizationHeader": "Authorization",
+      "bearerScheme": "Bearer"
+    },
+    "snapshots": [
+      {
+        "name": "users",
+        "method": "GET",
+        "targetRouteKey": "admin_users_get"
+      },
+      {
+        "name": "orders",
+        "method": "GET",
+        "targetRouteKey": "admin_orders_get"
+      },
+      {
+        "name": "products",
+        "method": "GET",
+        "path": "/api/products"
+      },
+      {
+        "name": "coupons",
+        "method": "GET",
+        "path": "/api/coupons"
+      }
+    ],
+    "routes": [
+      {
+        "key": "admin_import_products_post",
+        "method": "POST",
+        "path": "/api/admin/import-products",
+        "payload": {
+          "products": [
+            {
+              "name": "FR12_TC04_IMPORT_NO_TOKEN_23127027",
+              "price": 123456,
+              "description": "FR12 missing-token mutation sentinel",
+              "imageUrl": "https://example.test/fr12-tc04-product.png",
+              "category_id": 1
+            }
+          ]
+        },
+        "mutationMarker": "FR12_TC04_IMPORT_NO_TOKEN_23127027",
+        "authorizationHeader": null,
+        "protectedResource": "products"
+      },
+      {
+        "key": "admin_coupons_post",
+        "method": "POST",
+        "path": "/api/admin/coupons",
+        "payload": {
+          "code": "FR12TC04NOAUTH23127027",
+          "type": "fixed",
+          "discount_value": 12345,
+          "min_order_amount": 0,
+          "expired_at": "2099-12-31",
+          "max_uses_per_user": 1
+        },
+        "mutationMarker": "FR12TC04NOAUTH23127027",
+        "authorizationHeader": null,
+        "protectedResource": "coupons"
+      },
+      {
+        "key": "admin_coupons_delete",
+        "method": "DELETE",
+        "path": "/api/admin/coupons/:id",
+        "pathParameters": {
+          "id": "2147483601"
+        },
+        "authorizationHeader": null,
+        "protectedResource": "coupons"
+      },
+      {
+        "key": "admin_users_get",
+        "method": "GET",
+        "path": "/api/admin/users",
+        "authorizationHeader": null,
+        "protectedResource": "users"
+      },
+      {
+        "key": "admin_users_delete",
+        "method": "DELETE",
+        "path": "/api/admin/users/:id",
+        "pathParameters": {
+          "id": "2147483602"
+        },
+        "authorizationHeader": null,
+        "protectedResource": "users"
+      },
+      {
+        "key": "admin_orders_get",
+        "method": "GET",
+        "path": "/api/admin/orders",
+        "authorizationHeader": null,
+        "protectedResource": "orders"
+      },
+      {
+        "key": "admin_orders_status_put",
+        "method": "PUT",
+        "path": "/api/admin/orders/:id/status",
+        "pathParameters": {
+          "id": "2147483603"
+        },
+        "payload": {
+          "status": "confirmed"
+        },
+        "authorizationHeader": null,
+        "protectedResource": "orders"
+      }
+    ],
+    "controlledCleanup": [
+      {
+        "key": "imported_product",
+        "snapshotResource": "products",
+        "markerField": "name",
+        "markerValue": "FR12_TC04_IMPORT_NO_TOKEN_23127027",
+        "identifierField": "id",
+        "identifierType": "positive_integer",
+        "method": "DELETE",
+        "pathTemplate": "/api/products/:id",
+        "expected": {
+          "responseSuccessful": true
+        }
+      },
+      {
+        "key": "coupon",
+        "snapshotResource": "coupons",
+        "markerField": "code",
+        "markerValue": "FR12TC04NOAUTH23127027",
+        "identifierField": "id",
+        "identifierType": "positive_integer",
+        "method": "DELETE",
+        "pathTemplate": "/api/admin/coupons/:id",
+        "expected": {
+          "responseSuccessful": true
+        }
+      }
+    ],
+    "expected": {
+      "targetRouteCount": 7,
+      "snapshotResourceCount": 4,
+      "mutationMarkerCount": 2,
+      "controlledCleanupCount": 2,
+      "snapshotSessionLoginSuccessful": true,
+      "snapshotAcquisitionSuccessful": true,
+      "finalSnapshotAcquisitionSuccessful": true,
+      "probeTransportSuccessful": true,
+      "completedProbeResponses": 7,
+      "successfulProbeResponses": 0,
+      "protectedDataResponses": 0,
+      "responseSuccessful": false,
+      "authorizationHeaderPresent": false,
+      "protectedDataReturned": false,
+      "changedSnapshotCount": 0,
+      "mutationMarkerMatches": 0,
+      "cleanupDiscoverySuccessful": true,
+      "controlledMarkerMatchesAfterCleanup": 0,
+      "finalChangedSnapshotCount": 0
+    }
+  }
+}

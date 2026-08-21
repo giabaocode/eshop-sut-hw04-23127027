@@ -696,7 +696,6 @@ export interface AdminMutationRequestClassifier {
 
 interface AdminUiExpectedCounts {
   loginForms: number;
-  loginHeadings: number;
   emailControls: number;
   passwordControls: number;
   submitButtons: number;
@@ -734,21 +733,8 @@ interface AdminUiNoTokenCase extends AdminUiCaseBase {
   };
 }
 
-interface AdminLoginPrerequisiteCounts {
-  loginForms: number;
-  emailControls: number;
-  passwordControls: number;
-  submitButtons: number;
-}
-
-interface AdminUiCredentialCaseBase extends AdminUiCaseBase {
+interface AdminUiOrdinaryUserCase extends AdminUiCaseBase {
   credentials: AdminCredentials;
-  loginPrerequisites: {
-    counts: AdminLoginPrerequisiteCounts;
-  };
-}
-
-interface AdminUiOrdinaryUserCase extends AdminUiCredentialCaseBase {
   dialog: {
     allowedTypes: string[];
     requireNonEmptyMessage: boolean;
@@ -756,7 +742,9 @@ interface AdminUiOrdinaryUserCase extends AdminUiCredentialCaseBase {
   };
 }
 
-type AdminUiAdminCase = AdminUiCredentialCaseBase;
+interface AdminUiAdminCase extends AdminUiCaseBase {
+  credentials: AdminCredentials;
+}
 
 export type Fr12SnapshotResourceName =
   | 'users'
@@ -793,34 +781,6 @@ export interface Fr12AdminApiSessionConfig {
   bearerScheme: string;
 }
 
-interface Fr12ControlledCleanupBase {
-  markerValue: string;
-  identifierField: 'id';
-  identifierType: 'positive_integer';
-  method: 'DELETE';
-  expected: {
-    responseSuccessful: boolean;
-  };
-}
-
-interface Fr12ProductCleanup extends Fr12ControlledCleanupBase {
-  key: 'imported_product';
-  snapshotResource: 'products';
-  markerField: 'name';
-  pathTemplate: '/api/products/:id';
-}
-
-interface Fr12CouponCleanup extends Fr12ControlledCleanupBase {
-  key: 'coupon';
-  snapshotResource: 'coupons';
-  markerField: 'code';
-  pathTemplate: '/api/admin/coupons/:id';
-}
-
-export type Fr12ControlledCleanup =
-  | Fr12ProductCleanup
-  | Fr12CouponCleanup;
-
 interface AdminRouteInventoryMissingTokenCase {
   id: string;
   title: string;
@@ -841,15 +801,12 @@ interface AdminRouteInventoryMissingTokenCase {
     Fr12AdminRouteRecord,
     Fr12AdminRouteRecord,
   ];
-  controlledCleanup: [Fr12ProductCleanup, Fr12CouponCleanup];
   expected: {
     targetRouteCount: number;
     snapshotResourceCount: number;
     mutationMarkerCount: number;
-    controlledCleanupCount: number;
     snapshotSessionLoginSuccessful: boolean;
     snapshotAcquisitionSuccessful: boolean;
-    finalSnapshotAcquisitionSuccessful: boolean;
     probeTransportSuccessful: boolean;
     completedProbeResponses: number;
     successfulProbeResponses: number;
@@ -859,9 +816,6 @@ interface AdminRouteInventoryMissingTokenCase {
     protectedDataReturned: boolean;
     changedSnapshotCount: number;
     mutationMarkerMatches: number;
-    cleanupDiscoverySuccessful: boolean;
-    controlledMarkerMatchesAfterCleanup: number;
-    finalChangedSnapshotCount: number;
   };
 }
 
