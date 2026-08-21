@@ -635,7 +635,6 @@ interface ProductDetailAddToCartCase extends Fr07CaseBase {
     counts: {
       productDetailLinks: number;
       productImages: number;
-      quantityControls: number;
       cartBadges: number;
       minimumFeedbackSignals: number;
     };

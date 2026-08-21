@@ -1090,3 +1090,456 @@ No browser or API tests were run.
 ## Human review/action
 
 Chấp nhận output 0015. Human action: Tôi đã review correction và xác nhận FR07-TC05 đến FR07-TC08 không còn dùng exact label “Tổng cộng” hoặc “Tổng tạm tính” để định vị cart total. Summary amount được tìm trong semantic main của cart bằng currency-only regex được neo toàn chuỗi và loại mọi table descendant, nên line amount không thể thỏa locator; exact-label oracle vẫn dành riêng cho FR07-TC10. TC05 giữ đúng một visible Product Detail Add activation cùng các hard fixture prerequisites, không retry hoặc bù hành vi. TC06 giữ red-action và dialog-before-delete oracle; TC07 giữ cancel/no-mutation oracle; TC08 giữ confirmed-delete, total, remaining-row và badge oracle. FR07-TC01 đến FR07-TC04 không bị làm yếu. External JSON có đúng bốn key FR07-TC05 đến FR07-TC08 và không chứa total-label dependency. Typecheck thành công, Playwright chỉ liệt kê đúng 8 FR07 test, forbidden-pattern và whitespace scans đều sạch. Chưa chạy browser/API test và không sửa SUT, FR-01, database, evidence, configuration, documentation hoặc package files.
+
+# Interaction 0016
+
+## AI tool
+
+OpenAI Codex CLI 0.148.0 (model: gpt-5.6-sol)
+
+## ISO date/time
+
+2026-08-20T12:26:45Z
+
+## Exact prompt
+
+```text
+Complete the reviewed FR-07 Playwright automation with increment 3 covering exactly FR07-TC09 through FR07-TC12.
+
+Read and preserve:
+- docs/hw04-traceability-test-matrix.md
+- README.md
+- playwright.config.ts
+- frontend-web/src/App.jsx
+- frontend-web/src/context/CartContext.jsx
+- frontend-web/src/pages/Home.jsx
+- frontend-web/src/pages/ProductDetail.jsx
+- frontend-web/src/pages/Cart.jsx
+- tests/data/fr07-cart.json
+- tests/features/fr07-cart.spec.ts
+- tests/pages/cart.page.ts
+- tests/pages/catalog.page.ts
+- tests/pages/product-detail.page.ts
+- tests/support/data-loader.ts
+
+Implement exactly these external JSON records and generated test IDs:
+- cart_navigation -> FR07-TC09
+- cart_total_formatting -> FR07-TC10
+- empty_cart -> FR07-TC11
+- product_detail_add_to_cart -> FR07-TC12
+
+Modify only these automation files when necessary:
+- tests/data/fr07-cart.json
+- tests/features/fr07-cart.spec.ts
+- tests/pages/cart.page.ts
+- tests/pages/catalog.page.ts
+- tests/pages/product-detail.page.ts
+- tests/support/data-loader.ts
+
+General constraints:
+- The final FR07 spec must contain exactly twelve FR07 test declarations.
+- Preserve FR07-TC01 through FR07-TC08 without weakening or removing their assertions.
+- Do not modify existing TC01-TC08 test bodies unless a strictly backward-compatible shared-helper adjustment is unavoidable.
+- Keep IDs, titles, paths, product fixtures, labels, expected counts, currency rules, initial states, and expected state deltas in external JSON.
+- Use only the visible UI for UI fixture construction and target interactions.
+- Do not inject localStorage/sessionStorage, access React internals, mock the SUT, compensate for failed clicks, retry target actions, or add arbitrary waits.
+- Prefer accessible locators and Playwright web-first assertions.
+- Page Object value reads may occur only after suitable web-first existence/visibility/count prerequisites.
+- Keep independent requirement observations reachable with soft assertions or guarded reads where one missing feature would otherwise block unrelated evidence.
+- Do not invent exact wording, exact URLs, CSS classes, colors, separator characters, or feedback text where the matrix says EVIDENCE MISSING.
+- Do not modify SUT source, FR-01 automation, audit files, evidence, database, configuration, documentation, or package files.
+
+FR07-TC09:
+- Build the cart_navigation fixture deterministically through the visible web UI.
+- Verify the cart page is represented as a child page by a semantic breadcrumb.
+- Verify the cart navbar entry exposes a programmatic current-page state, such as aria-current; do not infer current state from an unspecified CSS class.
+- Independently assert the required visible “Tiếp tục mua sắm” label from external JSON.
+- Because a label mismatch must not prevent the navigation oracle, identify the cart page’s semantic home-destination shopping link separately and activate it exactly once.
+- Verify the resulting page is the Home page by externally defined destination identity, not by inventing an exact URL.
+- Keep breadcrumb, current-state, required-label, and destination observations independently reachable.
+
+FR07-TC10:
+- Build cart_total_formatting deterministically through the visible UI with a displayed amount that requires a thousands separator.
+- This is the only increment-3 case that owns the exact total-label oracle.
+- Assert the summary label is exactly “Tổng cộng” and that “Tổng tạm tính” is not accepted.
+- Assert the displayed total contains ₫, contains a thousands separator without inventing its locale-specific character, and numerically equals the sum of displayed line amounts.
+- Keep the exact-label assertions and independent currency/arithmetic assertions reachable.
+- Do not change the label-independent cart-summary helper used by FR07-TC05 through FR07-TC08; add a separate exact-label helper if needed.
+
+FR07-TC11:
+- Use the natural fresh-context empty cart; do not delete or mutate an uncontrolled user cart.
+- Assert a clear non-empty empty-cart message using semantic structure and requirement-derived meaning without inventing exact wording.
+- Assert a non-empty icon or illustration through semantic image evidence such as an img with meaningful alt, an accessible role=img, or an equivalently accessible illustration.
+- Assert that no populated cart product row is shown.
+- Keep message, illustration, and no-row assertions independently reachable.
+
+FR07-TC12:
+- Start in a fresh context with the target product absent and the externally defined known badge count.
+- Navigate to the target Product Detail through the visible web UI.
+- Verify every displayed target product image has a non-empty descriptive alt, including product identity where appropriate.
+- Locate the visible cart badge semantically in or associated with the Giỏ hàng navigation entry.
+- Missing badge evidence must fail its own assertion but must not block the independent image-alt, single Add activation, and feedback observations.
+- Activate the visible Product Detail Add control exactly once. Never retry or compensate if the SUT ignores that activation.
+- Assert deterministic visible add-to-cart feedback without inventing exact feedback wording; a visible semantic notification or a visible control-state/text transition is acceptable.
+- If a badge is available, verify its numeric value changes from the external initial value by exactly one. Guard numeric reads so a missing badge remains a recorded failure rather than causing unrelated evidence to be skipped.
+- Do not claim cart mutation unless it is externally observed.
+
+Page Object expectations:
+- Reuse CartPage, CatalogPage, and ProductDetailPage.
+- Add robust helpers only where needed for semantic breadcrumb/current navigation state, the exact TC10 total label, empty-state message/illustration, Home destination identity, product image alt, visual feedback, and cart badge lookup/parsing.
+- Keep exact-label and label-independent total helpers separate.
+- Keep helpers generic and strict TypeScript-compatible.
+- Remain compatible with Playwright 1.62.1.
+
+Static validation only:
+- Parse and validate the external JSON.
+- Run npm run typecheck.
+- List the four new tests with Playwright --list without executing them.
+- Confirm exactly twelve FR07 declarations.
+- Confirm FR07-TC01 through FR07-TC08 remain present and are not weakened.
+- Confirm TC12 contains exactly one visible Add activation.
+- Scan for forbidden patterns including waitForTimeout, test.skip, test.fixme, retries, duplicate-click helpers, storage injection, and React-internal access.
+- Run whitespace checks on authored automation files.
+- Confirm no SUT, FR-01, audit, evidence, database, configuration, documentation, or package file changed.
+
+After editing, report:
+- exact automation files changed;
+- the four added JSON keys and generated IDs;
+- the TC09 breadcrumb/current-state/required-label/navigation oracles;
+- the TC10 exact-label/currency/arithmetic oracles;
+- the TC11 message/illustration/no-row oracles;
+- the TC12 image-alt/single-Add/feedback/badge-delta oracles and evidence guards;
+- static validation performed;
+- confirmation that no browser/API tests ran and no prohibited file was modified.
+```
+
+## Exact AI output
+
+```text
+Implemented FR-07 increment 3 with exactly FR07-TC09 through FR07-TC12.
+
+### Files changed
+
+- [fr07-cart.json](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/data/fr07-cart.json)
+- [fr07-cart.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts)
+- [cart.page.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/cart.page.ts)
+- [catalog.page.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/catalog.page.ts)
+- [product-detail.page.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/product-detail.page.ts)
+- [data-loader.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/data-loader.ts)
+
+### Added records and generated IDs
+
+- `cart_navigation` → `FR07-TC09`
+- `cart_total_formatting` → `FR07-TC10`
+- `empty_cart` → `FR07-TC11`
+- `product_detail_add_to_cart` → `FR07-TC12`
+
+### Oracles
+
+- TC09: named semantic breadcrumb containing the current cart page; navbar `aria-current="page"`; independent exact `Tiếp tục mua sắm` assertion; separate meaning-based shopping link activated once; Home identified by its external heading rather than URL.
+- TC10: exact `Tổng cộng` label and explicit rejection of `Tổng tạm tính`; `₫`; locale-agnostic thousands-separator detection; displayed total equals the external expected value and sum of displayed line amounts.
+- TC11: natural fresh-context cart; meaningful semantic empty message; accessible named illustration; zero populated product rows.
+- TC12: every visible target image has non-empty alt containing product identity; guarded semantic badge reads; exactly one visible Product Detail Add activation; semantic notification or control transition feedback; available badge must equal external initial count plus one. Missing badge evidence remains a soft failure and does not block other observations.
+
+### Static validation
+
+- Parsed and validated exactly 12 unique JSON records and sequential IDs `FR07-TC01`–`FR07-TC12`.
+- `npm run typecheck` passed.
+- Playwright `--list` returned exactly the four new Chromium tests.
+- Confirmed exactly 12 FR-07 test declarations.
+- TC01–TC08 bodies are unchanged; the diff contains additions only.
+- Confirmed TC12 has one `addToCartOnce` call, whose helper contains one click.
+- Forbidden-pattern scan found no matches.
+- `git diff --check` passed.
+- Tracked changes are limited to the six allowed automation files.
+
+No browser or API tests were executed. No SUT, FR-01, audit, evidence, database, configuration, documentation, or package file was modified. The three pre-existing untracked `ai-audit` files were left untouched.
+```
+
+## Human review/action
+
+Từ chối output 0016. Human action: Tôi đã review toàn bộ diff FR-07 increment 3 và phát hiện TC12 chưa sử dụng targetProduct.quantity nên chưa chứng minh Add đúng một đơn vị. visualAddFeedback có thể chấp nhận alert hoặc status tồn tại trước thao tác nên thiếu before/after feedback delta. semanticCartBadge tìm số trong toàn bộ parent navigation nên chưa chứng minh số đó thực sự thuộc hoặc được liên kết với Giỏ hàng. Ngoài ra TC09 và TC12 lặp soft count/visibility trên locator bị thiếu, có nguy cơ hết test budget trước khi hoàn thành các oracle độc lập. Cần lưu proposal hiện tại làm rejected artifact và sửa bằng visible quantity prerequisite, feedback state transition, badge association chặt chẽ, cùng guarded visibility hoặc test.slow phù hợp. Chưa chạy Playwright browser/API test và SUT không bị sửa.
+
+# Interaction 0017
+
+## AI tool
+
+OpenAI Codex CLI 0.148.0 (model: gpt-5.6-sol)
+
+## ISO date/time
+
+2026-08-20T13:13:05Z
+
+## Exact prompt
+
+```text
+Correct the rejected FR-07 increment 3 proposal for exactly FR07-TC09 through FR07-TC12.
+
+Read and preserve:
+- docs/hw04-traceability-test-matrix.md
+- README.md
+- playwright.config.ts
+- frontend-web/src/App.jsx
+- frontend-web/src/context/CartContext.jsx
+- frontend-web/src/pages/Home.jsx
+- frontend-web/src/pages/ProductDetail.jsx
+- frontend-web/src/pages/Cart.jsx
+- ai-audit/prompts/0016-complete-fr07-cart.txt
+- ai-audit/outputs/0016-complete-fr07-cart.md
+- ai-audit/entries/0016-complete-fr07-cart.md
+- ai-audit/artifacts/0016-rejected-fr07-increment3/fr07-cart.json
+- ai-audit/artifacts/0016-rejected-fr07-increment3/fr07-cart.spec.ts
+- ai-audit/artifacts/0016-rejected-fr07-increment3/cart.page.ts
+- ai-audit/artifacts/0016-rejected-fr07-increment3/catalog.page.ts
+- ai-audit/artifacts/0016-rejected-fr07-increment3/product-detail.page.ts
+- ai-audit/artifacts/0016-rejected-fr07-increment3/data-loader.ts
+- tests/data/fr07-cart.json
+- tests/features/fr07-cart.spec.ts
+- tests/pages/cart.page.ts
+- tests/pages/catalog.page.ts
+- tests/pages/product-detail.page.ts
+- tests/support/data-loader.ts
+
+The 0016 proposal was rejected for these specific reasons:
+1. TC12 declares targetProduct.quantity but never uses it, so it does not prove that exactly one unit is submitted.
+2. visualAddFeedback accepts any existing alert or status and lacks a before/after feedback delta.
+3. semanticCartBadge searches the whole parent navigation, so an unrelated numeric element can be mistaken for the cart badge.
+4. TC09 and TC12 repeat soft count and visibility waits for missing locators, risking exhaustion of the test budget before independent evidence completes.
+
+Modify only these automation files when necessary:
+- tests/data/fr07-cart.json
+- tests/features/fr07-cart.spec.ts
+- tests/pages/cart.page.ts
+- tests/pages/catalog.page.ts
+- tests/pages/product-detail.page.ts
+- tests/support/data-loader.ts
+
+Required corrections:
+
+TC12 visible quantity:
+- Use targetProduct.quantity from external JSON.
+- Scope the quantity control to the displayed target Product Detail.
+- Establish a web-first visible quantity-control prerequisite.
+- Set or verify the visible quantity as exactly the external value 1, then assert its displayed value before Add.
+- Activate the visible Product Detail Add control exactly once.
+- Do not retry, compensate, or perform a second Add if the SUT ignores the first activation.
+
+TC12 feedback transition:
+- Capture a pre-action feedback baseline before clicking Add.
+- A pre-existing unchanged alert, status, or unrelated notification must never satisfy the post-action oracle.
+- After the one Add activation, require an externally observable transition:
+  - a new or changed semantic alert/status associated with the action; or
+  - a change in the scoped Add control’s visible text or relevant accessible state such as disabled, aria-disabled, aria-pressed, or aria-busy.
+- Compare post-action evidence with the captured baseline.
+- Keep feedback wording unspecified because exact wording is EVIDENCE MISSING.
+- Missing feedback must remain a failure without preventing independent image-alt or badge evidence.
+
+TC12 cart badge association:
+- Do not search all numeric text in the navigation or the unrestricted parent of the cart link.
+- A badge may qualify only when it is a numeric descendant of the Giỏ hàng link or is explicitly associated with that link through an accessible relationship such as aria-describedby or aria-labelledby.
+- Keep badge parsing strict and guarded.
+- Missing initial or updated badge must fail its own soft assertion but must not block quantity, image-alt, Add, or feedback evidence.
+- If both badge observations exist, verify the external initial value and exact +1 delta.
+
+TC09 and TC12 evidence budget:
+- Avoid unconditional toBeVisible calls after a soft count assertion has already shown that a locator is absent.
+- Guard visibility and value reads behind the externally expected count.
+- Add test.slow() to TC09 and TC12 because they intentionally collect several independent soft requirement failures.
+- Keep breadcrumb, navbar current state, required label, navigation destination, image alt, quantity, feedback, and badge observations independently reachable.
+
+Preservation requirements:
+- Keep exactly twelve FR07 test declarations.
+- Preserve FR07-TC01 through FR07-TC08 byte-for-byte.
+- Preserve the accepted isolation between TC05-TC08 label-independent totals and TC10 exact-label totals.
+- Preserve TC10 and TC11 from the rejected proposal unless a correction is strictly necessary.
+- Preserve external JSON keys and IDs:
+  - cart_navigation -> FR07-TC09
+  - cart_total_formatting -> FR07-TC10
+  - empty_cart -> FR07-TC11
+  - product_detail_add_to_cart -> FR07-TC12
+- Do not weaken any oracle.
+- Do not add arbitrary waits, retries, skips, fixmes, storage injection, mocking, React-internal access, or duplicate-click helpers.
+- Remain strict TypeScript-compatible and Playwright 1.62.1-compatible.
+- Do not modify SUT, FR-01, audit, evidence, database, configuration, documentation, or package files.
+
+Static validation only:
+- Parse and validate all 12 external JSON records and sequential IDs.
+- Run npm run typecheck.
+- Use Playwright --list for TC09-TC12 without executing tests.
+- Confirm exactly 12 FR07 declarations.
+- Confirm TC01-TC08 are byte-identical to the 0016 rejected artifact.
+- Confirm TC10-TC11 remain unchanged unless explicitly justified.
+- Confirm TC12 consumes targetProduct.quantity and contains exactly one Add activation.
+- Confirm the feedback oracle compares before and after states.
+- Confirm the badge locator cannot select unrelated numeric navigation content.
+- Scan forbidden patterns and run whitespace checks.
+- Confirm no prohibited file changed beyond changes already present before this correction.
+
+After editing, report:
+- exact automation files changed relative to the 0016 rejected artifact;
+- how TC12 proves visible quantity 1 before exactly one Add;
+- how feedback before/after transition is established;
+- how the badge is semantically associated with Giỏ hàng;
+- how TC09/TC12 avoid evidence-budget exhaustion;
+- retained TC09-TC12 oracles;
+- static validation performed;
+- confirmation that no browser/API test ran and no prohibited file was modified.
+```
+
+## Exact AI output
+
+```text
+Corrected the rejected FR-07 increment 3 proposal.
+
+Changed relative to the 0016 artifact:
+
+- [fr07-cart.json](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/data/fr07-cart.json)
+- [fr07-cart.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts)
+- [cart.page.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/cart.page.ts)
+- [product-detail.page.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/pages/product-detail.page.ts)
+- [data-loader.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/data-loader.ts)
+
+`catalog.page.ts` remains byte-identical to the rejected artifact.
+
+Key corrections:
+
+- TC12 scopes the spinbutton to the Product Detail main containing the target product heading. It requires the external `quantityControls: 1`, guards visibility behind that count, and asserts the displayed value equals `String(targetProduct.quantity)`—external value `1`—before Add.
+- TC12 calls `addToCartOnce` exactly once; that helper contains exactly one `.click()`. No compensating or repeated Add exists.
+- Feedback baseline is captured before Add, including visible target-detail alert/status elements and the exact Add control’s text, disabled state, `aria-disabled`, `aria-pressed`, and `aria-busy`.
+- Post-action feedback must differ from that baseline through a new/changed scoped semantic signal or a changed state/text on the same Add control. Unchanged pre-existing feedback cannot pass. The soft post-action observation does not prevent badge evidence.
+- Badge lookup now accepts only strict numeric descendants of the `Giỏ hàng` link or strict numeric elements referenced by that link through `aria-describedby`/`aria-labelledby`. The unrestricted parent-navigation search was removed.
+- Initial and updated badge count/visibility/parsing are guarded. Both available observations prove the external initial value and exact `+1` delta.
+- TC09 and TC12 use `test.slow()`. Visibility and value reads are conditional on externally expected locator counts, avoiding repeated waits for absent elements.
+
+Retained oracles:
+
+- TC09: semantic breadcrumb, navbar current state, exact required label, independent shopping-destination activation, and Home heading identity.
+- TC10: exact `Tổng cộng`, rejection of `Tổng tạm tính`, currency symbol, thousands separator, expected total, and displayed arithmetic.
+- TC11: natural empty state, meaningful message, accessible illustration, and zero product rows.
+- TC12: image alt, visible quantity `1`, one Add, feedback transition, and associated badge delta.
+
+Static validation passed:
+
+- Parsed and validated 12 JSON records with sequential unique IDs `FR07-TC01`–`FR07-TC12`.
+- `npm run typecheck`.
+- Playwright `--list` returned exactly TC09–TC12 for Chromium.
+- Exactly 12 FR07 test declarations.
+- TC01–TC08 byte-identical to the rejected artifact.
+- TC10–TC11 byte-identical to the rejected artifact.
+- Confirmed external quantity consumption, one Add activation, baseline-before-Add ordering, post-action comparison, and restricted badge association.
+- Forbidden-pattern scan found no matches.
+- `git diff --check` passed.
+- Final changed-path set matches the pre-correction baseline; pre-existing audit changes were untouched, and no prohibited file was newly modified.
+
+No browser or API test was executed.
+```
+
+## Human review/action
+
+Từ chối output 0017. Human action: Tôi đã review correction diff và xác nhận feedback baseline/delta, badge association, test.slow cùng guarded visibility đã được sửa đúng. Tuy nhiên TC12 vẫn dùng soft assertions cho quantity count, visibility và value rồi thực hiện Add vô điều kiện. Vì vậy quantity chưa phải hard fixture prerequisite và post-Add feedback/badge evidence có thể được thu dưới trạng thái không bảo đảm đúng một đơn vị. Cần lưu proposal 0017 làm rejected artifact và sửa quantity thành hard web-first prerequisite hoặc đặt bằng visible control rồi hard-assert trước đúng một Add activation. Chưa chạy Playwright browser/API test và SUT không bị sửa.
+
+# Interaction 0018
+
+## AI tool
+
+OpenAI Codex CLI 0.148.0 (model: gpt-5.6-sol)
+
+## ISO date/time
+
+2026-08-20T13:41:36Z
+
+## Exact prompt
+
+```text
+Apply one narrow final correction to the rejected FR-07 increment 3 proposal.
+
+Read:
+- docs/hw04-traceability-test-matrix.md
+- ai-audit/entries/0017-correct-fr07-cart-increment3.md
+- ai-audit/artifacts/0017-rejected-fr07-increment3/fr07-cart.spec.ts
+- tests/data/fr07-cart.json
+- tests/features/fr07-cart.spec.ts
+- tests/pages/product-detail.page.ts
+
+The 0017 proposal correctly fixed:
+- TC09 and TC12 evidence budgets with test.slow and guarded reads;
+- TC12 feedback before/after transition;
+- TC12 semantic cart-badge association;
+- TC12 external quantity field/type declarations;
+- preservation of TC01-TC08 and TC10-TC11.
+
+The only remaining defect is that TC12 uses soft assertions for the quantity count, visibility, and value, then performs Add even when the one-unit fixture is invalid.
+
+Modify only:
+- tests/features/fr07-cart.spec.ts
+
+Required narrow correction:
+- In FR07-TC12, make the target Product Detail quantity control a hard web-first fixture prerequisite before the Add action.
+- Require exactly the external expected quantity-control count.
+- Require the scoped quantity control to be visible.
+- Use the existing visible ProductDetailPage quantity interaction to set targetProduct.quantity exactly once, or retain the current value only if it is hard-asserted.
+- Hard-assert the displayed value equals String(testCase.targetProduct.quantity) before Add.
+- Only after all quantity prerequisites pass, capture the feedback baseline and activate Add.
+- Keep exactly one addToCartOnce call and exactly one click inside that helper.
+- Never retry or compensate if the Add activation is ignored.
+
+Preservation:
+- Keep FR07-TC01 through FR07-TC11 byte-identical to the 0017 rejected artifact.
+- Within TC12, keep image-alt, initial badge, feedback baseline/delta, updated badge, test.slow, guarded reads, and all other assertions unchanged.
+- Do not modify JSON, Page Objects, data-loader, SUT, FR-01, audit, evidence, database, configuration, documentation, or package files.
+- Do not weaken any oracle.
+- Do not add waits, retries, skips, fixmes, storage injection, mocks, React-internal access, or duplicate Add actions.
+- Keep exactly twelve FR07 test declarations.
+- Remain strict TypeScript-compatible and Playwright 1.62.1-compatible.
+
+Static validation only:
+- Run npm run typecheck.
+- Use Playwright --list for TC09-TC12 without executing tests.
+- Confirm the only automation file changed relative to the 0017 rejected artifact is tests/features/fr07-cart.spec.ts.
+- Confirm the correction diff is limited to the TC12 quantity prerequisite block.
+- Confirm TC01-TC11 are byte-identical to the 0017 artifact.
+- Confirm TC12 consumes targetProduct.quantity through a hard visible prerequisite before exactly one Add.
+- Confirm feedback baseline remains before Add.
+- Confirm forbidden-pattern and whitespace checks pass.
+
+After editing, report:
+- the exact file changed;
+- the exact hard quantity sequence;
+- confirmation that Add remains exactly once;
+- preservation checks;
+- static validation performed;
+- confirmation that no browser/API test ran and no prohibited file changed.
+```
+
+## Exact AI output
+
+```text
+Corrected exactly one file: [tests/features/fr07-cart.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1505).
+
+TC12 now hard-requires this sequence before Add:
+
+1. Exact external `quantityControls` count.
+2. Scoped quantity control visibility.
+3. Displayed value equal to `String(testCase.targetProduct.quantity)`.
+
+The existing value is retained only after that hard assertion. Feedback baseline capture remains after these prerequisites and before Add.
+
+Confirmed:
+
+- Exactly one TC12 `addToCartOnce` call.
+- Its unchanged helper contains exactly one click.
+- No retry or compensating Add.
+- Exactly 12 FR07 declarations.
+- TC01–TC11 are byte-identical to the 0017 artifact.
+- The diff is confined to TC12’s quantity prerequisite block.
+- All other 0017 automation files are byte-identical to their artifacts.
+- Forbidden-pattern scan and `git diff --check` passed.
+- `npm run typecheck` passed.
+- Playwright `--list` found exactly TC09–TC12 for Chromium.
+
+No browser/API test ran, and no prohibited file was changed.
+```
+
+## Human review/action
+
+Chấp nhận output 0018. Human action: Tôi đã review final correction và xác nhận chỉ tests/features/fr07-cart.spec.ts thay đổi so với rejected artifact 0017, tại đúng quantity prerequisite block của FR07-TC12. Quantity control được yêu cầu đúng external count, visible và có displayed value bằng String(targetProduct.quantity) dưới hard web-first assertions trước feedback baseline và đúng một addToCartOnce activation. Feedback before/after transition, semantic badge association, guarded reads, test.slow, image-alt và badge-delta oracles được giữ nguyên. Năm automation file còn lại byte-identical với artifact 0017; FR07-TC01 đến FR07-TC11 không thay đổi. Spec vẫn có đúng 12 FR07 declarations, typecheck thành công, Playwright chỉ liệt kê đúng TC09-TC12, forbidden-pattern và whitespace checks đều sạch. Chưa chạy Playwright browser/API test và không sửa SUT, FR-01, database, evidence, configuration, documentation hoặc package files.

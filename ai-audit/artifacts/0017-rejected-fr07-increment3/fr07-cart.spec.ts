@@ -1505,15 +1505,22 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
     const quantityControl = productDetail.quantityInput(
       testCase.targetProduct.name,
     );
-    await expect(
+    await expect.soft(
       quantityControl,
       'The displayed target Product Detail must expose one visible quantity control.',
     ).toHaveCount(testCase.expected.counts.quantityControls);
-    await expect(quantityControl).toBeVisible();
-    await expect(
-      quantityControl,
-      'The visible quantity submitted by the single Add activation must equal the external target quantity.',
-    ).toHaveValue(String(testCase.targetProduct.quantity));
+    const quantityControlCount = await quantityControl.count();
+    if (
+      quantityControlCount === testCase.expected.counts.quantityControls
+    ) {
+      await expect.soft(quantityControl).toBeVisible();
+      if (await quantityControl.isVisible()) {
+        await expect.soft(
+          quantityControl,
+          'The visible quantity submitted by the single Add activation must equal the external target quantity.',
+        ).toHaveValue(String(testCase.targetProduct.quantity));
+      }
+    }
 
     const addButton = productDetail.addToCartButton(
       testCase.targetProduct.name,

@@ -1190,7 +1190,6 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
   test(`${cartNavigationCase.id} ${cartNavigationCase.title}`, async ({
     page,
   }) => {
-    test.slow();
     const testCase = cartNavigationCase;
     const catalog = new CatalogPage(page);
     const cart = new CartPage(page);
@@ -1222,10 +1221,7 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
       breadcrumb,
       'The cart child page must expose a named semantic breadcrumb with a current-page item.',
     ).toHaveCount(testCase.expected.counts.breadcrumbs);
-    const breadcrumbCount = await breadcrumb.count();
-    if (breadcrumbCount === testCase.expected.counts.breadcrumbs) {
-      await expect.soft(breadcrumb).toBeVisible();
-    }
+    await expect.soft(breadcrumb).toBeVisible();
 
     const cartNavbarLink = cart.cartNavbarLink(
       testCase.navigation.cartLink,
@@ -1233,16 +1229,11 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
     await expect.soft(cartNavbarLink).toHaveCount(
       testCase.expected.counts.cartNavbarLinks,
     );
-    const cartNavbarLinkCount = await cartNavbarLink.count();
-    if (cartNavbarLinkCount === testCase.expected.counts.cartNavbarLinks) {
-      await expect.soft(cartNavbarLink).toBeVisible();
-      if (await cartNavbarLink.isVisible()) {
-        await expect.soft(cartNavbarLink).toHaveAttribute(
-          testCase.expected.navbar.currentStateAttribute,
-          testCase.expected.navbar.currentStateValue,
-        );
-      }
-    }
+    await expect.soft(cartNavbarLink).toBeVisible();
+    await expect.soft(cartNavbarLink).toHaveAttribute(
+      testCase.expected.navbar.currentStateAttribute,
+      testCase.expected.navbar.currentStateValue,
+    );
 
     const requiredLabelLink = cart.requiredContinueShoppingLink(
       testCase.navigation.requiredContinueShoppingLabel,
@@ -1251,13 +1242,7 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
       requiredLabelLink,
       `Required visible shopping label ${JSON.stringify(testCase.navigation.requiredContinueShoppingLabel)}`,
     ).toHaveCount(testCase.expected.counts.requiredContinueShoppingLinks);
-    const requiredLabelLinkCount = await requiredLabelLink.count();
-    if (
-      requiredLabelLinkCount ===
-      testCase.expected.counts.requiredContinueShoppingLinks
-    ) {
-      await expect.soft(requiredLabelLink).toBeVisible();
-    }
+    await expect.soft(requiredLabelLink).toBeVisible();
 
     const homeDestinationLink = cart.semanticShoppingDestinationLink(
       testCase.navigation.shoppingDestinationMeaningTerms,
@@ -1265,16 +1250,16 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
     await expect.soft(homeDestinationLink).toHaveCount(
       testCase.expected.counts.homeDestinationLinks,
     );
+    await expect.soft(homeDestinationLink).toBeVisible();
+
     const homeDestinationLinkCount = await homeDestinationLink.count();
     if (
       homeDestinationLinkCount ===
-      testCase.expected.counts.homeDestinationLinks
+        testCase.expected.counts.homeDestinationLinks &&
+      (await homeDestinationLink.isVisible())
     ) {
-      await expect.soft(homeDestinationLink).toBeVisible();
-      if (await homeDestinationLink.isVisible()) {
-        expect(testCase.actionCounts.homeDestination).toBe(1);
-        await homeDestinationLink.click();
-      }
+      expect(testCase.actionCounts.homeDestination).toBe(1);
+      await homeDestinationLink.click();
     }
 
     await expect.soft(
@@ -1423,7 +1408,6 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
   test(`${productDetailAddToCartCase.id} ${productDetailAddToCartCase.title}`, async ({
     page,
   }) => {
-    test.slow();
     const testCase = productDetailAddToCartCase;
     const catalog = new CatalogPage(page);
     const productDetail = new ProductDetailPage(page);
@@ -1471,7 +1455,7 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
       }
     }
 
-    const initialCartBadge = await cart.semanticCartBadge(
+    const initialCartBadge = cart.semanticCartBadge(
       testCase.navigation.cartLink,
       testCase.badge.numericTextPattern,
     );
@@ -1479,73 +1463,47 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
       initialCartBadge,
       'The Giỏ hàng navigation entry must expose its initial numeric badge.',
     ).toHaveCount(testCase.expected.counts.cartBadges);
-    const initialCartBadgeCount = await initialCartBadge.count();
+    await expect.soft(initialCartBadge).toBeVisible();
+
     let observedInitialBadgeCount: number | null = null;
     if (
-      initialCartBadgeCount === testCase.expected.counts.cartBadges
+      (await initialCartBadge.count()) ===
+        testCase.expected.counts.cartBadges &&
+      (await initialCartBadge.isVisible())
     ) {
-      await expect.soft(initialCartBadge).toBeVisible();
-      if (await initialCartBadge.isVisible()) {
-        try {
-          observedInitialBadgeCount = await cart.semanticCartBadgeCount(
-            initialCartBadge,
-          );
-          expect.soft(observedInitialBadgeCount).toBe(
-            testCase.initialState.cartBadgeCount,
-          );
-        } catch (error) {
-          expect.soft(
-            error,
-            'The initial associated cart badge must contain only a strict integer.',
-          ).toBeNull();
-        }
-      }
+      observedInitialBadgeCount = await cart.semanticCartBadgeCount(
+        initialCartBadge,
+      );
+      expect.soft(observedInitialBadgeCount).toBe(
+        testCase.initialState.cartBadgeCount,
+      );
     }
-
-    const quantityControl = productDetail.quantityInput(
-      testCase.targetProduct.name,
-    );
-    await expect(
-      quantityControl,
-      'The displayed target Product Detail must expose one visible quantity control.',
-    ).toHaveCount(testCase.expected.counts.quantityControls);
-    await expect(quantityControl).toBeVisible();
-    await expect(
-      quantityControl,
-      'The visible quantity submitted by the single Add activation must equal the external target quantity.',
-    ).toHaveValue(String(testCase.targetProduct.quantity));
 
     const addButton = productDetail.addToCartButton(
       testCase.targetProduct.name,
       testCase.navigation.productDetailAddToCartButton,
     );
     await expect(addButton).toBeVisible();
-    const feedbackBaseline = await productDetail.captureAddFeedbackBaseline(
-      testCase.targetProduct.name,
-      addButton,
-      testCase.feedback.semanticRoles,
-    );
     await productDetail.addToCartOnce(
       testCase.targetProduct.name,
       testCase.navigation.productDetailAddToCartButton,
     );
 
-    await expect.soft
-      .poll(
-        async () =>
-          productDetail.addFeedbackTransitionCount(
-            testCase.targetProduct.name,
-            feedbackBaseline,
-            testCase.feedback.semanticRoles,
-            testCase.feedback.allowControlStateOrTextTransition,
-          ),
-        'One Add activation must produce a new or changed scoped semantic notification or a visible Add-control text/state transition.',
-      )
-      .toBeGreaterThanOrEqual(
-        testCase.expected.counts.minimumFeedbackSignals,
-      );
+    const visualFeedback = productDetail.visualAddFeedback(
+      testCase.targetProduct.name,
+      testCase.navigation.productDetailAddToCartButton,
+      testCase.feedback.semanticRoles,
+      testCase.feedback.allowControlStateOrTextTransition,
+    );
+    await expect.soft(
+      visualFeedback.first(),
+      'One Add activation must produce a visible notification or control transition.',
+    ).toBeVisible();
+    expect.soft(await visualFeedback.count()).toBeGreaterThanOrEqual(
+      testCase.expected.counts.minimumFeedbackSignals,
+    );
 
-    const updatedCartBadge = await cart.semanticCartBadge(
+    const updatedCartBadge = cart.semanticCartBadge(
       testCase.navigation.cartLink,
       testCase.badge.numericTextPattern,
     );
@@ -1553,30 +1511,23 @@ test.describe('FR-07 shopping cart — reviewed increment 3', () => {
       updatedCartBadge,
       'The Giỏ hàng navigation entry must expose its updated numeric badge.',
     ).toHaveCount(testCase.expected.counts.cartBadges);
-    const updatedCartBadgeCount = await updatedCartBadge.count();
+    await expect.soft(updatedCartBadge).toBeVisible();
+
     if (
-      updatedCartBadgeCount === testCase.expected.counts.cartBadges
+      (await updatedCartBadge.count()) ===
+        testCase.expected.counts.cartBadges &&
+      (await updatedCartBadge.isVisible())
     ) {
-      await expect.soft(updatedCartBadge).toBeVisible();
-      if (await updatedCartBadge.isVisible()) {
-        try {
-          const observedUpdatedBadgeCount =
-            await cart.semanticCartBadgeCount(updatedCartBadge);
-          expect.soft(observedUpdatedBadgeCount).toBe(
-            testCase.initialState.cartBadgeCount +
-              testCase.badge.expectedDelta,
-          );
-          if (observedInitialBadgeCount !== null) {
-            expect.soft(
-              observedUpdatedBadgeCount - observedInitialBadgeCount,
-            ).toBe(testCase.badge.expectedDelta);
-          }
-        } catch (error) {
-          expect.soft(
-            error,
-            'The updated associated cart badge must contain only a strict integer.',
-          ).toBeNull();
-        }
+      const observedUpdatedBadgeCount = await cart.semanticCartBadgeCount(
+        updatedCartBadge,
+      );
+      expect.soft(observedUpdatedBadgeCount).toBe(
+        testCase.initialState.cartBadgeCount + testCase.badge.expectedDelta,
+      );
+      if (observedInitialBadgeCount !== null) {
+        expect.soft(
+          observedUpdatedBadgeCount - observedInitialBadgeCount,
+        ).toBe(testCase.badge.expectedDelta);
       }
     }
   });

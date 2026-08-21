@@ -13,15 +13,6 @@ function exactAccessibleName(name: string): RegExp {
   return new RegExp(`^\\s*${escapeRegularExpression(name)}\\s*$`, 'i');
 }
 
-function cssStringLiteral(value: string): string {
-  return `"${value
-    .replaceAll('\\', '\\\\')
-    .replaceAll('"', '\\"')
-    .replaceAll('\n', '\\a ')
-    .replaceAll('\r', '\\d ')
-    .replaceAll('\f', '\\c ')}"`;
-}
-
 function requiredMeaningPattern(terms: string[]): RegExp {
   const lookaheads = terms
     .map((term) => `(?=.*${escapeRegularExpression(term)})`)
@@ -267,37 +258,13 @@ export class CartPage {
     });
   }
 
-  async semanticCartBadge(
+  semanticCartBadge(
     cartLinkName: string,
     numericTextPattern: string,
-  ): Promise<Locator> {
-    const cartLink = this.cartNavbarLink(cartLinkName);
-    const strictNumericText = new RegExp(
-      `^\\s*(?:${numericTextPattern})\\s*$`,
-      'u',
-    );
-    const relationshipIds = await cartLink.evaluateAll((links) => {
-      const referencedIds = links.flatMap((link) =>
-        ['aria-describedby', 'aria-labelledby'].flatMap((attributeName) =>
-          (link.getAttribute(attributeName) ?? '')
-            .trim()
-            .split(/\s+/u)
-            .filter(Boolean),
-        ),
-      );
-
-      return [...new Set(referencedIds)];
-    });
-
-    let badge = cartLink.getByText(strictNumericText);
-    for (const relationshipId of relationshipIds) {
-      const associatedNumericElement = this.page
-        .locator(`[id=${cssStringLiteral(relationshipId)}]`)
-        .filter({ hasText: strictNumericText });
-      badge = badge.or(associatedNumericElement);
-    }
-
-    return badge;
+  ): Locator {
+    return this.cartNavbarLink(cartLinkName)
+      .locator('xpath=..')
+      .getByText(new RegExp(`^\\s*(?:${numericTextPattern})\\s*$`, 'u'));
   }
 
   async semanticCartBadgeCount(badge: Locator): Promise<number> {

@@ -1,0 +1,300 @@
+
+Running 4 tests using 1 worker
+
+  ✘  1 [chromium] › tests/features/fr07-cart.spec.ts:1190:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC09 cart breadcrumb, current navigation state, and semantic return home (15.5s)
+  ✘  2 [chromium] › tests/features/fr07-cart.spec.ts:1286:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC10 exact total label, currency formatting, and displayed arithmetic (265ms)
+  ✘  3 [chromium] › tests/features/fr07-cart.spec.ts:1387:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC11 natural empty cart message, accessible illustration, and no product row (10.2s)
+  ✘  4 [chromium] › tests/features/fr07-cart.spec.ts:1423:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC12 product image alt, one detail Add activation, feedback, and badge delta (14.4s)
+
+
+  1) [chromium] › tests/features/fr07-cart.spec.ts:1190:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC09 cart breadcrumb, current navigation state, and semantic return home 
+
+    Error: The cart child page must expose a named semantic breadcrumb with a current-page item.
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('main').getByRole('navigation', { name: /\S/u }).filter({ has: getByText(/^\s*Giỏ hàng\s*$/i) })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - The cart child page must expose a named semantic breadcrumb with a current-page item. with timeout 5000ms
+      - waiting for getByRole('main').getByRole('navigation', { name: /\S/u }).filter({ has: getByText(/^\s*Giỏ hàng\s*$/i) })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      1222 |       breadcrumb,
+      1223 |       'The cart child page must expose a named semantic breadcrumb with a current-page item.',
+    > 1224 |     ).toHaveCount(testCase.expected.counts.breadcrumbs);
+           |       ^
+      1225 |     const breadcrumbCount = await breadcrumb.count();
+      1226 |     if (breadcrumbCount === testCase.expected.counts.breadcrumbs) {
+      1227 |       await expect.soft(breadcrumb).toBeVisible();
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1224:7
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  getByRole('navigation').getByRole('link', { name: /^\s*Giỏ hàng(?:\s.*)?$/i })
+    Expected: "page"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "soft toHaveAttribute" with timeout 5000ms
+      - waiting for getByRole('navigation').getByRole('link', { name: /^\s*Giỏ hàng(?:\s.*)?$/i })
+        14 × locator resolved to <a href="/cart" data-discover="true" class="hover:underline">Giỏ hàng</a>
+           - unexpected value "null"
+
+
+      1238 |       await expect.soft(cartNavbarLink).toBeVisible();
+      1239 |       if (await cartNavbarLink.isVisible()) {
+    > 1240 |         await expect.soft(cartNavbarLink).toHaveAttribute(
+           |                                           ^
+      1241 |           testCase.expected.navbar.currentStateAttribute,
+      1242 |           testCase.expected.navbar.currentStateValue,
+      1243 |         );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1240:43
+
+    Error: Required visible shopping label "Tiếp tục mua sắm"
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('main').getByRole('link', { name: /^\s*Tiếp tục mua sắm\s*$/i })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Required visible shopping label "Tiếp tục mua sắm" with timeout 5000ms
+      - waiting for getByRole('main').getByRole('link', { name: /^\s*Tiếp tục mua sắm\s*$/i })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      1251 |       requiredLabelLink,
+      1252 |       `Required visible shopping label ${JSON.stringify(testCase.navigation.requiredContinueShoppingLabel)}`,
+    > 1253 |     ).toHaveCount(testCase.expected.counts.requiredContinueShoppingLinks);
+           |       ^
+      1254 |     const requiredLabelLinkCount = await requiredLabelLink.count();
+      1255 |     if (
+      1256 |       requiredLabelLinkCount ===
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1253:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-9b8e2-te-and-semantic-return-home-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-9b8e2-te-and-semantic-return-home-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-9b8e2-te-and-semantic-return-home-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-9b8e2-te-and-semantic-return-home-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [chromium] › tests/features/fr07-cart.spec.ts:1286:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC10 exact total label, currency formatting, and displayed arithmetic 
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "Tổng cộng"
+    Received: "Tổng tạm tính"
+
+      1341 |         testCase.expected.currency,
+      1342 |       );
+    > 1343 |       expect.soft(exactTotalLabel).toBe(testCase.expected.totalLabel);
+           |                                    ^
+      1344 |       expect.soft(exactTotalLabel).not.toBe(
+      1345 |         testCase.expected.forbiddenTotalLabel,
+      1346 |       );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1343:36
+
+    Error: expect(received).not.toBe(expected) // Object.is equality
+
+    Expected: not "Tổng tạm tính"
+
+      1342 |       );
+      1343 |       expect.soft(exactTotalLabel).toBe(testCase.expected.totalLabel);
+    > 1344 |       expect.soft(exactTotalLabel).not.toBe(
+           |                                        ^
+      1345 |         testCase.expected.forbiddenTotalLabel,
+      1346 |       );
+      1347 |     }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1344:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-a064e-ng-and-displayed-arithmetic-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-a064e-ng-and-displayed-arithmetic-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-a064e-ng-and-displayed-arithmetic-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-a064e-ng-and-displayed-arithmetic-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [chromium] › tests/features/fr07-cart.spec.ts:1387:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC11 natural empty cart message, accessible illustration, and no product row 
+
+    Error: The empty cart must expose an accessible illustration with a meaningful name.
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('main').getByRole('img', { name: /\S/u })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - The empty cart must expose an accessible illustration with a meaningful name. with timeout 5000ms
+      - waiting for getByRole('main').getByRole('img', { name: /\S/u })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      1412 |       emptyStateIllustration,
+      1413 |       'The empty cart must expose an accessible illustration with a meaningful name.',
+    > 1414 |     ).toHaveCount(testCase.expected.counts.illustrations);
+           |       ^
+      1415 |     await expect.soft(emptyStateIllustration).toBeVisible();
+      1416 |
+      1417 |     await expect.soft(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1414:7
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('main').getByRole('img', { name: /\S/u })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "soft toBeVisible" with timeout 5000ms
+      - waiting for getByRole('main').getByRole('img', { name: /\S/u })
+
+
+      1413 |       'The empty cart must expose an accessible illustration with a meaningful name.',
+      1414 |     ).toHaveCount(testCase.expected.counts.illustrations);
+    > 1415 |     await expect.soft(emptyStateIllustration).toBeVisible();
+           |                                               ^
+      1416 |
+      1417 |     await expect.soft(
+      1418 |       cart.dataRows(),
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1415:47
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-f34fd-stration-and-no-product-row-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-f34fd-stration-and-no-product-row-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-f34fd-stration-and-no-product-row-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-f34fd-stration-and-no-product-row-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [chromium] › tests/features/fr07-cart.spec.ts:1423:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC12 product image alt, one detail Add activation, feedback, and badge delta 
+
+    Error: The Giỏ hàng navigation entry must expose its initial numeric badge.
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('navigation').getByRole('link', { name: /^\s*Giỏ hàng(?:\s.*)?$/i }).getByText('/^\\s*(?:[0-9]+)\\s*$/u')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - The Giỏ hàng navigation entry must expose its initial numeric badge. with timeout 5000ms
+      - waiting for getByRole('navigation').getByRole('link', { name: /^\s*Giỏ hàng(?:\s.*)?$/i }).getByText('/^\\s*(?:[0-9]+)\\s*$/u')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      1479 |       initialCartBadge,
+      1480 |       'The Giỏ hàng navigation entry must expose its initial numeric badge.',
+    > 1481 |     ).toHaveCount(testCase.expected.counts.cartBadges);
+           |       ^
+      1482 |     const initialCartBadgeCount = await initialCartBadge.count();
+      1483 |     let observedInitialBadgeCount: number | null = null;
+      1484 |     if (
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1481:7
+
+    Error: One Add activation must produce a new or changed scoped semantic notification or a visible Add-control text/state transition.
+
+    One Add activation must produce a new or changed scoped semantic notification or a visible Add-control text/state transition.
+
+    expect(received).toBeGreaterThanOrEqual(expected)
+
+    Expected: >= 1
+    Received:    0
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      1542 |         'One Add activation must produce a new or changed scoped semantic notification or a visible Add-control text/state transition.',
+      1543 |       )
+    > 1544 |       .toBeGreaterThanOrEqual(
+           |        ^
+      1545 |         testCase.expected.counts.minimumFeedbackSignals,
+      1546 |       );
+      1547 |
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1544:8
+
+    Error: The Giỏ hàng navigation entry must expose its updated numeric badge.
+
+    expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('navigation').getByRole('link', { name: /^\s*Giỏ hàng(?:\s.*)?$/i }).getByText('/^\\s*(?:[0-9]+)\\s*$/u')
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - The Giỏ hàng navigation entry must expose its updated numeric badge. with timeout 5000ms
+      - waiting for getByRole('navigation').getByRole('link', { name: /^\s*Giỏ hàng(?:\s.*)?$/i }).getByText('/^\\s*(?:[0-9]+)\\s*$/u')
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      1553 |       updatedCartBadge,
+      1554 |       'The Giỏ hàng navigation entry must expose its updated numeric badge.',
+    > 1555 |     ).toHaveCount(testCase.expected.counts.cartBadges);
+           |       ^
+      1556 |     const updatedCartBadgeCount = await updatedCartBadge.count();
+      1557 |     if (
+      1558 |       updatedCartBadgeCount === testCase.expected.counts.cartBadges
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr07-cart.spec.ts:1555:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-9426c-on-feedback-and-badge-delta-chromium/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-9426c-on-feedback-and-badge-delta-chromium/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-9426c-on-feedback-and-badge-delta-chromium/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/dev/fr07-increment3-chromium/features-fr07-cart-FR-07-s-9426c-on-feedback-and-badge-delta-chromium/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4 failed
+    [chromium] › tests/features/fr07-cart.spec.ts:1190:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC09 cart breadcrumb, current navigation state, and semantic return home 
+    [chromium] › tests/features/fr07-cart.spec.ts:1286:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC10 exact total label, currency formatting, and displayed arithmetic 
+    [chromium] › tests/features/fr07-cart.spec.ts:1387:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC11 natural empty cart message, accessible illustration, and no product row 
+    [chromium] › tests/features/fr07-cart.spec.ts:1423:7 › FR-07 shopping cart — reviewed increment 3 › FR07-TC12 product image alt, one detail Add activation, feedback, and badge delta 
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report playwright-report/dev/fr07-increment3-chromium[39m
+[36m[39m
