@@ -865,11 +865,462 @@ interface AdminRouteInventoryMissingTokenCase {
   };
 }
 
+export type Fr12TokenPartition =
+  | 'missing_token'
+  | 'invalid_bearer'
+  | 'ordinary_user'
+  | 'admin';
+
+export interface Fr12ExplicitAuthorization {
+  partition: Fr12TokenPartition;
+  header: string | null;
+  scheme?: string;
+  tokenClass?: 'malformed' | 'expired';
+}
+
+export interface Fr12TargetRouteRecord {
+  key: string;
+  method: Fr12HttpMethod;
+  path: string;
+  pathParameters?: Record<string, string>;
+  payload?: Fr12JsonValue;
+  mutationMarker?: string;
+  authorization: Fr12ExplicitAuthorization;
+  protectedResource: Fr12SnapshotResourceName;
+  evidenceBoundaryKey?: string;
+}
+
+export interface Fr12EvidenceBoundary {
+  key: string;
+  classification: 'EVIDENCE MISSING';
+  targetMethod: 'PUT';
+  targetPath: string;
+  targetIdentifierParameter: 'id';
+  targetIdentifierType: 'positive_integer';
+  targetExistsInBaseline: false;
+  apiOnlyReversibleFixturePossible: false;
+  creationEndpoint: string;
+  creationLeavesPersistentOrder: true;
+  supportedDeleteEndpoint: null;
+  supportedRestoreTransition: null;
+  sourceBasis: string;
+  ambiguity: string;
+  oracleConstraint: string;
+}
+
+export interface Fr12RoleAwareApiSessionConfig
+  extends Fr12AdminApiSessionConfig {
+  userProperty: string;
+  roleProperty: string;
+  expectedRole: 'user' | 'admin';
+}
+
+export interface Fr12ControlledCleanupDefinition {
+  key: string;
+  snapshotResource: Fr12SnapshotResourceName;
+  markerField: string;
+  markerValue: string;
+  identifierField: 'id';
+  identifierType: 'positive_integer';
+  method: 'DELETE';
+  pathTemplate: string;
+  expected: {
+    responseSuccessful: boolean;
+  };
+}
+
+interface AdminRouteInventoryInvalidTokensCase {
+  id: string;
+  title: string;
+  accessPartition: {
+    authentication: 'invalid_token';
+    authorization: 'not_evaluated';
+  };
+  snapshotSession: Fr12AdminApiSessionConfig;
+  invalidTokens: {
+    malformed: {
+      value: string;
+    };
+    expired: {
+      algorithm: 'HS256';
+      header: Record<string, Fr12JsonValue>;
+      claims: Record<string, Fr12JsonValue>;
+      signingMaterialEnvironmentVariable: string;
+      sourceObservation: string;
+    };
+  };
+  snapshots: Fr12SnapshotResource[];
+  evidenceBoundaries: Fr12EvidenceBoundary[];
+  probes: Fr12TargetRouteRecord[];
+  controlledCleanup: Fr12ControlledCleanupDefinition[];
+  expected: {
+    tokenClassCount: number;
+    probeCount: number;
+    routesPerTokenClass: number;
+    evidenceBoundaryDefinitionCount: number;
+    evidenceMissingProbeResponses: number;
+    verifiedDenialProbeResponses: number;
+    verifiedDenialsPerTokenClass: number;
+    cleanupMarkerCount: number;
+    snapshotSessionLoginSuccessful: boolean;
+    snapshotAcquisitionSuccessful: boolean;
+    finalSnapshotAcquisitionSuccessful: boolean;
+    jwtSegmentCount: number;
+    algorithmMatches: boolean;
+    expiredClaimNumeric: boolean;
+    expiredBeforeCurrentTime: boolean;
+    signatureValid: boolean;
+    probeTransportSuccessful: boolean;
+    completedProbeResponses: number;
+    successfulProbeResponses: number;
+    protectedDataResponses: number;
+    responseSuccessful: boolean;
+    protectedDataReturned: boolean;
+    changedSnapshotCount: number;
+    mutationMarkerMatches: number;
+    cleanupDiscoverySuccessful: boolean;
+    controlledMarkerMatchesAfterCleanup: number;
+    finalChangedSnapshotCount: number;
+  };
+}
+
+interface AdminRouteInventoryUserTokenCase {
+  id: string;
+  title: string;
+  accessPartition: {
+    authentication: 'valid_credentials';
+    authorization: 'ordinary_user_denied';
+  };
+  apiSession: Fr12RoleAwareApiSessionConfig;
+  snapshotSession: Fr12AdminApiSessionConfig;
+  snapshots: Fr12SnapshotResource[];
+  evidenceBoundaries: Fr12EvidenceBoundary[];
+  routes: Fr12TargetRouteRecord[];
+  controlledCleanup: Fr12ControlledCleanupDefinition[];
+  expected: {
+    routeCount: number;
+    evidenceBoundaryDefinitionCount: number;
+    evidenceMissingProbeResponses: number;
+    verifiedDenialProbeResponses: number;
+    cleanupMarkerCount: number;
+    loginSuccessful: boolean;
+    tokenPresent: boolean;
+    roleEvidenceMatches: boolean;
+    snapshotSessionLoginSuccessful: boolean;
+    snapshotAcquisitionSuccessful: boolean;
+    finalSnapshotAcquisitionSuccessful: boolean;
+    probeTransportSuccessful: boolean;
+    completedProbeResponses: number;
+    successfulProbeResponses: number;
+    protectedDataResponses: number;
+    responseSuccessful: boolean;
+    protectedDataReturned: boolean;
+    changedSnapshotCount: number;
+    mutationMarkerMatches: number;
+    cleanupDiscoverySuccessful: boolean;
+    controlledMarkerMatchesAfterCleanup: number;
+    finalChangedSnapshotCount: number;
+  };
+}
+
+export interface Fr12AdminReadRouteRecord extends Fr12TargetRouteRecord {
+  method: 'GET';
+  payload?: never;
+  mutationMarker?: never;
+  authorization: Fr12ExplicitAuthorization & {
+    partition: 'admin';
+  };
+  collectionOracle: {
+    allowEmpty: boolean;
+    identityField?: string;
+    expectedIdentities?: string[];
+  };
+}
+
+interface AdminReadRoutesAdminTokenCase {
+  id: string;
+  title: string;
+  accessPartition: {
+    authentication: 'valid_credentials';
+    authorization: 'admin_allowed';
+  };
+  apiSession: Fr12RoleAwareApiSessionConfig;
+  routes: Fr12AdminReadRouteRecord[];
+  expected: {
+    routeCount: number;
+    loginSuccessful: boolean;
+    tokenPresent: boolean;
+    roleEvidenceMatches: boolean;
+    probeTransportSuccessful: boolean;
+    completedResponses: number;
+    successfulResponses: number;
+    protectedCollectionResponses: number;
+    responseSuccessful: boolean;
+    protectedCollectionReturned: boolean;
+  };
+}
+
+export interface Fr12ProductPayload extends Record<string, Fr12JsonValue> {
+  name: string;
+  price: number;
+  description: string;
+  imageUrl: string;
+  category_id: number | string;
+}
+
+export interface Fr12ProductMatrixSetup {
+  method: 'POST';
+  path: string;
+  authorization: Fr12ExplicitAuthorization & {
+    partition: 'admin';
+  };
+  payload: Fr12ProductPayload;
+  responseIdentifierField: 'id';
+  expected: {
+    responseSuccessful: boolean;
+    strictPositiveIntegerId: boolean;
+    productPresent: boolean;
+  };
+}
+
+export interface Fr12ProductMatrixRow {
+  key: string;
+  method: 'POST' | 'PUT' | 'DELETE';
+  path: string;
+  setup?: Fr12ProductMatrixSetup;
+  payload?: Fr12ProductPayload;
+  authorization: Fr12ExplicitAuthorization;
+  controlledMarker: {
+    field: 'name';
+    value: string;
+  };
+  cleanupInvariantMarkers: string[];
+  expectedProduct?: Fr12ProductPayload;
+  expected: {
+    accessObservation:
+      | 'authentication_denied'
+      | 'authorization_denied'
+      | 'business_execution';
+    responseSuccessful: boolean;
+    stateObservation:
+      | 'controlled_product_absent'
+      | 'controlled_target_unchanged'
+      | 'controlled_product_present'
+      | 'controlled_target_changed'
+      | 'controlled_target_removed';
+  };
+}
+
+interface ProductMutationAccessMatrixCase {
+  id: string;
+  title: string;
+  apiSessions: {
+    ordinaryUser: Fr12RoleAwareApiSessionConfig;
+    admin: Fr12RoleAwareApiSessionConfig;
+  };
+  categoryReference: {
+    method: 'GET';
+    path: string;
+    markerField: string;
+    markerValue: string;
+    identifierField: 'id';
+    identifierType: 'positive_integer';
+    payloadReferenceToken: string;
+  };
+  productSnapshot: {
+    resource: 'products';
+    method: 'GET';
+    path: string;
+  };
+  rows: Fr12ProductMatrixRow[];
+  cleanup: {
+    markerField: 'name';
+    identifierField: 'id';
+    identifierType: 'positive_integer';
+    method: 'DELETE';
+    pathTemplate: string;
+    authorization: Fr12ExplicitAuthorization & {
+      partition: 'admin';
+    };
+  };
+  expected: {
+    rowCount: number;
+    methodCount: number;
+    tokenPartitionCount: number;
+    loginSuccessful: boolean;
+    tokenPresent: boolean;
+    roleEvidenceMatches: boolean;
+    categoryReadSuccessful: boolean;
+    categoryReferenceFound: boolean;
+    baselineSnapshotSuccessful: boolean;
+    setupSuccessful: boolean;
+    targetTransportSuccessful: boolean;
+    targetStateSnapshotSuccessful: boolean;
+    completedTargetResponses: number;
+    preCleanupSnapshotSuccessful: boolean;
+    cleanupDiscoverySuccessful: boolean;
+    cleanupResponseSuccessful: boolean;
+    finalSnapshotSuccessful: boolean;
+    finalMatchesBaseline: boolean;
+  };
+}
+
+export interface Fr12NamedPayload extends Record<string, Fr12JsonValue> {
+  name: string;
+}
+
+export interface Fr12CategoryMatrixRow {
+  key: string;
+  method: 'POST' | 'PUT' | 'DELETE';
+  path: string;
+  setup?: {
+    method: 'POST';
+    path: string;
+    payload: Fr12NamedPayload;
+    responseIdentifierField: 'id';
+  };
+  payload?: Fr12NamedPayload;
+  authorization: Fr12ExplicitAuthorization;
+  cleanupInvariantMarkers: string[];
+  expected: {
+    responseSuccessful: boolean;
+    stateObservation:
+      | 'controlled_record_absent'
+      | 'controlled_target_unchanged'
+      | 'controlled_record_present'
+      | 'controlled_target_changed'
+      | 'controlled_target_removed';
+  };
+}
+
+interface CategoryMutationAccessMatrixCase {
+  id: string;
+  title: string;
+  apiSessions: {
+    ordinaryUser: Fr12RoleAwareApiSessionConfig;
+    admin: Fr12RoleAwareApiSessionConfig;
+  };
+  snapshot: {
+    method: 'GET';
+    path: string;
+  };
+  rows: Fr12CategoryMatrixRow[];
+  cleanup: {
+    markerField: 'name';
+    identifierField: 'id';
+    method: 'DELETE';
+    pathTemplate: string;
+    authorization: Fr12ExplicitAuthorization & { partition: 'admin' };
+  };
+  expected: {
+    rowCount: number;
+    completedTargetResponses: number;
+    finalMatchesBaseline: boolean;
+  };
+}
+
+export interface Fr12CouponPayload extends Record<string, Fr12JsonValue> {
+  code: string;
+  type: 'percent' | 'fixed';
+  discount_value: number;
+  min_order_amount: number;
+  expired_at: string;
+  max_uses_per_user: number;
+}
+
+export interface Fr12CouponMatrixRow {
+  key: string;
+  routeFamily: 'contract_exposed' | 'readme_required';
+  method: 'POST' | 'PUT' | 'DELETE';
+  path: string;
+  setup?: {
+    method: 'POST';
+    path: '/api/admin/coupons';
+    payload: Fr12CouponPayload;
+    responseIdentifierField: 'id';
+  };
+  payload?: Fr12CouponPayload;
+  authorization: Fr12ExplicitAuthorization;
+  cleanupInvariantMarkers: string[];
+  expected: {
+    responseSuccessful: boolean;
+    stateObservation:
+      | 'controlled_record_absent'
+      | 'controlled_target_unchanged'
+      | 'controlled_record_present'
+      | 'controlled_target_removed';
+  };
+}
+
+interface CouponMutationRouteMatrixCase {
+  id: string;
+  title: string;
+  apiSessions: {
+    ordinaryUser: Fr12RoleAwareApiSessionConfig;
+    admin: Fr12RoleAwareApiSessionConfig;
+  };
+  malformedToken: string;
+  snapshot: {
+    method: 'GET';
+    path: '/api/coupons';
+    authorization: Fr12ExplicitAuthorization & { partition: 'admin' };
+  };
+  rows: Fr12CouponMatrixRow[];
+  cleanup: {
+    markerField: 'code';
+    identifierField: 'id';
+    method: 'DELETE';
+    pathTemplate: '/api/admin/coupons/:id';
+    authorization: Fr12ExplicitAuthorization & { partition: 'admin' };
+  };
+  expected: {
+    contractExposedRowCount: number;
+    readmeRequiredRowCount: number;
+    completedTargetResponses: number;
+    finalMatchesBaseline: boolean;
+  };
+}
+
+interface ProfileRoleInjectionCase {
+  id: string;
+  title: string;
+  apiSession: Fr12RoleAwareApiSessionConfig;
+  profileRead: {
+    method: 'GET';
+    path: '/api/users/me';
+    authorization: Fr12ExplicitAuthorization;
+  };
+  profileUpdate: {
+    method: 'PUT';
+    path: '/api/users/me';
+    authorization: Fr12ExplicitAuthorization;
+  };
+  injectionPayload: Record<string, Fr12JsonValue> & { role: 'user' | 'admin' };
+  persistedFields: string[];
+  roleField: 'role';
+  expectedOriginalRole: 'user' | 'admin';
+  expectedEffectiveRole: 'user' | 'admin';
+  expected: {
+    baselineReadSuccessful: boolean;
+    roleUnchanged: boolean;
+    freshLoginRoleUnchanged: boolean;
+    restorationSuccessful: boolean;
+  };
+}
+
 export interface Fr12AccessControlData {
   admin_ui_no_token: AdminUiNoTokenCase;
   admin_ui_ordinary_user: AdminUiOrdinaryUserCase;
   admin_ui_admin: AdminUiAdminCase;
   admin_route_inventory_missing_token: AdminRouteInventoryMissingTokenCase;
+  admin_route_inventory_invalid_tokens: AdminRouteInventoryInvalidTokensCase;
+  admin_route_inventory_user_token: AdminRouteInventoryUserTokenCase;
+  admin_read_routes_admin_token: AdminReadRoutesAdminTokenCase;
+  product_mutation_access_matrix: ProductMutationAccessMatrixCase;
+  category_mutation_access_matrix: CategoryMutationAccessMatrixCase;
+  coupon_mutation_route_matrix: CouponMutationRouteMatrixCase;
+  profile_role_injection_user: ProfileRoleInjectionCase;
+  profile_role_injection_admin: ProfileRoleInjectionCase;
 }
 
 export function loadJsonFile<T>(workspaceRelativePath: string): T {

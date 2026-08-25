@@ -354,5 +354,555 @@
       "controlledMarkerMatchesAfterCleanup": 0,
       "finalChangedSnapshotCount": 0
     }
+  },
+  "admin_route_inventory_invalid_tokens": {
+    "id": "FR12-TC05",
+    "title": "invalid-token probes cover every Admin route with an explicit order-status evidence boundary",
+    "accessPartition": {
+      "authentication": "invalid_token",
+      "authorization": "not_evaluated"
+    },
+    "snapshotSession": {
+      "login": {
+        "method": "POST",
+        "path": "/api/login",
+        "credentials": {
+          "email": "admin@eshop.com",
+          "password": "Admin123!"
+        },
+        "tokenProperty": "token"
+      },
+      "authorizationHeader": "Authorization",
+      "bearerScheme": "Bearer"
+    },
+    "invalidTokens": {
+      "malformed": {
+        "value": "FR12_TC05_MALFORMED_NOT_A_JWT_23127027"
+      },
+      "expired": {
+        "algorithm": "HS256",
+        "header": {
+          "alg": "HS256",
+          "typ": "JWT"
+        },
+        "claims": {
+          "id": 2,
+          "role": "user",
+          "iat": 946684800,
+          "exp": 946684860
+        },
+        "signingMaterialEnvironmentVariable": "PW_TEST_JWT_SECRET",
+        "sourceObservation": "signing material is supplied by the test environment at runtime; fixture-only, not a production token-lifetime contract"
+      }
+    },
+    "snapshots": [
+      { "name": "users", "method": "GET", "path": "/api/admin/users" },
+      { "name": "orders", "method": "GET", "path": "/api/admin/orders" },
+      { "name": "products", "method": "GET", "path": "/api/products" },
+      { "name": "coupons", "method": "GET", "path": "/api/coupons" }
+    ],
+    "evidenceBoundaries": [
+      {
+        "key": "non_existing_order_status_access_boundary",
+        "classification": "EVIDENCE MISSING",
+        "targetMethod": "PUT",
+        "targetPath": "/api/admin/orders/:id/status",
+        "targetIdentifierParameter": "id",
+        "targetIdentifierType": "positive_integer",
+        "targetExistsInBaseline": false,
+        "apiOnlyReversibleFixturePossible": false,
+        "creationEndpoint": "/api/checkout",
+        "creationLeavesPersistentOrder": true,
+        "supportedDeleteEndpoint": null,
+        "supportedRestoreTransition": null,
+        "sourceBasis": "Supported HTTP APIs can create a pending order, but expose no order deletion and no reverse status transition that restores the pre-test collection and state.",
+        "ambiguity": "For a non-existing order ID, an access-control bypass can reach the business handler and return Order not found, so a generic non-success response plus unchanged snapshots cannot prove invalid-token rejection.",
+        "oracleConstraint": "Retain the one-shot response and post-target state for human triage, but do not assert an unsupported exact status or wording and do not count this route as a verified denial."
+      }
+    ],
+    "probes": [
+      {
+        "key": "malformed_admin_import_products_post",
+        "method": "POST",
+        "path": "/api/admin/import-products",
+        "payload": { "products": [{ "name": "FR12_TC05_IMPORT_MALFORMED_23127027", "price": 125051, "description": "FR12 malformed-token import sentinel", "imageUrl": "https://example.test/fr12-tc05-malformed-product.png", "category_id": 1 }] },
+        "mutationMarker": "FR12_TC05_IMPORT_MALFORMED_23127027",
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "malformed" },
+        "protectedResource": "products"
+      },
+      {
+        "key": "malformed_admin_coupons_post",
+        "method": "POST",
+        "path": "/api/admin/coupons",
+        "payload": { "code": "FR12TC05MALFORMED23127027", "type": "fixed", "discount_value": 12505, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 },
+        "mutationMarker": "FR12TC05MALFORMED23127027",
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "malformed" },
+        "protectedResource": "coupons"
+      },
+      {
+        "key": "malformed_admin_coupons_delete",
+        "method": "DELETE",
+        "path": "/api/admin/coupons/:id",
+        "pathParameters": { "id": "2147483501" },
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "malformed" },
+        "protectedResource": "coupons"
+      },
+      {
+        "key": "malformed_admin_users_get",
+        "method": "GET",
+        "path": "/api/admin/users",
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "malformed" },
+        "protectedResource": "users"
+      },
+      {
+        "key": "malformed_admin_users_delete",
+        "method": "DELETE",
+        "path": "/api/admin/users/:id",
+        "pathParameters": { "id": "2147483502" },
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "malformed" },
+        "protectedResource": "users"
+      },
+      {
+        "key": "malformed_admin_orders_get",
+        "method": "GET",
+        "path": "/api/admin/orders",
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "malformed" },
+        "protectedResource": "orders"
+      },
+      {
+        "key": "malformed_admin_orders_status_put",
+        "method": "PUT",
+        "path": "/api/admin/orders/:id/status",
+        "pathParameters": { "id": "2147483503" },
+        "payload": { "status": "confirmed" },
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "malformed" },
+        "protectedResource": "orders",
+        "evidenceBoundaryKey": "non_existing_order_status_access_boundary"
+      },
+      {
+        "key": "expired_admin_import_products_post",
+        "method": "POST",
+        "path": "/api/admin/import-products",
+        "payload": { "products": [{ "name": "FR12_TC05_IMPORT_EXPIRED_23127027", "price": 125052, "description": "FR12 expired-token import sentinel", "imageUrl": "https://example.test/fr12-tc05-expired-product.png", "category_id": 1 }] },
+        "mutationMarker": "FR12_TC05_IMPORT_EXPIRED_23127027",
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "expired" },
+        "protectedResource": "products"
+      },
+      {
+        "key": "expired_admin_coupons_post",
+        "method": "POST",
+        "path": "/api/admin/coupons",
+        "payload": { "code": "FR12TC05EXPIRED23127027", "type": "fixed", "discount_value": 12506, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 },
+        "mutationMarker": "FR12TC05EXPIRED23127027",
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "expired" },
+        "protectedResource": "coupons"
+      },
+      {
+        "key": "expired_admin_coupons_delete",
+        "method": "DELETE",
+        "path": "/api/admin/coupons/:id",
+        "pathParameters": { "id": "2147483511" },
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "expired" },
+        "protectedResource": "coupons"
+      },
+      {
+        "key": "expired_admin_users_get",
+        "method": "GET",
+        "path": "/api/admin/users",
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "expired" },
+        "protectedResource": "users"
+      },
+      {
+        "key": "expired_admin_users_delete",
+        "method": "DELETE",
+        "path": "/api/admin/users/:id",
+        "pathParameters": { "id": "2147483512" },
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "expired" },
+        "protectedResource": "users"
+      },
+      {
+        "key": "expired_admin_orders_get",
+        "method": "GET",
+        "path": "/api/admin/orders",
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "expired" },
+        "protectedResource": "orders"
+      },
+      {
+        "key": "expired_admin_orders_status_put",
+        "method": "PUT",
+        "path": "/api/admin/orders/:id/status",
+        "pathParameters": { "id": "2147483513" },
+        "payload": { "status": "confirmed" },
+        "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer", "tokenClass": "expired" },
+        "protectedResource": "orders",
+        "evidenceBoundaryKey": "non_existing_order_status_access_boundary"
+      }
+    ],
+    "controlledCleanup": [
+      { "key": "malformed_imported_product", "snapshotResource": "products", "markerField": "name", "markerValue": "FR12_TC05_IMPORT_MALFORMED_23127027", "identifierField": "id", "identifierType": "positive_integer", "method": "DELETE", "pathTemplate": "/api/products/:id", "expected": { "responseSuccessful": true } },
+      { "key": "malformed_coupon", "snapshotResource": "coupons", "markerField": "code", "markerValue": "FR12TC05MALFORMED23127027", "identifierField": "id", "identifierType": "positive_integer", "method": "DELETE", "pathTemplate": "/api/admin/coupons/:id", "expected": { "responseSuccessful": true } },
+      { "key": "expired_imported_product", "snapshotResource": "products", "markerField": "name", "markerValue": "FR12_TC05_IMPORT_EXPIRED_23127027", "identifierField": "id", "identifierType": "positive_integer", "method": "DELETE", "pathTemplate": "/api/products/:id", "expected": { "responseSuccessful": true } },
+      { "key": "expired_coupon", "snapshotResource": "coupons", "markerField": "code", "markerValue": "FR12TC05EXPIRED23127027", "identifierField": "id", "identifierType": "positive_integer", "method": "DELETE", "pathTemplate": "/api/admin/coupons/:id", "expected": { "responseSuccessful": true } }
+    ],
+    "expected": {
+      "tokenClassCount": 2,
+      "probeCount": 14,
+      "routesPerTokenClass": 7,
+      "evidenceBoundaryDefinitionCount": 1,
+      "evidenceMissingProbeResponses": 2,
+      "verifiedDenialProbeResponses": 12,
+      "verifiedDenialsPerTokenClass": 6,
+      "cleanupMarkerCount": 4,
+      "snapshotSessionLoginSuccessful": true,
+      "snapshotAcquisitionSuccessful": true,
+      "finalSnapshotAcquisitionSuccessful": true,
+      "jwtSegmentCount": 3,
+      "algorithmMatches": true,
+      "expiredClaimNumeric": true,
+      "expiredBeforeCurrentTime": true,
+      "signatureValid": true,
+      "probeTransportSuccessful": true,
+      "completedProbeResponses": 14,
+      "successfulProbeResponses": 0,
+      "protectedDataResponses": 0,
+      "responseSuccessful": false,
+      "protectedDataReturned": false,
+      "changedSnapshotCount": 0,
+      "mutationMarkerMatches": 0,
+      "cleanupDiscoverySuccessful": true,
+      "controlledMarkerMatchesAfterCleanup": 0,
+      "finalChangedSnapshotCount": 0
+    }
+  },
+  "admin_route_inventory_user_token": {
+    "id": "FR12-TC06",
+    "title": "ordinary-user probes cover every Admin route with an explicit order-status evidence boundary",
+    "accessPartition": { "authentication": "valid_credentials", "authorization": "ordinary_user_denied" },
+    "apiSession": {
+      "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "test@eshop.com", "password": "Test1234!" }, "tokenProperty": "token" },
+      "authorizationHeader": "Authorization",
+      "bearerScheme": "Bearer",
+      "userProperty": "user",
+      "roleProperty": "role",
+      "expectedRole": "user"
+    },
+    "snapshotSession": {
+      "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "admin@eshop.com", "password": "Admin123!" }, "tokenProperty": "token" },
+      "authorizationHeader": "Authorization",
+      "bearerScheme": "Bearer"
+    },
+    "snapshots": [
+      { "name": "users", "method": "GET", "path": "/api/admin/users" },
+      { "name": "orders", "method": "GET", "path": "/api/admin/orders" },
+      { "name": "products", "method": "GET", "path": "/api/products" },
+      { "name": "coupons", "method": "GET", "path": "/api/coupons" }
+    ],
+    "evidenceBoundaries": [
+      {
+        "key": "non_existing_order_status_access_boundary",
+        "classification": "EVIDENCE MISSING",
+        "targetMethod": "PUT",
+        "targetPath": "/api/admin/orders/:id/status",
+        "targetIdentifierParameter": "id",
+        "targetIdentifierType": "positive_integer",
+        "targetExistsInBaseline": false,
+        "apiOnlyReversibleFixturePossible": false,
+        "creationEndpoint": "/api/checkout",
+        "creationLeavesPersistentOrder": true,
+        "supportedDeleteEndpoint": null,
+        "supportedRestoreTransition": null,
+        "sourceBasis": "Supported HTTP APIs can create a pending order, but expose no order deletion and no reverse status transition that restores the pre-test collection and state.",
+        "ambiguity": "For a non-existing order ID, an access-control bypass can reach the business handler and return Order not found, so a generic non-success response plus unchanged snapshots cannot prove ordinary-user authorization denial.",
+        "oracleConstraint": "Retain the one-shot response and post-target state for human triage, but do not assert an unsupported exact status or wording and do not count this route as a verified denial."
+      }
+    ],
+    "routes": [
+      { "key": "user_admin_import_products_post", "method": "POST", "path": "/api/admin/import-products", "payload": { "products": [{ "name": "FR12_TC06_IMPORT_USER_23127027", "price": 126061, "description": "FR12 ordinary-user import sentinel", "imageUrl": "https://example.test/fr12-tc06-user-product.png", "category_id": 1 }] }, "mutationMarker": "FR12_TC06_IMPORT_USER_23127027", "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "protectedResource": "products" },
+      { "key": "user_admin_coupons_post", "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC06USER23127027", "type": "fixed", "discount_value": 12606, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "mutationMarker": "FR12TC06USER23127027", "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "protectedResource": "coupons" },
+      { "key": "user_admin_coupons_delete", "method": "DELETE", "path": "/api/admin/coupons/:id", "pathParameters": { "id": "2147483521" }, "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "protectedResource": "coupons" },
+      { "key": "user_admin_users_get", "method": "GET", "path": "/api/admin/users", "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "protectedResource": "users" },
+      { "key": "user_admin_users_delete", "method": "DELETE", "path": "/api/admin/users/:id", "pathParameters": { "id": "2147483522" }, "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "protectedResource": "users" },
+      { "key": "user_admin_orders_get", "method": "GET", "path": "/api/admin/orders", "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "protectedResource": "orders" },
+      { "key": "user_admin_orders_status_put", "method": "PUT", "path": "/api/admin/orders/:id/status", "pathParameters": { "id": "2147483523" }, "payload": { "status": "confirmed" }, "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "protectedResource": "orders", "evidenceBoundaryKey": "non_existing_order_status_access_boundary" }
+    ],
+    "controlledCleanup": [
+      { "key": "user_imported_product", "snapshotResource": "products", "markerField": "name", "markerValue": "FR12_TC06_IMPORT_USER_23127027", "identifierField": "id", "identifierType": "positive_integer", "method": "DELETE", "pathTemplate": "/api/products/:id", "expected": { "responseSuccessful": true } },
+      { "key": "user_coupon", "snapshotResource": "coupons", "markerField": "code", "markerValue": "FR12TC06USER23127027", "identifierField": "id", "identifierType": "positive_integer", "method": "DELETE", "pathTemplate": "/api/admin/coupons/:id", "expected": { "responseSuccessful": true } }
+    ],
+    "expected": {
+      "routeCount": 7,
+      "evidenceBoundaryDefinitionCount": 1,
+      "evidenceMissingProbeResponses": 1,
+      "verifiedDenialProbeResponses": 6,
+      "cleanupMarkerCount": 2,
+      "loginSuccessful": true,
+      "tokenPresent": true,
+      "roleEvidenceMatches": true,
+      "snapshotSessionLoginSuccessful": true,
+      "snapshotAcquisitionSuccessful": true,
+      "finalSnapshotAcquisitionSuccessful": true,
+      "probeTransportSuccessful": true,
+      "completedProbeResponses": 7,
+      "successfulProbeResponses": 0,
+      "protectedDataResponses": 0,
+      "responseSuccessful": false,
+      "protectedDataReturned": false,
+      "changedSnapshotCount": 0,
+      "mutationMarkerMatches": 0,
+      "cleanupDiscoverySuccessful": true,
+      "controlledMarkerMatchesAfterCleanup": 0,
+      "finalChangedSnapshotCount": 0
+    }
+  },
+  "admin_read_routes_admin_token": {
+    "id": "FR12-TC07",
+    "title": "valid seeded-admin token reads protected Admin user and order collections",
+    "accessPartition": { "authentication": "valid_credentials", "authorization": "admin_allowed" },
+    "apiSession": {
+      "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "admin@eshop.com", "password": "Admin123!" }, "tokenProperty": "token" },
+      "authorizationHeader": "Authorization",
+      "bearerScheme": "Bearer",
+      "userProperty": "user",
+      "roleProperty": "role",
+      "expectedRole": "admin"
+    },
+    "routes": [
+      { "key": "admin_users_get", "method": "GET", "path": "/api/admin/users", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "protectedResource": "users", "collectionOracle": { "allowEmpty": false, "identityField": "email", "expectedIdentities": ["admin@eshop.com", "test@eshop.com"] } },
+      { "key": "admin_orders_get", "method": "GET", "path": "/api/admin/orders", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "protectedResource": "orders", "collectionOracle": { "allowEmpty": true } }
+    ],
+    "expected": {
+      "routeCount": 2,
+      "loginSuccessful": true,
+      "tokenPresent": true,
+      "roleEvidenceMatches": true,
+      "probeTransportSuccessful": true,
+      "completedResponses": 2,
+      "successfulResponses": 2,
+      "protectedCollectionResponses": 2,
+      "responseSuccessful": true,
+      "protectedCollectionReturned": true
+    }
+  },
+  "product_mutation_access_matrix": {
+    "id": "FR12-TC08",
+    "title": "product POST PUT DELETE enforce missing-user-admin access partitions",
+    "apiSessions": {
+      "ordinaryUser": {
+        "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "test@eshop.com", "password": "Test1234!" }, "tokenProperty": "token" },
+        "authorizationHeader": "Authorization",
+        "bearerScheme": "Bearer",
+        "userProperty": "user",
+        "roleProperty": "role",
+        "expectedRole": "user"
+      },
+      "admin": {
+        "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "admin@eshop.com", "password": "Admin123!" }, "tokenProperty": "token" },
+        "authorizationHeader": "Authorization",
+        "bearerScheme": "Bearer",
+        "userProperty": "user",
+        "roleProperty": "role",
+        "expectedRole": "admin"
+      }
+    },
+    "categoryReference": { "method": "GET", "path": "/api/categories", "markerField": "name", "markerValue": "Điện thoại", "identifierField": "id", "identifierType": "positive_integer", "payloadReferenceToken": "{{category_id}}" },
+    "productSnapshot": { "resource": "products", "method": "GET", "path": "/api/products" },
+    "rows": [
+      {
+        "key": "post_missing_token",
+        "method": "POST",
+        "path": "/api/products",
+        "payload": { "name": "FR12_TC08_POST_MISSING_23127027", "price": 128011, "description": "FR12 TC08 POST missing token", "imageUrl": "https://example.test/fr12-tc08-post-missing.png", "category_id": "{{category_id}}" },
+        "authorization": { "partition": "missing_token", "header": null },
+        "controlledMarker": { "field": "name", "value": "FR12_TC08_POST_MISSING_23127027" },
+        "cleanupInvariantMarkers": ["FR12_TC08_POST_MISSING_23127027"],
+        "expectedProduct": { "name": "FR12_TC08_POST_MISSING_23127027", "price": 128011, "description": "FR12 TC08 POST missing token", "imageUrl": "https://example.test/fr12-tc08-post-missing.png", "category_id": "{{category_id}}" },
+        "expected": { "accessObservation": "authentication_denied", "responseSuccessful": false, "stateObservation": "controlled_product_absent" }
+      },
+      {
+        "key": "post_ordinary_user",
+        "method": "POST",
+        "path": "/api/products",
+        "payload": { "name": "FR12_TC08_POST_USER_23127027", "price": 128012, "description": "FR12 TC08 POST ordinary user", "imageUrl": "https://example.test/fr12-tc08-post-user.png", "category_id": "{{category_id}}" },
+        "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" },
+        "controlledMarker": { "field": "name", "value": "FR12_TC08_POST_USER_23127027" },
+        "cleanupInvariantMarkers": ["FR12_TC08_POST_USER_23127027"],
+        "expectedProduct": { "name": "FR12_TC08_POST_USER_23127027", "price": 128012, "description": "FR12 TC08 POST ordinary user", "imageUrl": "https://example.test/fr12-tc08-post-user.png", "category_id": "{{category_id}}" },
+        "expected": { "accessObservation": "authorization_denied", "responseSuccessful": false, "stateObservation": "controlled_product_absent" }
+      },
+      {
+        "key": "post_admin",
+        "method": "POST",
+        "path": "/api/products",
+        "payload": { "name": "FR12_TC08_POST_ADMIN_23127027", "price": 128013, "description": "FR12 TC08 POST admin", "imageUrl": "https://example.test/fr12-tc08-post-admin.png", "category_id": "{{category_id}}" },
+        "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" },
+        "controlledMarker": { "field": "name", "value": "FR12_TC08_POST_ADMIN_23127027" },
+        "cleanupInvariantMarkers": ["FR12_TC08_POST_ADMIN_23127027"],
+        "expectedProduct": { "name": "FR12_TC08_POST_ADMIN_23127027", "price": 128013, "description": "FR12 TC08 POST admin", "imageUrl": "https://example.test/fr12-tc08-post-admin.png", "category_id": "{{category_id}}" },
+        "expected": { "accessObservation": "business_execution", "responseSuccessful": true, "stateObservation": "controlled_product_present" }
+      },
+      {
+        "key": "put_missing_token",
+        "method": "PUT",
+        "path": "/api/products/:id",
+        "setup": { "method": "POST", "path": "/api/products", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "payload": { "name": "FR12_TC08_PUT_MISSING_BASE_23127027", "price": 128021, "description": "FR12 TC08 PUT missing baseline", "imageUrl": "https://example.test/fr12-tc08-put-missing-base.png", "category_id": "{{category_id}}" }, "responseIdentifierField": "id", "expected": { "responseSuccessful": true, "strictPositiveIntegerId": true, "productPresent": true } },
+        "payload": { "name": "FR12_TC08_PUT_MISSING_TARGET_23127027", "price": 128022, "description": "FR12 TC08 PUT missing target", "imageUrl": "https://example.test/fr12-tc08-put-missing-target.png", "category_id": "{{category_id}}" },
+        "authorization": { "partition": "missing_token", "header": null },
+        "controlledMarker": { "field": "name", "value": "FR12_TC08_PUT_MISSING_TARGET_23127027" },
+        "cleanupInvariantMarkers": ["FR12_TC08_PUT_MISSING_BASE_23127027", "FR12_TC08_PUT_MISSING_TARGET_23127027"],
+        "expectedProduct": { "name": "FR12_TC08_PUT_MISSING_BASE_23127027", "price": 128021, "description": "FR12 TC08 PUT missing baseline", "imageUrl": "https://example.test/fr12-tc08-put-missing-base.png", "category_id": "{{category_id}}" },
+        "expected": { "accessObservation": "authentication_denied", "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" }
+      },
+      {
+        "key": "put_ordinary_user",
+        "method": "PUT",
+        "path": "/api/products/:id",
+        "setup": { "method": "POST", "path": "/api/products", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "payload": { "name": "FR12_TC08_PUT_USER_BASE_23127027", "price": 128023, "description": "FR12 TC08 PUT user baseline", "imageUrl": "https://example.test/fr12-tc08-put-user-base.png", "category_id": "{{category_id}}" }, "responseIdentifierField": "id", "expected": { "responseSuccessful": true, "strictPositiveIntegerId": true, "productPresent": true } },
+        "payload": { "name": "FR12_TC08_PUT_USER_TARGET_23127027", "price": 128024, "description": "FR12 TC08 PUT user target", "imageUrl": "https://example.test/fr12-tc08-put-user-target.png", "category_id": "{{category_id}}" },
+        "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" },
+        "controlledMarker": { "field": "name", "value": "FR12_TC08_PUT_USER_TARGET_23127027" },
+        "cleanupInvariantMarkers": ["FR12_TC08_PUT_USER_BASE_23127027", "FR12_TC08_PUT_USER_TARGET_23127027"],
+        "expectedProduct": { "name": "FR12_TC08_PUT_USER_BASE_23127027", "price": 128023, "description": "FR12 TC08 PUT user baseline", "imageUrl": "https://example.test/fr12-tc08-put-user-base.png", "category_id": "{{category_id}}" },
+        "expected": { "accessObservation": "authorization_denied", "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" }
+      },
+      {
+        "key": "put_admin",
+        "method": "PUT",
+        "path": "/api/products/:id",
+        "setup": { "method": "POST", "path": "/api/products", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "payload": { "name": "FR12_TC08_PUT_ADMIN_BASE_23127027", "price": 128025, "description": "FR12 TC08 PUT admin baseline", "imageUrl": "https://example.test/fr12-tc08-put-admin-base.png", "category_id": "{{category_id}}" }, "responseIdentifierField": "id", "expected": { "responseSuccessful": true, "strictPositiveIntegerId": true, "productPresent": true } },
+        "payload": { "name": "FR12_TC08_PUT_ADMIN_TARGET_23127027", "price": 128026, "description": "FR12 TC08 PUT admin target", "imageUrl": "https://example.test/fr12-tc08-put-admin-target.png", "category_id": "{{category_id}}" },
+        "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" },
+        "controlledMarker": { "field": "name", "value": "FR12_TC08_PUT_ADMIN_TARGET_23127027" },
+        "cleanupInvariantMarkers": ["FR12_TC08_PUT_ADMIN_BASE_23127027", "FR12_TC08_PUT_ADMIN_TARGET_23127027"],
+        "expectedProduct": { "name": "FR12_TC08_PUT_ADMIN_TARGET_23127027", "price": 128026, "description": "FR12 TC08 PUT admin target", "imageUrl": "https://example.test/fr12-tc08-put-admin-target.png", "category_id": "{{category_id}}" },
+        "expected": { "accessObservation": "business_execution", "responseSuccessful": true, "stateObservation": "controlled_target_changed" }
+      },
+      {
+        "key": "delete_missing_token",
+        "method": "DELETE",
+        "path": "/api/products/:id",
+        "setup": { "method": "POST", "path": "/api/products", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "payload": { "name": "FR12_TC08_DELETE_MISSING_23127027", "price": 128031, "description": "FR12 TC08 DELETE missing target", "imageUrl": "https://example.test/fr12-tc08-delete-missing.png", "category_id": "{{category_id}}" }, "responseIdentifierField": "id", "expected": { "responseSuccessful": true, "strictPositiveIntegerId": true, "productPresent": true } },
+        "authorization": { "partition": "missing_token", "header": null },
+        "controlledMarker": { "field": "name", "value": "FR12_TC08_DELETE_MISSING_23127027" },
+        "cleanupInvariantMarkers": ["FR12_TC08_DELETE_MISSING_23127027"],
+        "expectedProduct": { "name": "FR12_TC08_DELETE_MISSING_23127027", "price": 128031, "description": "FR12 TC08 DELETE missing target", "imageUrl": "https://example.test/fr12-tc08-delete-missing.png", "category_id": "{{category_id}}" },
+        "expected": { "accessObservation": "authentication_denied", "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" }
+      },
+      {
+        "key": "delete_ordinary_user",
+        "method": "DELETE",
+        "path": "/api/products/:id",
+        "setup": { "method": "POST", "path": "/api/products", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "payload": { "name": "FR12_TC08_DELETE_USER_23127027", "price": 128032, "description": "FR12 TC08 DELETE user target", "imageUrl": "https://example.test/fr12-tc08-delete-user.png", "category_id": "{{category_id}}" }, "responseIdentifierField": "id", "expected": { "responseSuccessful": true, "strictPositiveIntegerId": true, "productPresent": true } },
+        "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" },
+        "controlledMarker": { "field": "name", "value": "FR12_TC08_DELETE_USER_23127027" },
+        "cleanupInvariantMarkers": ["FR12_TC08_DELETE_USER_23127027"],
+        "expectedProduct": { "name": "FR12_TC08_DELETE_USER_23127027", "price": 128032, "description": "FR12 TC08 DELETE user target", "imageUrl": "https://example.test/fr12-tc08-delete-user.png", "category_id": "{{category_id}}" },
+        "expected": { "accessObservation": "authorization_denied", "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" }
+      },
+      {
+        "key": "delete_admin",
+        "method": "DELETE",
+        "path": "/api/products/:id",
+        "setup": { "method": "POST", "path": "/api/products", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "payload": { "name": "FR12_TC08_DELETE_ADMIN_23127027", "price": 128033, "description": "FR12 TC08 DELETE admin target", "imageUrl": "https://example.test/fr12-tc08-delete-admin.png", "category_id": "{{category_id}}" }, "responseIdentifierField": "id", "expected": { "responseSuccessful": true, "strictPositiveIntegerId": true, "productPresent": true } },
+        "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" },
+        "controlledMarker": { "field": "name", "value": "FR12_TC08_DELETE_ADMIN_23127027" },
+        "cleanupInvariantMarkers": ["FR12_TC08_DELETE_ADMIN_23127027"],
+        "expectedProduct": { "name": "FR12_TC08_DELETE_ADMIN_23127027", "price": 128033, "description": "FR12 TC08 DELETE admin target", "imageUrl": "https://example.test/fr12-tc08-delete-admin.png", "category_id": "{{category_id}}" },
+        "expected": { "accessObservation": "business_execution", "responseSuccessful": true, "stateObservation": "controlled_target_removed" }
+      }
+    ],
+    "cleanup": { "markerField": "name", "identifierField": "id", "identifierType": "positive_integer", "method": "DELETE", "pathTemplate": "/api/products/:id", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" } },
+    "expected": {
+      "rowCount": 9,
+      "methodCount": 3,
+      "tokenPartitionCount": 3,
+      "loginSuccessful": true,
+      "tokenPresent": true,
+      "roleEvidenceMatches": true,
+      "categoryReadSuccessful": true,
+      "categoryReferenceFound": true,
+      "baselineSnapshotSuccessful": true,
+      "setupSuccessful": true,
+      "targetTransportSuccessful": true,
+      "targetStateSnapshotSuccessful": true,
+      "completedTargetResponses": 9,
+      "preCleanupSnapshotSuccessful": true,
+      "cleanupDiscoverySuccessful": true,
+      "cleanupResponseSuccessful": true,
+      "finalSnapshotSuccessful": true,
+      "finalMatchesBaseline": true
+    }
+  },
+  "category_mutation_access_matrix": {
+    "id": "FR12-TC09",
+    "title": "category POST PUT DELETE enforce missing-user-admin access partitions",
+    "apiSessions": {
+      "ordinaryUser": { "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "test@eshop.com", "password": "Test1234!" }, "tokenProperty": "token" }, "authorizationHeader": "Authorization", "bearerScheme": "Bearer", "userProperty": "user", "roleProperty": "role", "expectedRole": "user" },
+      "admin": { "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "admin@eshop.com", "password": "Admin123!" }, "tokenProperty": "token" }, "authorizationHeader": "Authorization", "bearerScheme": "Bearer", "userProperty": "user", "roleProperty": "role", "expectedRole": "admin" }
+    },
+    "snapshot": { "method": "GET", "path": "/api/categories" },
+    "rows": [
+      { "key": "post_missing_token", "method": "POST", "path": "/api/categories", "payload": { "name": "FR12_TC09_POST_MISSING_23127027" }, "authorization": { "partition": "missing_token", "header": null }, "cleanupInvariantMarkers": ["FR12_TC09_POST_MISSING_23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_record_absent" } },
+      { "key": "post_ordinary_user", "method": "POST", "path": "/api/categories", "payload": { "name": "FR12_TC09_POST_USER_23127027" }, "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12_TC09_POST_USER_23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_record_absent" } },
+      { "key": "post_admin", "method": "POST", "path": "/api/categories", "payload": { "name": "FR12_TC09_POST_ADMIN_23127027" }, "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12_TC09_POST_ADMIN_23127027"], "expected": { "responseSuccessful": true, "stateObservation": "controlled_record_present" } },
+      { "key": "put_missing_token", "method": "PUT", "path": "/api/categories/:id", "setup": { "method": "POST", "path": "/api/categories", "payload": { "name": "FR12_TC09_PUT_MISSING_BASE_23127027" }, "responseIdentifierField": "id" }, "payload": { "name": "FR12_TC09_PUT_MISSING_TARGET_23127027" }, "authorization": { "partition": "missing_token", "header": null }, "cleanupInvariantMarkers": ["FR12_TC09_PUT_MISSING_BASE_23127027", "FR12_TC09_PUT_MISSING_TARGET_23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" } },
+      { "key": "put_ordinary_user", "method": "PUT", "path": "/api/categories/:id", "setup": { "method": "POST", "path": "/api/categories", "payload": { "name": "FR12_TC09_PUT_USER_BASE_23127027" }, "responseIdentifierField": "id" }, "payload": { "name": "FR12_TC09_PUT_USER_TARGET_23127027" }, "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12_TC09_PUT_USER_BASE_23127027", "FR12_TC09_PUT_USER_TARGET_23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" } },
+      { "key": "put_admin", "method": "PUT", "path": "/api/categories/:id", "setup": { "method": "POST", "path": "/api/categories", "payload": { "name": "FR12_TC09_PUT_ADMIN_BASE_23127027" }, "responseIdentifierField": "id" }, "payload": { "name": "FR12_TC09_PUT_ADMIN_TARGET_23127027" }, "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12_TC09_PUT_ADMIN_BASE_23127027", "FR12_TC09_PUT_ADMIN_TARGET_23127027"], "expected": { "responseSuccessful": true, "stateObservation": "controlled_target_changed" } },
+      { "key": "delete_missing_token", "method": "DELETE", "path": "/api/categories/:id", "setup": { "method": "POST", "path": "/api/categories", "payload": { "name": "FR12_TC09_DELETE_MISSING_23127027" }, "responseIdentifierField": "id" }, "authorization": { "partition": "missing_token", "header": null }, "cleanupInvariantMarkers": ["FR12_TC09_DELETE_MISSING_23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" } },
+      { "key": "delete_ordinary_user", "method": "DELETE", "path": "/api/categories/:id", "setup": { "method": "POST", "path": "/api/categories", "payload": { "name": "FR12_TC09_DELETE_USER_23127027" }, "responseIdentifierField": "id" }, "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12_TC09_DELETE_USER_23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" } },
+      { "key": "delete_admin", "method": "DELETE", "path": "/api/categories/:id", "setup": { "method": "POST", "path": "/api/categories", "payload": { "name": "FR12_TC09_DELETE_ADMIN_23127027" }, "responseIdentifierField": "id" }, "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12_TC09_DELETE_ADMIN_23127027"], "expected": { "responseSuccessful": true, "stateObservation": "controlled_target_removed" } }
+    ],
+    "cleanup": { "markerField": "name", "identifierField": "id", "method": "DELETE", "pathTemplate": "/api/categories/:id", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" } },
+    "expected": { "rowCount": 9, "completedTargetResponses": 9, "finalMatchesBaseline": true }
+  },
+  "coupon_mutation_route_matrix": {
+    "id": "FR12-TC10",
+    "title": "coupon access control covers exposed Admin routes and required route discrepancy",
+    "apiSessions": {
+      "ordinaryUser": { "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "test@eshop.com", "password": "Test1234!" }, "tokenProperty": "token" }, "authorizationHeader": "Authorization", "bearerScheme": "Bearer", "userProperty": "user", "roleProperty": "role", "expectedRole": "user" },
+      "admin": { "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "admin@eshop.com", "password": "Admin123!" }, "tokenProperty": "token" }, "authorizationHeader": "Authorization", "bearerScheme": "Bearer", "userProperty": "user", "roleProperty": "role", "expectedRole": "admin" }
+    },
+    "malformedToken": "fr12.tc10.malformed",
+    "snapshot": { "method": "GET", "path": "/api/coupons", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" } },
+    "rows": [
+      { "key": "exposed_post_missing", "routeFamily": "contract_exposed", "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10POSTMISS23127027", "type": "fixed", "discount_value": 1001, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "authorization": { "partition": "missing_token", "header": null }, "cleanupInvariantMarkers": ["FR12TC10POSTMISS23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_record_absent" } },
+      { "key": "exposed_post_invalid", "routeFamily": "contract_exposed", "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10POSTBAD23127027", "type": "fixed", "discount_value": 1002, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12TC10POSTBAD23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_record_absent" } },
+      { "key": "exposed_post_user", "routeFamily": "contract_exposed", "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10POSTUSER23127027", "type": "fixed", "discount_value": 1003, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12TC10POSTUSER23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_record_absent" } },
+      { "key": "exposed_post_admin", "routeFamily": "contract_exposed", "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10POSTADMIN23127027", "type": "fixed", "discount_value": 1004, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12TC10POSTADMIN23127027"], "expected": { "responseSuccessful": true, "stateObservation": "controlled_record_present" } },
+      { "key": "exposed_delete_missing", "routeFamily": "contract_exposed", "method": "DELETE", "path": "/api/admin/coupons/:id", "setup": { "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10DELMISS23127027", "type": "fixed", "discount_value": 1011, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "responseIdentifierField": "id" }, "authorization": { "partition": "missing_token", "header": null }, "cleanupInvariantMarkers": ["FR12TC10DELMISS23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" } },
+      { "key": "exposed_delete_invalid", "routeFamily": "contract_exposed", "method": "DELETE", "path": "/api/admin/coupons/:id", "setup": { "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10DELBAD23127027", "type": "fixed", "discount_value": 1012, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "responseIdentifierField": "id" }, "authorization": { "partition": "invalid_bearer", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12TC10DELBAD23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" } },
+      { "key": "exposed_delete_user", "routeFamily": "contract_exposed", "method": "DELETE", "path": "/api/admin/coupons/:id", "setup": { "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10DELUSER23127027", "type": "fixed", "discount_value": 1013, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "responseIdentifierField": "id" }, "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12TC10DELUSER23127027"], "expected": { "responseSuccessful": false, "stateObservation": "controlled_target_unchanged" } },
+      { "key": "exposed_delete_admin", "routeFamily": "contract_exposed", "method": "DELETE", "path": "/api/admin/coupons/:id", "setup": { "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10DELADMIN23127027", "type": "fixed", "discount_value": 1014, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "responseIdentifierField": "id" }, "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12TC10DELADMIN23127027"], "expected": { "responseSuccessful": true, "stateObservation": "controlled_target_removed" } },
+      { "key": "required_post_admin", "routeFamily": "readme_required", "method": "POST", "path": "/api/coupons", "payload": { "code": "FR12TC10REQPOST23127027", "type": "fixed", "discount_value": 1021, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12TC10REQPOST23127027"], "expected": { "responseSuccessful": true, "stateObservation": "controlled_record_present" } },
+      { "key": "required_put_admin", "routeFamily": "readme_required", "method": "PUT", "path": "/api/coupons/:id", "setup": { "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10REQPUT23127027", "type": "fixed", "discount_value": 1022, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "responseIdentifierField": "id" }, "payload": { "code": "FR12TC10REQPUTTARGET23127027", "type": "fixed", "discount_value": 1023, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12TC10REQPUT23127027", "FR12TC10REQPUTTARGET23127027"], "expected": { "responseSuccessful": true, "stateObservation": "controlled_record_present" } },
+      { "key": "required_delete_admin", "routeFamily": "readme_required", "method": "DELETE", "path": "/api/coupons/:id", "setup": { "method": "POST", "path": "/api/admin/coupons", "payload": { "code": "FR12TC10REQDEL23127027", "type": "fixed", "discount_value": 1024, "min_order_amount": 0, "expired_at": "2099-12-31", "max_uses_per_user": 1 }, "responseIdentifierField": "id" }, "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" }, "cleanupInvariantMarkers": ["FR12TC10REQDEL23127027"], "expected": { "responseSuccessful": true, "stateObservation": "controlled_target_removed" } }
+    ],
+    "cleanup": { "markerField": "code", "identifierField": "id", "method": "DELETE", "pathTemplate": "/api/admin/coupons/:id", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" } },
+    "expected": { "contractExposedRowCount": 8, "readmeRequiredRowCount": 3, "completedTargetResponses": 11, "finalMatchesBaseline": true }
+  },
+  "profile_role_injection_user": {
+    "id": "FR12-TC11",
+    "title": "ordinary user profile update cannot elevate persisted or effective role",
+    "apiSession": { "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "test@eshop.com", "password": "Test1234!" }, "tokenProperty": "token" }, "authorizationHeader": "Authorization", "bearerScheme": "Bearer", "userProperty": "user", "roleProperty": "role", "expectedRole": "user" },
+    "profileRead": { "method": "GET", "path": "/api/users/me", "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" } },
+    "profileUpdate": { "method": "PUT", "path": "/api/users/me", "authorization": { "partition": "ordinary_user", "header": "Authorization", "scheme": "Bearer" } },
+    "injectionPayload": { "name": "FR12 TC11 Controlled User", "shipping_address": "23127027 controlled user address", "phone": "0912270271", "role": "admin" },
+    "persistedFields": ["name", "shipping_address", "phone", "role"],
+    "roleField": "role",
+    "expectedOriginalRole": "user",
+    "expectedEffectiveRole": "user",
+    "expected": { "baselineReadSuccessful": true, "roleUnchanged": true, "freshLoginRoleUnchanged": true, "restorationSuccessful": true }
+  },
+  "profile_role_injection_admin": {
+    "id": "FR12-TC12",
+    "title": "admin self-profile update cannot demote persisted or effective role",
+    "apiSession": { "login": { "method": "POST", "path": "/api/login", "credentials": { "email": "admin@eshop.com", "password": "Admin123!" }, "tokenProperty": "token" }, "authorizationHeader": "Authorization", "bearerScheme": "Bearer", "userProperty": "user", "roleProperty": "role", "expectedRole": "admin" },
+    "profileRead": { "method": "GET", "path": "/api/users/me", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" } },
+    "profileUpdate": { "method": "PUT", "path": "/api/users/me", "authorization": { "partition": "admin", "header": "Authorization", "scheme": "Bearer" } },
+    "injectionPayload": { "name": "FR12 TC12 Controlled Admin", "shipping_address": "23127027 controlled admin address", "phone": "0912270272", "role": "user" },
+    "persistedFields": ["name", "shipping_address", "phone", "role"],
+    "roleField": "role",
+    "expectedOriginalRole": "admin",
+    "expectedEffectiveRole": "admin",
+    "expected": { "baselineReadSuccessful": true, "roleUnchanged": true, "freshLoginRoleUnchanged": true, "restorationSuccessful": true }
   }
 }
