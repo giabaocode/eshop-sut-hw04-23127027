@@ -1,7 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
 const runTimestamp = new Date().toISOString();
-const reportDirectory = process.env.PW_REPORT_DIR ?? 'playwright-report';
+const reportDirectory = process.env.PW_REPORT_DIR ?? 'playwright-report/local';
 const runLabel = process.env.PW_RUN_LABEL ?? 'local';
 
 export default defineConfig({

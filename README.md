@@ -1,5 +1,53 @@
 # Đặc tả Yêu cầu Hệ thống (System Requirements Specification)
 
+## HW04 — Automation Testing submission summary
+
+- Student ID: `23127027`
+- Selected features: FR-01 Account registration, FR-07 Shopping cart, FR-12 Access control
+- Automated logical test cases: **36** (12 per feature)
+- Final browser runs: **9** (each feature on Chromium, Firefox, and WebKit)
+- Final executions: **108** — **30 passed**, **78 failed**
+- Confirmed root-cause bug groups: **16**
+- Inconclusive automation boundaries: FR12-TC05 and FR12-TC06 order-status probes (no reversible API-only order fixture)
+- Public repository: https://github.com/giabaocode/eshop-sut-hw04-23127027
+- Demo video: **PENDING — student must record and add the unlisted YouTube URL**
+- Main report: [`docs/hw04-final-report.md`](docs/hw04-final-report.md)
+- AI critique: [`docs/ai-critique.md`](docs/ai-critique.md)
+- AI audit: [`ai-audit/AI_AUDIT.md`](ai-audit/AI_AUDIT.md)
+- Bug report: [`docs/bug-report.md`](docs/bug-report.md)
+- Final HTML reports: [`playwright-report/final/`](playwright-report/final/)
+- Git test-commit log: [`git-commit-log.txt`](git-commit-log.txt)
+- Reusable Agent Skill: [`skills/hw04-playwright-workflow/SKILL.md`](skills/hw04-playwright-workflow/SKILL.md)
+
+### Test environment
+
+Copy `.env.example` to a local ignored `.env`, replace the placeholder values,
+and export that file before running Playwright. FR12-TC05 requires
+`PW_TEST_JWT_SECRET` so it can construct an expired JWT without committing the
+SUT signing material to test data. Routine runs write their HTML report to
+`playwright-report/local`; the nine submission reports are preserved separately
+under `playwright-report/final` and must not be overwritten by local runs.
+
+```bash
+set -a
+source .env
+set +a
+npm test
+```
+
+### Self-assessment
+
+| Criterion | Maximum | Self-assessed |
+|---|---:|---:|
+| Task 1 — Feature A (FR-01) | 25 | 25 |
+| Task 1 — Feature B (FR-07) | 25 | 25 |
+| Task 1 — Feature C (FR-12) | 25 | 25 |
+| Task 2 — Demo video | 15 | 0 (pending student recording) |
+| Agent Skill | 10 | 0 (skill complete; demonstration video pending) |
+| **Total** | **100** | **75** |
+
+Provisional archive grade token: `075`. Update both video-dependent rows, total, demo URL, and archive filename after recording and demonstrating the skill.
+
 # EShop — Phiên bản dành cho Kiểm thử Phần mềm
 
 > **Phạm vi tài liệu**: Mô tả **yêu cầu nghiệp vụ đúng** của hệ thống EShop.

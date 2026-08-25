@@ -1,0 +1,5 @@
+Codex read the eight-page assignment PDF, audited the repository, completed FR12-TC09 through FR12-TC12 with external JSON data, and preserved the existing FR01/FR07 automation. Static validation passed with exactly 36 logical cases and three browser projects.
+
+Codex ran nine genuine final feature-browser executions. The result was 108 executions: 30 passed and 78 failed. Nine separate Playwright HTML reports were generated and verified to contain `Run by: 23127027` plus a run-specific ISO timestamp. Controlled runtime data was cleaned and the SQLite database was restored to its verified backup hash.
+
+Codex added the final report, 200–300 word AI critique, consolidated bug report, student-only checklist, final execution summary, eight-entry test commit log, README summary/self-assessment, reusable `hw04-playwright-workflow` Agent Skill, and PDF versions of the mandatory documents. It did not fabricate the student's voice, identity proof, YouTube upload, GitHub Issue publication, human review, commit/push, or Moodle submission.

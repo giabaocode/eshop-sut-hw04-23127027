@@ -42,7 +42,7 @@ No files were modified.
 ````
 
 ## Human review/action
-Tôi đã đối chiếu ba file, xác nhận prompt và output được lưu nguyên văn, template có đủ năm trường, không có evidence bị bịa và không có source file nào bị sửa.
+Em đã đối chiếu ba file, xác nhận prompt và output được lưu nguyên văn, template có đủ năm trường, không có evidence bị bịa và không có source file nào bị sửa.
 
 
 # Interaction 0002
@@ -72,7 +72,7 @@ Implementation inventory based only on scoped documentation and source files. �
 ````
 
 ## Human review/action
-Tôi đã đối chiếu các dẫn chiếu web và backend cho FR-01, FR-07 và FR-12; các nhận định chính phù hợp source. Tôi loại phần frontend-mobile khỏi test basis HW04 vì phạm vi Playwright là web. Các discrepancy được giữ làm test target và chưa được báo cáo là defect khi chưa có execution evidence.
+Em đã đối chiếu các dẫn chiếu web và backend cho FR-01, FR-07 và FR-12; các nhận định chính phù hợp source. Em loại phần frontend-mobile khỏi test basis HW04 vì phạm vi Playwright là web. Các discrepancy được giữ làm test target và chưa được báo cáo là defect khi chưa có execution evidence.
 
 
 # Interaction 0003
@@ -104,7 +104,7 @@ No other files were modified, and no tests, servers, installations, or Git comma
 ````
 
 ## Human review/action
-Tôi đã kiểm tra đủ 36 case và không chấp nhận draft 0003 ở trạng thái hiện tại. Tôi yêu cầu loại suy diễn ảnh sản phẩm khỏi FR07-TC01; đổi FR07-TC03 thành kiểm tra gộp sản phẩm hoàn toàn qua UI; làm oracle badge FR07-TC12 xác định bằng trạng thái ban đầu không có sản phẩm và thêm đúng một đơn vị; bổ sung chính sách 9 feature-browser runs, 9 HTML reports với student ID và ISO timestamp từ execution thật; đồng thời cập nhật coverage FR-12 gồm TC11-TC12. Không thay đổi số lượng 12 case cho mỗi feature và chưa gọi discrepancy nào là defect.
+Em đã kiểm tra đủ 36 case và không chấp nhận draft 0003 ở trạng thái hiện tại. Em yêu cầu loại suy diễn ảnh sản phẩm khỏi FR07-TC01; đổi FR07-TC03 thành kiểm tra gộp sản phẩm hoàn toàn qua UI; làm oracle badge FR07-TC12 xác định bằng trạng thái ban đầu không có sản phẩm và thêm đúng một đơn vị; bổ sung chính sách 9 feature-browser runs, 9 HTML reports với student ID và ISO timestamp từ execution thật; đồng thời cập nhật coverage FR-12 gồm TC11-TC12. Không thay đổi số lượng 12 case cho mỗi feature và chưa gọi discrepancy nào là defect.
 
 
 # Interaction 0004
@@ -130,7 +130,7 @@ Applied all five requested corrections and verified the structure remains exactl
 ````
 
 ## Human review/action
-Tôi đã so sánh corrected matrix với rejected artifact 0003 và xác nhận Codex chỉ áp dụng các correction đã yêu cầu. Matrix giữ đúng 12 case cho mỗi feature, dùng external JSON, có ít nhất ba assertion patterns cho mỗi feature, áp dụng Chromium/Firefox/WebKit, quy định 9 run và 9 genuine HTML reports với Run by: 23127027 cùng ISO timestamp sinh trong execution. Không có source SUT bị sửa và chưa có pass/fail hoặc defect nào được tuyên bố.
+Em đã so sánh corrected matrix với rejected artifact 0003 và xác nhận Codex chỉ áp dụng các correction đã yêu cầu. Matrix giữ đúng 12 case cho mỗi feature, dùng external JSON, có ít nhất ba assertion patterns cho mỗi feature, áp dụng Chromium/Firefox/WebKit, quy định 9 run và 9 genuine HTML reports với Run by: 23127027 cùng ISO timestamp sinh trong execution. Không có source SUT bị sửa và chưa có pass/fail hoặc defect nào được tuyên bố.
 
 
 # Interaction 0005
@@ -164,7 +164,7 @@ No prohibited files were edited.
 ````
 
 ## Human review/action
-Tôi đã review package.json, Playwright config, TypeScript config, environment example và infrastructure smoke spec. Typecheck thành công, test listing có đúng ba browser projects và smoke execution thật pass 3/3. Tôi đã mở HTML report và xác nhận hiển thị Run by: 23127027, ISO timestamp 2026-08-18T07:20:21.847Z cùng kết quả Chromium, Firefox và WebKit. Report này chỉ dùng kiểm chứng infrastructure, không được tính vào chín feature-browser reports cuối và không có source SUT nào bị sửa.
+Em đã review package.json, Playwright config, TypeScript config, environment example và infrastructure smoke spec. Typecheck thành công, test listing có đúng ba browser projects và smoke execution thật pass 3/3. Em đã mở HTML report và xác nhận hiển thị Run by: 23127027, ISO timestamp 2026-08-18T07:20:21.847Z cùng kết quả Chromium, Firefox và WebKit. Report này chỉ dùng kiểm chứng infrastructure, không được tính vào chín feature-browser reports cuối và không có source SUT nào bị sửa.
 
 
 # Interaction 0006
@@ -204,7 +204,7 @@ Per instruction, I did not run tests, servers, package commands, Git commands, o
 ````
 
 ## Human review/action
-Tôi đã review code trước khi chạy và phát hiện locator getByLabel không phù hợp DOM hiện tại, exact button name có thể làm mất form locator, fill luôn phụ thuộc confirmation làm nhiễu TC03, ID/title chưa nằm trong JSON và error locator có thể bỏ sót error thật. Tôi yêu cầu sửa automation để locator form-scoped theo cấu trúc label-parent-input, dùng accessible-name case-insensitive, cho phép điền đúng tập field cần kiểm tra, lấy ID/title từ external JSON và phát hiện error mà không sửa SUT hoặc né assertion. Chưa có test execution hoặc defect claim.
+Em đã review code trước khi chạy và phát hiện locator getByLabel không phù hợp DOM hiện tại, exact button name có thể làm mất form locator, fill luôn phụ thuộc confirmation làm nhiễu TC03, ID/title chưa nằm trong JSON và error locator có thể bỏ sót error thật. Em yêu cầu sửa automation để locator form-scoped theo cấu trúc label-parent-input, dùng accessible-name case-insensitive, cho phép điền đúng tập field cần kiểm tra, lấy ID/title từ external JSON và phát hiện error mà không sửa SUT hoặc né assertion. Chưa có test execution hoặc defect claim.
 
 
 # Interaction 0007
@@ -249,7 +249,7 @@ No tests, servers, package commands, Git commands, or commits were run.
 ````
 
 ## Human review/action
-Tôi đã đối chiếu correction với prompt và phát hiện email_format_partitions.fieldsToFill vẫn chứa confirmationPassword, nên TC03 chưa cô lập đúng email validity. Tôi yêu cầu bỏ confirmationPassword khỏi riêng field list của TC03, giữ nguyên confirmation assertions ở TC01, TC02 và TC04, không thay đổi requirement assertions hoặc source SUT. Chưa chạy test và chưa có defect claim.
+Em đã đối chiếu correction với prompt và phát hiện email_format_partitions.fieldsToFill vẫn chứa confirmationPassword, nên TC03 chưa cô lập đúng email validity. Em yêu cầu bỏ confirmationPassword khỏi riêng field list của TC03, giữ nguyên confirmation assertions ở TC01, TC02 và TC04, không thay đổi requirement assertions hoặc source SUT. Chưa chạy test và chưa có defect claim.
 
 
 # Interaction 0008
@@ -275,7 +275,7 @@ No other values changed. Tests were not run.
 ````
 
 ## Human review/action
-Tôi đã kiểm tra toàn bộ execution output và final diff. Codex ban đầu sửa nhầm fieldsToFill của TC01 nhưng đã tự hoàn tác trước khi hoàn thành; final diff chỉ loại confirmationPassword khỏi email_format_partitions.fieldsToFill của TC03. Ba file TypeScript không thay đổi, TC01/TC02/TC04 vẫn giữ confirmation assertions, chưa chạy test, chưa có defect claim và source SUT không bị sửa.
+Em đã kiểm tra toàn bộ execution output và final diff. Codex ban đầu sửa nhầm fieldsToFill của TC01 nhưng đã tự hoàn tác trước khi hoàn thành; final diff chỉ loại confirmationPassword khỏi email_format_partitions.fieldsToFill của TC03. Ba file TypeScript không thay đổi, TC01/TC02/TC04 vẫn giữ confirmation assertions, chưa chạy test, chưa có defect claim và source SUT không bị sửa.
 
 
 # Interaction 0009
@@ -311,7 +311,7 @@ No tests were run. No other assertions or files were changed.
 ````
 
 ## Human review/action
-Tôi đã review final diff và xác nhận Codex chỉ thay đúng bốn matcher toBeRequired không được Playwright 1.62.1 hỗ trợ bằng toHaveAttribute("required", ""), không làm yếu requirement assertion. FR01 JSON, page object và data loader không thay đổi. Typecheck đã thành công và Playwright liệt kê đúng bốn test FR01-TC01 đến FR01-TC04 trên Chromium. Chưa thực thi browser test, chưa có pass/fail hoặc defect claim và source SUT không bị sửa.
+Em đã review final diff và xác nhận Codex chỉ thay đúng bốn matcher toBeRequired không được Playwright 1.62.1 hỗ trợ bằng toHaveAttribute("required", ""), không làm yếu requirement assertion. FR01 JSON, page object và data loader không thay đổi. Typecheck đã thành công và Playwright liệt kê đúng bốn test FR01-TC01 đến FR01-TC04 trên Chromium. Chưa thực thi browser test, chưa có pass/fail hoặc defect claim và source SUT không bị sửa.
 
 
 # Interaction 0010
@@ -436,7 +436,7 @@ No Playwright tests or SUT were run. Static TypeScript, JSON syntax, and diff ch
 ````
 
 ## Human review/action
-Tôi đã review toàn bộ bốn file automation và xác nhận increment 2 bổ sung đúng FR01-TC05 đến FR01-TC08. ID, title, input, fieldsToFill và expected values được lấy từ external JSON; mỗi case chỉ điền fullName, email và password. Các password partition cô lập đúng boundary 7/8 ký tự, thiếu chữ hoa, thiếu chữ thường và thiếu chữ số. Invalid cases giữ oracle lỗi ứng dụng không rỗng nằm trên submit cùng zero POST /api/register; boundary 8 giữ success oracle tới trang đăng nhập và một registration POST. TC01-TC04 không bị làm yếu. Typecheck thành công và Playwright liệt kê đúng 8 test FR01 trên Chromium. Chưa thực thi browser test, chưa có pass/fail hoặc defect claim và source SUT không bị sửa.
+Em đã review toàn bộ bốn file automation và xác nhận increment 2 bổ sung đúng FR01-TC05 đến FR01-TC08. ID, title, input, fieldsToFill và expected values được lấy từ external JSON; mỗi case chỉ điền fullName, email và password. Các password partition cô lập đúng boundary 7/8 ký tự, thiếu chữ hoa, thiếu chữ thường và thiếu chữ số. Invalid cases giữ oracle lỗi ứng dụng không rỗng nằm trên submit cùng zero POST /api/register; boundary 8 giữ success oracle tới trang đăng nhập và một registration POST. TC01-TC04 không bị làm yếu. Typecheck thành công và Playwright liệt kê đúng 8 test FR01 trên Chromium. Chưa thực thi browser test, chưa có pass/fail hoặc defect claim và source SUT không bị sửa.
 
 
 # Interaction 0011
@@ -587,7 +587,7 @@ Static JSON, diff, and strict TypeScript checks passed. No tests were run. No SU
 ````
 
 ## Human review/action
-Tôi đã review toàn bộ increment 3 và xác nhận automation bổ sung đúng FR01-TC09 đến FR01-TC12, nâng tổng FR-01 lên đúng 12 test. TC09 cô lập trường hợp thiếu allowed special; TC10 dùng bảy external JSON rows cho @, $, !, %, *, ?, & với test.step, test.slow và soft assertions giữ nguyên navigation cùng one-POST oracle cho từng row; TC11 giữ confirmation control visible, required và type=password làm hard prerequisite trước decision table unequal/equal; TC12 dùng absolute PW_API_URL, body đúng API contract, kiểm tra first 200/success message/numeric id rồi yêu cầu duplicate response không successful mà không suy diễn status hoặc wording. TC01-TC08 không bị làm yếu, Page Object không cần sửa. Typecheck thành công và Playwright liệt kê đúng FR01-TC09 đến FR01-TC12 trên Chromium. Chưa thực thi browser/API test, chưa có pass/fail hoặc defect claim và source SUT không bị sửa.
+Em đã review toàn bộ increment 3 và xác nhận automation bổ sung đúng FR01-TC09 đến FR01-TC12, nâng tổng FR-01 lên đúng 12 test. TC09 cô lập trường hợp thiếu allowed special; TC10 dùng bảy external JSON rows cho @, $, !, %, *, ?, & với test.step, test.slow và soft assertions giữ nguyên navigation cùng one-POST oracle cho từng row; TC11 giữ confirmation control visible, required và type=password làm hard prerequisite trước decision table unequal/equal; TC12 dùng absolute PW_API_URL, body đúng API contract, kiểm tra first 200/success message/numeric id rồi yêu cầu duplicate response không successful mà không suy diễn status hoặc wording. TC01-TC08 không bị làm yếu, Page Object không cần sửa. Typecheck thành công và Playwright liệt kê đúng FR01-TC09 đến FR01-TC12 trên Chromium. Chưa thực thi browser/API test, chưa có pass/fail hoặc defect claim và source SUT không bị sửa.
 
 
 # Interaction 0012
@@ -745,7 +745,7 @@ No Playwright tests ran and no SUT was started. No SUT, database, evidence, conf
 ````
 
 ## Human review/action
-Tôi đã review toàn bộ năm file automation và xác nhận FR-07 increment 1 bổ sung đúng FR07-TC01 đến FR07-TC04. ID, title, product fixture, authentication partitions, paths, labels, prices, quantities và expected counts đều lấy từ external JSON. TC01 tạo cart qua hai product card riêng biệt và giữ đầy đủ structure, h1, column, quantity-control cùng currency assertions. TC02 dùng login token hợp lệ để snapshot cart, thực hiện đủ missing, malformed và JWT đã ký nhưng hết hạn qua cả GET và POST, sau đó so sánh cart trước/sau mà không suy diễn status hoặc wording. TC03 kích hoạt cùng product card đúng hai lần, không retry hoặc bù hành vi. TC04 giữ nút + row-scoped làm hard prerequisite trước state-delta assertions. FR01-TC01 đến FR01-TC12 không thay đổi. Typecheck thành công và Playwright liệt kê đúng bốn test FR07-TC01 đến FR07-TC04 trên Chromium. Chưa thực thi browser/API test, chưa có pass/fail hoặc defect claim và source SUT không bị sửa.
+Em đã review toàn bộ năm file automation và xác nhận FR-07 increment 1 bổ sung đúng FR07-TC01 đến FR07-TC04. ID, title, product fixture, authentication partitions, paths, labels, prices, quantities và expected counts đều lấy từ external JSON. TC01 tạo cart qua hai product card riêng biệt và giữ đầy đủ structure, h1, column, quantity-control cùng currency assertions. TC02 dùng login token hợp lệ để snapshot cart, thực hiện đủ missing, malformed và JWT đã ký nhưng hết hạn qua cả GET và POST, sau đó so sánh cart trước/sau mà không suy diễn status hoặc wording. TC03 kích hoạt cùng product card đúng hai lần, không retry hoặc bù hành vi. TC04 giữ nút + row-scoped làm hard prerequisite trước state-delta assertions. FR01-TC01 đến FR01-TC12 không thay đổi. Typecheck thành công và Playwright liệt kê đúng bốn test FR07-TC01 đến FR07-TC04 trên Chromium. Chưa thực thi browser/API test, chưa có pass/fail hoặc defect claim và source SUT không bị sửa.
 
 
 # Interaction 0013
@@ -786,7 +786,7 @@ All four FR07 test declarations and all existing assertions remain. TypeScript t
 ````
 
 ## Human review/action
-Tôi đã review final diff và xác nhận Codex chỉ sửa tests/features/fr07-cart.spec.ts tại đúng hai điểm. FR07-TC01 thêm test.slow để toàn bộ independent soft assertions có đủ test budget mà không giảm timeout hoặc làm yếu oracle. FR07-TC04 thay immediate count bằng web-first toHaveCount trước khi ghi nhận beforeRowCount, khắc phục timing issue đã được failure DOM chứng minh trong khi giữ nguyên hard prerequisite nút + và toàn bộ state-delta assertions. Cả bốn FR07 test declarations và các assertion hiện có vẫn được giữ nguyên. Typecheck thành công, chưa rerun Playwright, chưa có kết quả corrected run hoặc defect claim mới và source SUT không bị sửa.
+Em đã review final diff và xác nhận Codex chỉ sửa tests/features/fr07-cart.spec.ts tại đúng hai điểm. FR07-TC01 thêm test.slow để toàn bộ independent soft assertions có đủ test budget mà không giảm timeout hoặc làm yếu oracle. FR07-TC04 thay immediate count bằng web-first toHaveCount trước khi ghi nhận beforeRowCount, khắc phục timing issue đã được failure DOM chứng minh trong khi giữ nguyên hard prerequisite nút + và toàn bộ state-delta assertions. Cả bốn FR07 test declarations và các assertion hiện có vẫn được giữ nguyên. Typecheck thành công, chưa rerun Playwright, chưa có kết quả corrected run hoặc defect claim mới và source SUT không bị sửa.
 
 
 # Interaction 0014
@@ -954,7 +954,7 @@ No Playwright tests were run, and no execution result or SUT defect is claimed. 
 
 ## Human review/action
 
-Từ chối output 0014. Human action: Tôi đã review increment 2 và phát hiện TC05-TC08 dùng exact label “Tổng cộng” để định vị cart total trước target action. Điều này khiến TC06-TC08 có thể bị chặn bởi requirement của FR07-TC10 trước khi dialog/delete oracles được thực thi, nên các case chưa được cô lập đúng. TC05 vẫn phải giữ visible quantity fixture và đúng một Add click, không được bù hành vi nếu fixture thất bại. Cần lưu output hiện tại làm rejected artifact và sửa locator cart summary để không khẳng định exact label; FR07-TC10 sẽ giữ exact-label oracle. Chưa chạy Playwright và SUT không bị sửa.
+Từ chối output 0014. Human action: Em đã review increment 2 và phát hiện TC05-TC08 dùng exact label “Tổng cộng” để định vị cart total trước target action. Điều này khiến TC06-TC08 có thể bị chặn bởi requirement của FR07-TC10 trước khi dialog/delete oracles được thực thi, nên các case chưa được cô lập đúng. TC05 vẫn phải giữ visible quantity fixture và đúng một Add click, không được bù hành vi nếu fixture thất bại. Cần lưu output hiện tại làm rejected artifact và sửa locator cart summary để không khẳng định exact label; FR07-TC10 sẽ giữ exact-label oracle. Chưa chạy Playwright và SUT không bị sửa.
 
 
 # Interaction 0015
@@ -1089,7 +1089,7 @@ No browser or API tests were run.
 
 ## Human review/action
 
-Chấp nhận output 0015. Human action: Tôi đã review correction và xác nhận FR07-TC05 đến FR07-TC08 không còn dùng exact label “Tổng cộng” hoặc “Tổng tạm tính” để định vị cart total. Summary amount được tìm trong semantic main của cart bằng currency-only regex được neo toàn chuỗi và loại mọi table descendant, nên line amount không thể thỏa locator; exact-label oracle vẫn dành riêng cho FR07-TC10. TC05 giữ đúng một visible Product Detail Add activation cùng các hard fixture prerequisites, không retry hoặc bù hành vi. TC06 giữ red-action và dialog-before-delete oracle; TC07 giữ cancel/no-mutation oracle; TC08 giữ confirmed-delete, total, remaining-row và badge oracle. FR07-TC01 đến FR07-TC04 không bị làm yếu. External JSON có đúng bốn key FR07-TC05 đến FR07-TC08 và không chứa total-label dependency. Typecheck thành công, Playwright chỉ liệt kê đúng 8 FR07 test, forbidden-pattern và whitespace scans đều sạch. Chưa chạy browser/API test và không sửa SUT, FR-01, database, evidence, configuration, documentation hoặc package files.
+Chấp nhận output 0015. Human action: Em đã review correction và xác nhận FR07-TC05 đến FR07-TC08 không còn dùng exact label “Tổng cộng” hoặc “Tổng tạm tính” để định vị cart total. Summary amount được tìm trong semantic main của cart bằng currency-only regex được neo toàn chuỗi và loại mọi table descendant, nên line amount không thể thỏa locator; exact-label oracle vẫn dành riêng cho FR07-TC10. TC05 giữ đúng một visible Product Detail Add activation cùng các hard fixture prerequisites, không retry hoặc bù hành vi. TC06 giữ red-action và dialog-before-delete oracle; TC07 giữ cancel/no-mutation oracle; TC08 giữ confirmed-delete, total, remaining-row và badge oracle. FR07-TC01 đến FR07-TC04 không bị làm yếu. External JSON có đúng bốn key FR07-TC05 đến FR07-TC08 và không chứa total-label dependency. Typecheck thành công, Playwright chỉ liệt kê đúng 8 FR07 test, forbidden-pattern và whitespace scans đều sạch. Chưa chạy browser/API test và không sửa SUT, FR-01, database, evidence, configuration, documentation hoặc package files.
 
 # Interaction 0016
 
@@ -1258,7 +1258,7 @@ No browser or API tests were executed. No SUT, FR-01, audit, evidence, database,
 
 ## Human review/action
 
-Từ chối output 0016. Human action: Tôi đã review toàn bộ diff FR-07 increment 3 và phát hiện TC12 chưa sử dụng targetProduct.quantity nên chưa chứng minh Add đúng một đơn vị. visualAddFeedback có thể chấp nhận alert hoặc status tồn tại trước thao tác nên thiếu before/after feedback delta. semanticCartBadge tìm số trong toàn bộ parent navigation nên chưa chứng minh số đó thực sự thuộc hoặc được liên kết với Giỏ hàng. Ngoài ra TC09 và TC12 lặp soft count/visibility trên locator bị thiếu, có nguy cơ hết test budget trước khi hoàn thành các oracle độc lập. Cần lưu proposal hiện tại làm rejected artifact và sửa bằng visible quantity prerequisite, feedback state transition, badge association chặt chẽ, cùng guarded visibility hoặc test.slow phù hợp. Chưa chạy Playwright browser/API test và SUT không bị sửa.
+Từ chối output 0016. Human action: Em đã review toàn bộ diff FR-07 increment 3 và phát hiện TC12 chưa sử dụng targetProduct.quantity nên chưa chứng minh Add đúng một đơn vị. visualAddFeedback có thể chấp nhận alert hoặc status tồn tại trước thao tác nên thiếu before/after feedback delta. semanticCartBadge tìm số trong toàn bộ parent navigation nên chưa chứng minh số đó thực sự thuộc hoặc được liên kết với Giỏ hàng. Ngoài ra TC09 và TC12 lặp soft count/visibility trên locator bị thiếu, có nguy cơ hết test budget trước khi hoàn thành các oracle độc lập. Cần lưu proposal hiện tại làm rejected artifact và sửa bằng visible quantity prerequisite, feedback state transition, badge association chặt chẽ, cùng guarded visibility hoặc test.slow phù hợp. Chưa chạy Playwright browser/API test và SUT không bị sửa.
 
 # Interaction 0017
 
@@ -1436,7 +1436,7 @@ No browser or API test was executed.
 
 ## Human review/action
 
-Từ chối output 0017. Human action: Tôi đã review correction diff và xác nhận feedback baseline/delta, badge association, test.slow cùng guarded visibility đã được sửa đúng. Tuy nhiên TC12 vẫn dùng soft assertions cho quantity count, visibility và value rồi thực hiện Add vô điều kiện. Vì vậy quantity chưa phải hard fixture prerequisite và post-Add feedback/badge evidence có thể được thu dưới trạng thái không bảo đảm đúng một đơn vị. Cần lưu proposal 0017 làm rejected artifact và sửa quantity thành hard web-first prerequisite hoặc đặt bằng visible control rồi hard-assert trước đúng một Add activation. Chưa chạy Playwright browser/API test và SUT không bị sửa.
+Từ chối output 0017. Human action: Em đã review correction diff và xác nhận feedback baseline/delta, badge association, test.slow cùng guarded visibility đã được sửa đúng. Tuy nhiên TC12 vẫn dùng soft assertions cho quantity count, visibility và value rồi thực hiện Add vô điều kiện. Vì vậy quantity chưa phải hard fixture prerequisite và post-Add feedback/badge evidence có thể được thu dưới trạng thái không bảo đảm đúng một đơn vị. Cần lưu proposal 0017 làm rejected artifact và sửa quantity thành hard web-first prerequisite hoặc đặt bằng visible control rồi hard-assert trước đúng một Add activation. Chưa chạy Playwright browser/API test và SUT không bị sửa.
 
 # Interaction 0018
 
@@ -1542,7 +1542,7 @@ No browser/API test ran, and no prohibited file was changed.
 
 ## Human review/action
 
-Chấp nhận output 0018. Human action: Tôi đã review final correction và xác nhận chỉ tests/features/fr07-cart.spec.ts thay đổi so với rejected artifact 0017, tại đúng quantity prerequisite block của FR07-TC12. Quantity control được yêu cầu đúng external count, visible và có displayed value bằng String(targetProduct.quantity) dưới hard web-first assertions trước feedback baseline và đúng một addToCartOnce activation. Feedback before/after transition, semantic badge association, guarded reads, test.slow, image-alt và badge-delta oracles được giữ nguyên. Năm automation file còn lại byte-identical với artifact 0017; FR07-TC01 đến FR07-TC11 không thay đổi. Spec vẫn có đúng 12 FR07 declarations, typecheck thành công, Playwright chỉ liệt kê đúng TC09-TC12, forbidden-pattern và whitespace checks đều sạch. Chưa chạy Playwright browser/API test và không sửa SUT, FR-01, database, evidence, configuration, documentation hoặc package files.
+Chấp nhận output 0018. Human action: Em đã review final correction và xác nhận chỉ tests/features/fr07-cart.spec.ts thay đổi so với rejected artifact 0017, tại đúng quantity prerequisite block của FR07-TC12. Quantity control được yêu cầu đúng external count, visible và có displayed value bằng String(targetProduct.quantity) dưới hard web-first assertions trước feedback baseline và đúng một addToCartOnce activation. Feedback before/after transition, semantic badge association, guarded reads, test.slow, image-alt và badge-delta oracles được giữ nguyên. Năm automation file còn lại byte-identical với artifact 0017; FR07-TC01 đến FR07-TC11 không thay đổi. Spec vẫn có đúng 12 FR07 declarations, typecheck thành công, Playwright chỉ liệt kê đúng TC09-TC12, forbidden-pattern và whitespace checks đều sạch. Chưa chạy Playwright browser/API test và không sửa SUT, FR-01, database, evidence, configuration, documentation hoặc package files.
 
 # Interaction 0019
 
@@ -1740,7 +1740,7 @@ No browser or API test was executed—only TypeScript checking and Playwright di
 
 ## Human review/action
 
-Từ chối output 0019. Human action: Tôi đã review toàn bộ FR-12 increment 1 diff và xác nhận bốn external JSON key/ID, inventory đủ bảy /api/admin/* routes, target probes không truyền Authorization, snapshot session tách biệt, và mỗi TC02/TC03 chỉ có một loginOnce activation. Tuy nhiên TC02 và TC03 dùng soft login-form/control prerequisites rồi thực hiện loginOnce vô điều kiện, nên authorization evidence có thể được thu dưới fixture UI không hợp lệ hoặc hết test budget. TC01 đến TC03 cũng lặp soft count/visibility trên locator bị thiếu mà không guard. Ngoài ra TC04 chỉ phát hiện unexpected mutation qua snapshot/marker nhưng không cleanup product/coupon sentinel nếu SUT cho phép mutation, có thể làm bẩn runtime database. Cần lưu proposal hiện tại làm rejected artifact, sửa TC02/TC03 thành hard visible login prerequisites, guard các independent UI observations hoặc dùng test.slow phù hợp, và cleanup controlled mutations qua API trong finally mà không sửa SQLite trực tiếp. Chưa chạy Playwright browser/API test và SUT không bị sửa.
+Từ chối output 0019. Human action: Em đã review toàn bộ FR-12 increment 1 diff và xác nhận bốn external JSON key/ID, inventory đủ bảy /api/admin/* routes, target probes không truyền Authorization, snapshot session tách biệt, và mỗi TC02/TC03 chỉ có một loginOnce activation. Tuy nhiên TC02 và TC03 dùng soft login-form/control prerequisites rồi thực hiện loginOnce vô điều kiện, nên authorization evidence có thể được thu dưới fixture UI không hợp lệ hoặc hết test budget. TC01 đến TC03 cũng lặp soft count/visibility trên locator bị thiếu mà không guard. Ngoài ra TC04 chỉ phát hiện unexpected mutation qua snapshot/marker nhưng không cleanup product/coupon sentinel nếu SUT cho phép mutation, có thể làm bẩn runtime database. Cần lưu proposal hiện tại làm rejected artifact, sửa TC02/TC03 thành hard visible login prerequisites, guard các independent UI observations hoặc dùng test.slow phù hợp, và cleanup controlled mutations qua API trong finally mà không sửa SQLite trực tiếp. Chưa chạy Playwright browser/API test và SUT không bị sửa.
 
 # Interaction 0020
 
@@ -1920,4 +1920,416 @@ No browser or API test was executed. The pre-existing audit changes were untouch
 
 ## Human review/action
 
-Chấp nhận output 0020. Human action: Tôi đã review toàn bộ correction diff FR-12 increment 1 và xác nhận TC02/TC03 hard-require đúng external login form/control counts cùng visibility trước đúng một loginOnce activation; không có retry hoặc compensating submit. TC01 đến TC03 dùng test.slow và guarded post-count visibility để bảo toàn evidence budget. TC04 giữ nguyên đủ bảy missing-token probes không truyền Authorization, ghi nhận post-probe snapshot/marker defect evidence trước cleanup, rồi chỉ tìm product/coupon sentinel bằng exact marker-field equality và strict positive-integer ID. Controlled cleanup dùng seeded-admin API session trong nested finally; zero marker không tạo cleanup mutation, còn final snapshots kiểm tra marker vắng mặt và state trở lại pre-probe baseline. Admin Page Object byte-identical với rejected artifact 0019; FR01/FR07 không thay đổi. External JSON có đúng bốn sequential IDs, bảy unique target routes và hai controlled cleanup definitions. Typecheck thành công, Playwright chỉ liệt kê đúng bốn TC01-TC04 trên Chromium, declaration count là 4, forbidden-pattern, whitespace và diff checks đều sạch. Chưa chạy Playwright browser/API test và không sửa SUT, database, evidence, configuration, documentation hoặc package files.
+Chấp nhận output 0020. Human action: Em đã review toàn bộ correction diff FR-12 increment 1 và xác nhận TC02/TC03 hard-require đúng external login form/control counts cùng visibility trước đúng một loginOnce activation; không có retry hoặc compensating submit. TC01 đến TC03 dùng test.slow và guarded post-count visibility để bảo toàn evidence budget. TC04 giữ nguyên đủ bảy missing-token probes không truyền Authorization, ghi nhận post-probe snapshot/marker defect evidence trước cleanup, rồi chỉ tìm product/coupon sentinel bằng exact marker-field equality và strict positive-integer ID. Controlled cleanup dùng seeded-admin API session trong nested finally; zero marker không tạo cleanup mutation, còn final snapshots kiểm tra marker vắng mặt và state trở lại pre-probe baseline. Admin Page Object byte-identical với rejected artifact 0019; FR01/FR07 không thay đổi. External JSON có đúng bốn sequential IDs, bảy unique target routes và hai controlled cleanup definitions. Typecheck thành công, Playwright chỉ liệt kê đúng bốn TC01-TC04 trên Chromium, declaration count là 4, forbidden-pattern, whitespace và diff checks đều sạch. Chưa chạy Playwright browser/API test và không sửa SUT, database, evidence, configuration, documentation hoặc package files.
+
+# Interaction 0021
+
+## AI tool
+
+Codex CLI 0.148.0
+
+## ISO date/time
+
+2026-08-21T03:28:59Z
+
+## Exact prompt
+
+```text
+Implement the second reviewed FR-12 Playwright automation increment covering exactly FR12-TC05 through FR12-TC08.
+
+Read and preserve:
+- README.md
+- api_specification.md
+- docs/hw04-traceability-test-matrix.md
+- playwright.config.ts
+- backend/database.js
+- backend/server.js
+- backend/package.json
+- tests/data/fr12-access-control.json
+- tests/features/fr12-access-control.spec.ts
+- tests/pages/admin-access.page.ts
+- tests/support/fr12-api.ts
+- tests/support/data-loader.ts
+- evidence/development/fr12-increment1-chromium/run-record.md
+- ai-audit/entries/0020-correct-fr12-access-control-increment1.md
+
+Implement exactly these additional external JSON records and generated IDs:
+- admin_route_inventory_invalid_tokens -> FR12-TC05
+- admin_route_inventory_user_token -> FR12-TC06
+- admin_read_routes_admin_token -> FR12-TC07
+- product_mutation_access_matrix -> FR12-TC08
+
+Modify only when necessary:
+- tests/data/fr12-access-control.json
+- tests/features/fr12-access-control.spec.ts
+- tests/support/fr12-api.ts
+- tests/support/data-loader.ts
+
+Keep tests/pages/admin-access.page.ts byte-identical to HEAD.
+
+General constraints:
+- The final FR12 spec must contain exactly eight FR12 test declarations.
+- Preserve FR12-TC01 through FR12-TC04 test bodies byte-for-byte.
+- Preserve all accepted TC01-TC04 helpers and oracles.
+- Preserve FR01 and FR07 byte-for-byte.
+- Keep all cases, IDs, credentials, token partitions, JWT fixture material, claims, paths, methods, payloads, safe IDs, markers, snapshot resources, expected counts, expected state deltas, cleanup marker fields, cleanup routes, and decision-table rows in external JSON.
+- API origins use PW_API_URL with fallback http://localhost:3000.
+- Do not modify SUT, audit, evidence, database, Playwright configuration, documentation, or package files.
+- Do not access SQLite directly.
+- Do not inject browser storage, mock the SUT, access React internals, retry target requests, compensate for failed target actions, or add arbitrary waits.
+- Do not assert exact denial status codes or response wording where the matrix says EVIDENCE MISSING.
+- Keep authentication and authorization observations distinct.
+- Prefer independent soft requirement observations after hard fixture prerequisites.
+- Use test.slow() where many independent route or matrix observations intentionally run.
+- Remain strict TypeScript-compatible and Playwright 1.62.1-compatible.
+- Use only Node built-in modules already available to the test project; do not add packages.
+
+FR12-TC05 — invalid-token route inventory:
+- Cover every registered/documented /api/admin/* route for exactly two external token classes: malformed and expired.
+- Materialize exactly fourteen external probe rows: seven routes for each token class. Do not construct an inline route matrix in the spec.
+- The malformed token value must be external.
+- Build the expired token deterministically with Node built-in crypto from external JWT header, claims, and source-observed test signing material.
+- Hard-validate before probing that the expired fixture:
+  - has exactly three JWT segments;
+  - uses the external algorithm;
+  - has a numeric exp claim earlier than the current time;
+  - has a valid signature for the external test signing material.
+- This fixture exercises expiry rejection by the observed verifier; do not claim that the SUT normally issues exp-bearing tokens or invent a production expiry contract.
+- Send each target probe exactly once with its assigned invalid Bearer token.
+- Assert independently that every response is non-success and does not return protected data, without asserting exact status/body.
+- Use valid-looking external POST payloads, external non-existing safe IDs, exact token-class-specific mutation markers, pre/post snapshots, and controlled API cleanup in finally.
+- Preserve original mutation evidence before cleanup and verify final restoration.
+- There must be four controlled POST cleanup markers: import-product and coupon markers for each token class.
+
+FR12-TC06 — ordinary-user token route inventory:
+- Acquire the external seeded ordinary-user token through exactly one supported API login.
+- Hard-require successful credential authentication and a non-empty token before target probes.
+- Establish external role evidence that this fixture is an ordinary user without inventing denial wording.
+- Probe each of the same seven Admin routes exactly once with the ordinary-user Bearer token.
+- Use valid-looking external POST payloads with exact controlled markers and non-existing safe IDs for mutation-shaped DELETE/PUT routes.
+- Assert each route is denied as authorization, protected data is not returned, and controlled state does not change.
+- Record all independent route results even if some fail.
+- Capture pre/post snapshots using a separate seeded-admin snapshot session.
+- Record mutation evidence before cleanup.
+- Cleanup only exact controlled product/coupon sentinels via authenticated API in finally, then verify final restoration.
+- Never delete an uncontrolled record.
+
+FR12-TC07 — positive admin read authorization:
+- Acquire the external seeded-admin token through exactly one supported API login.
+- Hard-require successful login, a non-empty token, and external admin-role evidence.
+- Exercise only the externally listed read-only Admin routes:
+  - GET /api/admin/users
+  - GET /api/admin/orders
+- Send each read exactly once with the admin Bearer token.
+- Assert each request succeeds and returns a protected collection representation without inventing exact status code or complete schema.
+- Cross-check externally known seeded user identities where configured.
+- Permit an externally configured empty orders collection; do not invent order fixtures.
+- Perform no POST, PUT, or DELETE target request and no cleanup mutation.
+
+FR12-TC08 — product mutation access matrix:
+- Implement exactly nine external decision-table rows: POST, PUT, and DELETE crossed with missing token, valid ordinary-user token, and valid admin token.
+- Acquire ordinary-user and admin tokens through one supported API login each.
+- Hard-require both login fixtures, non-empty tokens, and their external role partitions before matrix target actions.
+- Hard-require the external category reference through a supported read API before product setup.
+- Build all controlled product setup through supported APIs using the admin token. Do not use SQLite.
+- Use separate externally defined controlled markers/payloads per decision row so rows cannot mask each other.
+- Execute every target matrix row exactly once; no retry or compensation.
+- Missing-token rows must be evaluated as authentication denial.
+- Ordinary-user rows must be evaluated as authorization denial.
+- Admin rows must be evaluated as positive access that reaches business execution.
+- For denied POST rows, assert no controlled product appears.
+- For denied PUT rows, assert the controlled target remains unchanged.
+- For denied DELETE rows, assert the controlled target remains present and unchanged.
+- For admin POST, assert the controlled product appears with the external expected fields.
+- For admin PUT, assert the controlled target changes to the external expected fields.
+- For admin DELETE, assert the controlled target is removed.
+- Keep response acceptance/denial and state-delta observations independently reachable where fixture prerequisites exist.
+- Record the pre-cleanup matrix state before teardown.
+- In finally, discover only exact controlled invariant markers, require strict positive-integer IDs, delete only those controlled products using the configured authenticated cleanup route, and verify the final product collection equals the pre-test baseline.
+- Cleanup must also handle unexpected products created or changed by denied rows.
+- Never delete or overwrite an uncontrolled product.
+
+JWT/API helper requirements:
+- Implement URL-safe base64 and HS256 signing/verification with Node built-in crypto only.
+- Keep the signing material and token claims external; never read backend source at runtime.
+- Do not log raw tokens or signing material in diagnostics or evidence.
+- Generalize authenticated API sessions and target probes without weakening TC04.
+- Every target request must make its Authorization partition explicit: absent, invalid Bearer, ordinary-user Bearer, or admin Bearer.
+- Snapshot and cleanup helpers must catch transport failures, return guarded diagnostics, and avoid false no-change/no-marker passes when snapshots are unavailable.
+- Cleanup discovery must use exact configured field equality and strict IDs.
+- Keep all route/matrix collections external, not inline in the spec.
+
+Static validation only:
+- Parse and validate all eight FR12 JSON records and sequential unique IDs FR12-TC01 through FR12-TC08.
+- Validate TC05 has two token classes, fourteen probe rows, seven unique routes per class, and four cleanup markers.
+- Validate TC06 has seven unique route probes and two cleanup markers.
+- Validate TC07 has exactly two GET-only routes and no mutation configuration.
+- Validate TC08 has exactly nine unique method × token-partition rows and unique controlled markers.
+- Run npm run typecheck.
+- Use Playwright --list for FR12-TC05 through FR12-TC08 without executing tests.
+- Confirm exactly eight FR12 declarations.
+- Confirm TC01-TC04 bodies are byte-identical to HEAD.
+- Confirm admin-access.page.ts, FR01, and FR07 are byte-identical to HEAD.
+- Confirm each login acquisition and each target action occurs exactly once.
+- Confirm invalid JWT fixture validation occurs before TC05 probes.
+- Confirm TC05/TC06 original mutation evidence precedes finally cleanup.
+- Confirm TC08 setup, nine one-shot target actions, pre-cleanup evidence, finally cleanup, and final restoration ordering.
+- Confirm no raw token/signing-material logging.
+- Scan forbidden patterns and run whitespace checks.
+- Confirm no prohibited file changed.
+
+After editing, report:
+- exact automation files changed;
+- four added JSON keys and IDs;
+- TC05 malformed/expired fixture proof and 14-route denial design;
+- TC06 ordinary-user seven-route authorization design and cleanup;
+- TC07 two positive admin reads;
+- TC08 nine-row decision matrix, state deltas, and cleanup;
+- evidence guards;
+- static validation performed;
+- confirmation that no browser/API test ran and no prohibited file changed.
+```
+
+## Exact AI output
+
+```text
+Implemented the reviewed FR-12 increment for exactly FR12-TC05 through FR12-TC08.
+
+### Changed files
+
+- [fr12-access-control.json](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/data/fr12-access-control.json:358)
+- [fr12-access-control.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:802)
+- [fr12-api.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/fr12-api.ts:273)
+- [data-loader.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/data-loader.ts:868)
+
+Added external records:
+
+- `admin_route_inventory_invalid_tokens` → `FR12-TC05`
+- `admin_route_inventory_user_token` → `FR12-TC06`
+- `admin_read_routes_admin_token` → `FR12-TC07`
+- `product_mutation_access_matrix` → `FR12-TC08`
+
+### Coverage
+
+- TC05 contains exactly fourteen external probes: all seven Admin routes for malformed and expired Bearer tokens. The deterministic HS256 fixture was statically proven to have three segments, matching algorithm, numeric past `exp`, and a valid signature. Four exact product/coupon cleanup markers restore state without asserting a production expiry contract.
+- TC06 performs one ordinary-user login, validates external `user` role evidence, probes all seven Admin routes once, records independent authorization failures and state evidence, then cleans only the two exact sentinels through the seeded-admin API session.
+- TC07 performs one admin login and exactly two GET target requests for `/api/admin/users` and `/api/admin/orders`. It verifies collection representations, configured seeded user identities, and permits empty orders.
+- TC08 implements exactly nine unique POST/PUT/DELETE × missing/user/admin rows. All setup uses supported APIs with the admin token and a read API category reference. Each target runs once with independent response/state assertions. Final cleanup discovers exact invariant names, accepts only positive integer IDs, removes only controlled products, and verifies the complete pre-test baseline.
+
+Transport, snapshot, cleanup, and final-restoration failures produce guarded diagnostics and cannot become false no-change/no-marker passes. Tokens and signing material are never logged.
+
+### Static validation
+
+Passed:
+
+- JSON parsing and sequential unique `FR12-TC01`–`FR12-TC08` IDs
+- TC05: 2 token classes, 14 probes, 7 routes/class, 4 cleanup markers
+- TC06: 7 routes and 2 cleanup markers
+- TC07: exactly 2 GET-only routes with no mutation/cleanup configuration
+- TC08: 9 unique decisions, 9 unique primary markers, 12 unique cleanup invariants
+- `npm run typecheck`
+- Playwright `--list` for TC05–TC08: four cases across Chromium, Firefox, and WebKit
+- Exactly eight FR12 declarations overall
+- TC01–TC04 describe block byte-identical to HEAD
+- `admin-access.page.ts`, FR01, and FR07 byte-identical to HEAD
+- One-shot login/target structure and required evidence/cleanup ordering
+- Forbidden-pattern, raw-secret logging, trailing-whitespace, and `git diff --check` scans
+
+No browser or API test was executed. Only the four permitted automation files changed; SUT, configuration, documentation, database, package, audit, evidence, and Admin Page Object files were not modified.
+```
+
+## Human review/action
+
+Từ chối output 0021. Human action: Em đã review toàn bộ FR-12 increment 2 diff và xác nhận external JSON bổ sung đúng FR12-TC05 đến FR12-TC08; TC05 có đủ 14 malformed/expired-token probes trên bảy Admin routes, TC06 có đủ bảy ordinary-user probes, TC07 chỉ thực hiện hai admin GET reads, và TC08 có đúng chín POST/PUT/DELETE × missing/user/admin target actions với controlled setup, exact-marker cleanup và final baseline verification. Tuy nhiên TC05 và TC06 probe PUT /api/admin/orders/:id/status bằng safe non-existing IDs và chỉ yêu cầu non-success response cùng unchanged snapshots. Nếu authentication/authorization bị bypass, business handler vẫn có thể trả 404 Order not found mà không đổi state; các oracle hiện tại sẽ hiểu nhầm kết quả này là access denial. Cần lưu proposal 0021 làm rejected artifact và sửa order-status probes dùng controlled existing order có business-valid transition, kiểm tra trạng thái không đổi dưới invalid/ordinary-user token, rồi restore controlled state qua authenticated admin API trong finally. Nếu không thể thiết lập fixture hợp lệ thì phải ghi rõ evidence not reached, không được phân loại mọi non-success response là authentication/authorization denial. Chưa chạy Playwright browser/API test và không sửa SUT.
+
+# Interaction 0022
+
+## AI tool
+
+Codex CLI 0.148.0
+
+## ISO date/time
+
+2026-08-21T03:57:10Z
+
+## Exact prompt
+
+```text
+Act as a senior Playwright TypeScript test-automation engineer correcting the rejected FR-12 increment 2 proposal for HW04 student 23127027.
+
+Repository root:
+`/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027`
+
+Read before editing:
+
+- `README.md`, especially FR-12, SEC-02, SEC-03, and relevant FR-21 through FR-24 requirements.
+- `docs/hw04-traceability-test-matrix.md`, especially FR12-TC05 through FR12-TC08.
+- `api_specification.md` only as supporting contract.
+- Current:
+  - `tests/data/fr12-access-control.json`
+  - `tests/features/fr12-access-control.spec.ts`
+  - `tests/support/data-loader.ts`
+  - `tests/support/fr12-api.ts`
+- Rejected artifact:
+  - `ai-audit/artifacts/0021-rejected-fr12-increment2/fr12-access-control.json`
+  - `ai-audit/artifacts/0021-rejected-fr12-increment2/fr12-access-control.spec.ts`
+  - `ai-audit/artifacts/0021-rejected-fr12-increment2/data-loader.ts`
+  - `ai-audit/artifacts/0021-rejected-fr12-increment2/fr12-api.ts`
+- Read-only SUT references needed to understand whether an API-only reversible order fixture is possible:
+  - `backend/server.js`
+  - `backend/database.js`
+
+Correct only the rejected FR12-TC05 through FR12-TC08 proposal. Preserve all accepted TC01-TC04 code byte-for-byte relative to HEAD.
+
+The rejection reason is specific:
+
+TC05 and TC06 currently probe `PUT /api/admin/orders/:id/status` with a non-existing safe ID and treat any non-success response plus unchanged snapshots as authentication or authorization denial. If the access-control boundary is bypassed, the business handler can return `404 Order not found`; the current oracle can then pass falsely.
+
+Required correction:
+
+1. Do not treat a generic non-success response from the non-existing order-status target as proof of authentication or authorization denial.
+
+2. First determine from the read-only SUT/API sources whether a controlled existing order can be established and fully restored using supported HTTP APIs only.
+
+3. If an API-only reversible controlled order fixture is possible:
+   - Create it through supported APIs, never by editing SQLite or injecting internal state.
+   - Prove a strict positive-integer controlled order ID and its initial state.
+   - Choose a business-valid transition whose payload differs from the initial state.
+   - Execute each TC05/TC06 order-status target exactly once.
+   - Assert that invalid-token and ordinary-user requests do not change the controlled order.
+   - Record the original target response/state evidence before cleanup.
+   - Restore all controlled state through authenticated Admin APIs in nested `finally`.
+   - Verify the final observable state equals its pre-test baseline.
+
+4. If no fully reversible API-only controlled order fixture exists:
+   - Keep the safe order-status request one-shot and non-mutating.
+   - Add explicit external JSON evidence-boundary data explaining that a non-existing target cannot distinguish access denial from business-handler `not found`.
+   - Do not count generic non-success as a verified denied route.
+   - Produce an explicit guarded `EVIDENCE MISSING` assertion for that route so the test cannot pass falsely.
+   - Keep the response available for later human triage without asserting unsupported exact status or wording.
+   - Do not use skip, fixme, retry, arbitrary waits, mocks, storage injection, direct database access, or fabricated evidence.
+
+5. Ensure aggregate route counters cannot report all seven routes as verified denials when the order-status authorization boundary was not actually proven.
+
+6. Preserve the accepted design elsewhere:
+   - TC05: exactly two invalid-token classes and fourteen one-shot target probes across seven Admin routes per class.
+   - TC06: exactly seven one-shot ordinary-user target probes.
+   - TC07: exactly two GET-only Admin read targets.
+   - TC08: exactly nine POST/PUT/DELETE × missing/user/admin target rows.
+   - Original post-target defect evidence must be recorded before cleanup.
+   - Exact-marker discovery, strict positive-integer IDs, authenticated API cleanup, nested `finally`, and final baseline verification remain.
+   - No raw token or signing material may be logged.
+   - External test-case data remains in JSON; do not introduce inline test-case arrays or objects in the spec.
+
+Permitted automation files:
+
+- `tests/data/fr12-access-control.json`
+- `tests/features/fr12-access-control.spec.ts`
+- `tests/support/data-loader.ts`
+- `tests/support/fr12-api.ts`
+
+Do not modify:
+
+- `tests/pages/admin-access.page.ts`
+- FR01 or FR07 automation
+- SUT source
+- database files
+- README, API specification, traceability matrix, or other documentation
+- Playwright/TypeScript configuration
+- package files or lockfiles
+- evidence
+- existing audit files, prompts, outputs, entries, or rejected artifacts
+
+Validation requirements:
+
+- JSON parses and IDs remain exactly sequential and unique FR12-TC01 through FR12-TC08.
+- Exactly eight FR12 test declarations overall.
+- TC01-TC04 remain byte-identical to HEAD.
+- TC05-TC08 Playwright discovery lists exactly four tests for Chromium.
+- Run `npm run typecheck`.
+- Run Playwright only with `--list`; do not execute browser or API tests.
+- Check one-shot target counts, evidence-before-cleanup ordering, guarded observations, forbidden patterns, trailing whitespace, and `git diff --check`.
+- Confirm prohibited files are unchanged.
+
+In the final response, state:
+
+- the exact files changed;
+- whether an API-only reversible order fixture was possible;
+- how the false-pass order-status oracle was eliminated;
+- TC05 through TC08 structure and action counts;
+- cleanup and evidence boundaries;
+- static validation performed;
+- that no browser/API test ran and no prohibited file changed.
+```
+
+## Exact AI output
+
+```text
+Implemented the corrected FR12-TC05–TC08 proposal.
+
+Changed files:
+
+- [fr12-access-control.json](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/data/fr12-access-control.json)
+- [fr12-access-control.spec.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts)
+- [data-loader.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/data-loader.ts)
+- [fr12-api.ts](/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/support/fr12-api.ts)
+
+An API-only reversible order fixture was not possible. `/api/checkout` creates a persistent pending order, but no supported HTTP endpoint deletes orders or reverses a status transition to its baseline state.
+
+The false-pass oracle was eliminated by:
+
+- Binding the three non-existing order-status probes to external JSON `EVIDENCE MISSING` definitions.
+- Proving their safe IDs are strict positive integers and absent from the authenticated baseline.
+- Retaining one-shot response diagnostics and post-target order snapshots.
+- Never treating generic non-success, status, or wording as access-denial proof.
+- Deliberately raising a guarded `EVIDENCE MISSING` assertion.
+- Limiting verified-denial counters to six routes per token class, never seven.
+
+Structure:
+
+- TC05: 2 invalid-token classes × 7 routes = 14 one-shot probes; 12 potentially verified denials and 2 guarded order-status observations.
+- TC06: 7 one-shot ordinary-user probes; 6 potentially verified denials and 1 guarded order-status observation.
+- TC07: exactly 2 GET-only Admin reads.
+- TC08: exactly 9 rows—POST/PUT/DELETE × missing/user/admin.
+
+Original response/state evidence is recorded before exact-marker authenticated cleanup. Cleanup remains nested with strict positive-integer IDs and final collection-to-baseline verification.
+
+Validation passed:
+
+- JSON parsing and sequential unique FR12-TC01–TC08 IDs.
+- Exactly eight test declarations.
+- TC01–TC04 byte-identical to HEAD.
+- Chromium `--list`: exactly four TC05–TC08 tests.
+- `npm run typecheck`.
+- Action-count, evidence-ordering, guarded-oracle, forbidden-pattern, logging, trailing-whitespace, and `git diff --check` checks.
+
+No browser or API test ran. No prohibited file was changed; pre-existing `ai-audit` worktree entries were left untouched.
+```
+
+## Human review/action
+
+Chấp nhận output 0022. Human action: Em đã review toàn bộ correction diff FR-12 increment 2 và xác nhận không thể tạo rồi khôi phục hoàn toàn controlled order fixture chỉ qua supported HTTP APIs vì checkout tạo persistent order nhưng không có order-delete endpoint hoặc reverse transition về baseline. TC05 và TC06 vì vậy gắn explicit external EVIDENCE MISSING boundary cho đúng hai invalid-token và một ordinary-user order-status probes. Các safe order IDs được hard-check là strict positive integers và vắng mặt trong authenticated baseline; mỗi target vẫn chạy đúng một lần và giữ original response/post-target snapshot evidence, nhưng generic non-success, status hoặc wording không còn được xem là access denial. Guarded EVIDENCE MISSING assertions ngăn test pass sai; counters chỉ cho phép TC05 có 12 potentially verified denials, sáu mỗi token class, và TC06 có sáu potentially verified denials. TC05 vẫn có đủ 14 probes, TC06 đủ bảy routes, TC07 đúng hai GET-only reads và TC08 đúng chín POST/PUT/DELETE × missing/user/admin rows. Evidence-before-cleanup, exact-marker authenticated cleanup, strict positive-integer IDs, nested finally và final baseline verification được giữ nguyên; fr12-api.ts byte-identical với rejected artifact 0021. TC01-TC04 byte-identical với HEAD, FR01/FR07 và Admin Page Object không thay đổi. External JSON có IDs tuần tự FR12-TC01 đến FR12-TC08, spec có đúng tám declarations, typecheck thành công và Playwright chỉ liệt kê đúng TC05-TC08 trên Chromium. Forbidden-pattern, whitespace và tracked diff checks đều sạch. Chưa chạy Playwright browser/API test và không sửa SUT, database, evidence, configuration, documentation hoặc package files.
+
+# Interaction 0023
+
+## AI tool
+
+OpenAI Codex
+
+## ISO date/time
+
+2026-08-21T15:12:00+07:00
+
+## Exact prompt
+
+```text
+Mình vừa đặt file tên HW04_Testing.pdf vào repo này bạn hãy đọc tình trạng hiện tại và so với các yêu cầu của file xem còn thiếu phần nào thì làm tiếp cho xong giúp mình, cấc phần nào cần mình cần tự làm thì hãy để dành sau khi bạn xong hết rồi nói tôi để làm từng bước để hoàn thành toàn bộ file bài tập này
+```
+
+## Exact AI output
+
+See `ai-audit/outputs/0023-complete-hw04-submission.md`.
+
+## Human review/action
+
+Chấp nhận output 0023. Em đã đọc kết quả kiểm tra từng bước và đồng ý với phần review code, cấu hình, tài liệu và execution evidence. Bộ test có đủ 36 logical cases, gồm FR12-TC01 đến FR12-TC12; các mutation có cleanup, TC05/TC06 giữ đúng phân loại EVIDENCE MISSING và không có skip, retry hay fixed sleep để né lỗi. Signing material đã được chuyển khỏi JSON sang biến môi trường; giá trị cũ trong rejected artifact cũng được ghi rõ là redacted trước khi public. Report local được tách tại `playwright-report/local`, còn chín report final được giữ riêng tại `playwright-report/final`; evidence hiện có tổng cộng 108 executions với 30 pass và 78 fail. Nội dung final report, bug report, AI critique và workflow skill phù hợp với evidence đã tổng hợp. Em đã tự tạo 16 GitHub Issues kèm ảnh evidence và đã yêu cầu Codex thực hiện các thao tác kỹ thuật commit, cập nhật Git log, push branch và cài workflow skill. Video vẫn để PENDING để em tự quay bằng giọng nói và bằng chứng danh tính của mình; em cũng sẽ tự đóng gói và nộp bài. Em chấp nhận trạng thái hiện tại của output sau các chỉnh sửa trên.

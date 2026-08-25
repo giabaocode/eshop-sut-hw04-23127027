@@ -8,7 +8,7 @@
     "test:list": "playwright test --list",
     "test:infrastructure": "playwright test tests/smoke/infrastructure.spec.ts",
     "typecheck": "tsc --noEmit",
-    "report:open": "playwright show-report"
+    "report:open": "playwright show-report playwright-report/local"
   },
   "devDependencies": {
     "@playwright/test": "1.62.1",

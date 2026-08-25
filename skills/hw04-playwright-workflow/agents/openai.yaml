@@ -1,0 +1,4 @@
+interface:
+  display_name: "HW04 Playwright Workflow"
+  short_description: "Build reviewed multi-browser test evidence"
+  default_prompt: "Use $hw04-playwright-workflow to automate one reviewed web feature with external data and genuine three-browser evidence."

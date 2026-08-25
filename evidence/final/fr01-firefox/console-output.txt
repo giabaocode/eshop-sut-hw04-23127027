@@ -1,0 +1,1093 @@
+
+Running 12 tests using 1 worker
+
+  ✘   1 [firefox] › tests/features/fr01-registration.spec.ts:86:7 › FR-01 account registration — reviewed increment 1 › FR01-TC01 valid registration reaches the login destination with compliant registration UI (5.6s)
+  ✘   2 [firefox] › tests/features/fr01-registration.spec.ts:126:7 › FR-01 account registration — reviewed increment 1 › FR01-TC02 required controls reject blank and one-field omissions with correctly placed application errors (5.6s)
+  ✘   3 [firefox] › tests/features/fr01-registration.spec.ts:198:7 › FR-01 account registration — reviewed increment 1 › FR01-TC03 email control enforces invalid and valid format partitions without browser-specific wording (5.5s)
+  ✘   4 [firefox] › tests/features/fr01-registration.spec.ts:248:7 › FR-01 account registration — reviewed increment 1 › FR01-TC04 confirmation and password semantics have one h1 and top-to-bottom keyboard focus order (5.6s)
+  ✘   5 [firefox] › tests/features/fr01-registration.spec.ts:293:7 › FR-01 account registration — reviewed increment 2 › FR01-TC05 password minimum length rejects seven characters and accepts eight (5.9s)
+  ✓   6 [firefox] › tests/features/fr01-registration.spec.ts:349:7 › FR-01 account registration — reviewed increment 2 › FR01-TC06 password validation rejects a value without an uppercase letter (690ms)
+  ✓   7 [firefox] › tests/features/fr01-registration.spec.ts:367:7 › FR-01 account registration — reviewed increment 2 › FR01-TC07 password validation rejects a value without a lowercase letter (255ms)
+  ✓   8 [firefox] › tests/features/fr01-registration.spec.ts:385:7 › FR-01 account registration — reviewed increment 2 › FR01-TC08 password validation rejects a value without a digit (251ms)
+  ✓   9 [firefox] › tests/features/fr01-registration.spec.ts:405:7 › FR-01 account registration — reviewed increment 3 › FR01-TC09 password requires an allowed special character. (250ms)
+  ✘  10 [firefox] › tests/features/fr01-registration.spec.ts:423:7 › FR-01 account registration — reviewed increment 3 › FR01-TC10 each of @, $, !, %, *, ?, & satisfies the special-character rule. (36.1s)
+  ✘  11 [firefox] › tests/features/fr01-registration.spec.ts:478:7 › FR-01 account registration — reviewed increment 3 › FR01-TC11 confirmation equal-versus-unequal decision table and error placement. (5.6s)
+  ✘  12 [firefox] › tests/features/fr01-registration.spec.ts:556:7 › FR-01 account registration — reviewed increment 3 › FR01-TC12 unique-email registration followed by duplicate registration through the API. (27ms)
+
+
+  1) [firefox] › tests/features/fr01-registration.spec.ts:86:7 › FR-01 account registration — reviewed increment 1 › FR01-TC01 valid registration reaches the login destination with compliant registration UI 
+
+    Error: expect(locator).toHaveCount(expected) failed
+
+    Locator:  getByRole('heading', { level: 1 })
+    Expected: 1
+    Received: 0
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveCount" with timeout 5000ms
+      - waiting for getByRole('heading', { level: 1 })
+        14 × locator resolved to 0 elements
+           - unexpected value "0"
+
+
+      92 |     await registration.goto(testCase.registrationPath);
+      93 |
+    > 94 |     await expect(registration.allLevelOneHeadings).toHaveCount(1);
+         |                                                    ^
+      95 |     await expect(registration.heading).toBeVisible();
+      96 |     await expect(registration.confirmationPasswordInput).toBeVisible();
+      97 |     await expect(registration.confirmationPasswordInput).toHaveAttribute("required", "");
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:94:52
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-a0413-h-compliant-registration-UI-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final/fr01-firefox/features-fr01-registration-a0413-h-compliant-registration-UI-firefox/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-a0413-h-compliant-registration-UI-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr01-firefox/features-fr01-registration-a0413-h-compliant-registration-UI-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [firefox] › tests/features/fr01-registration.spec.ts:126:7 › FR-01 account registration — reviewed increment 1 › FR01-TC02 required controls reject blank and one-field omissions with correctly placed application errors 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng ký\s*$/i }) }).locator('label').filter({ hasText: /^\s*Xác nhận mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng ký\s*$/i }) }).locator('label').filter({ hasText: /^\s*Xác nhận mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      132 |     await registration.goto(testCase.registrationPath);
+      133 |
+    > 134 |     await expect(registration.confirmationPasswordInput).toBeVisible();
+          |                                                          ^
+      135 |     await expect(registration.confirmationPasswordInput).toHaveAttribute("required", "");
+      136 |     for (const field of testCase.expected.requiredFields) {
+      137 |       const input = registration.inputFor(field);
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:134:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-4d52a-y-placed-application-errors-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final/fr01-firefox/features-fr01-registration-4d52a-y-placed-application-errors-firefox/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-4d52a-y-placed-application-errors-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr01-firefox/features-fr01-registration-4d52a-y-placed-application-errors-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [firefox] › tests/features/fr01-registration.spec.ts:198:7 › FR-01 account registration — reviewed increment 1 › FR01-TC03 email control enforces invalid and valid format partitions without browser-specific wording 
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng ký\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: "email"
+    Received: "text"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng ký\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+        14 × locator resolved to <input value="" required="" type="text" class="w-full border p-2 rounded"/>
+           - unexpected value "text"
+
+
+      203 |
+      204 |     await registration.goto(testCase.registrationPath);
+    > 205 |     await expect(registration.emailInput).toHaveAttribute(
+          |                                           ^
+      206 |       'type',
+      207 |       testCase.expected.emailType,
+      208 |     );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:205:43
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-7e92d-ut-browser-specific-wording-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final/fr01-firefox/features-fr01-registration-7e92d-ut-browser-specific-wording-firefox/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-7e92d-ut-browser-specific-wording-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr01-firefox/features-fr01-registration-7e92d-ut-browser-specific-wording-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [firefox] › tests/features/fr01-registration.spec.ts:248:7 › FR-01 account registration — reviewed increment 1 › FR01-TC04 confirmation and password semantics have one h1 and top-to-bottom keyboard focus order 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng ký\s*$/i }) }).locator('label').filter({ hasText: /^\s*Xác nhận mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng ký\s*$/i }) }).locator('label').filter({ hasText: /^\s*Xác nhận mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      254 |     await registration.goto(testCase.registrationPath);
+      255 |
+    > 256 |     await expect(registration.confirmationPasswordInput).toBeVisible();
+          |                                                          ^
+      257 |     await expect(registration.confirmationPasswordInput).toHaveAttribute("required", "");
+      258 |     await expect(registration.passwordInput).toHaveAttribute(
+      259 |       'type',
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:256:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-b940e-bottom-keyboard-focus-order-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final/fr01-firefox/features-fr01-registration-b940e-bottom-keyboard-focus-order-firefox/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-b940e-bottom-keyboard-focus-order-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr01-firefox/features-fr01-registration-b940e-bottom-keyboard-focus-order-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [firefox] › tests/features/fr01-registration.spec.ts:293:7 › FR-01 account registration — reviewed increment 2 › FR01-TC05 password minimum length rejects seven characters and accepts eight 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+
+
+      328 |       await expect(
+      329 |         registration.loginHeading(testCase.expected.loginDestination),
+    > 330 |       ).toBeVisible();
+          |         ^
+      331 |       await expect(
+      332 |         registration.loginForm(testCase.expected.loginDestination),
+      333 |       ).toBeVisible();
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:330:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-34792-haracters-and-accepts-eight-firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final/fr01-firefox/features-fr01-registration-34792-haracters-and-accepts-eight-firefox/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-34792-haracters-and-accepts-eight-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr01-firefox/features-fr01-registration-34792-haracters-and-accepts-eight-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [firefox] › tests/features/fr01-registration.spec.ts:423:7 › FR-01 account registration — reviewed increment 3 › FR01-TC10 each of @, $, !, %, *, ?, & satisfies the special-character rule. 
+
+    Error: at_sign must reach the documented login heading
+
+    expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - at_sign must reach the documented login heading with timeout 5000ms
+      - waiting for getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+
+
+      449 |               registration.loginHeading(testCase.expected.loginDestination),
+      450 |               `${row.name} must reach the documented login heading`,
+    > 451 |             ).toBeVisible(),
+          |               ^
+      452 |             expect.soft(
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:451:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: at_sign must reach the documented login form
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - at_sign must reach the documented login form with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+
+
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+    > 455 |             ).toBeVisible(),
+          |               ^
+      456 |             expect.soft(
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:455:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: at_sign login destination must show its email control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - at_sign login destination must show its email control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+    > 459 |             ).toBeVisible(),
+          |               ^
+      460 |             expect.soft(
+      461 |               registration.loginPasswordInput(
+      462 |                 testCase.expected.loginDestination,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:459:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: at_sign login destination must show its password control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - at_sign login destination must show its password control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      463 |               ),
+      464 |               `${row.name} login destination must show its password control`,
+    > 465 |             ).toBeVisible(),
+          |               ^
+      466 |           ]);
+      467 |           expect.soft(
+      468 |             registrationRequests.count(),
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:465:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: at_sign must submit exactly one registration request
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      468 |             registrationRequests.count(),
+      469 |             `${row.name} must submit exactly one registration request`,
+    > 470 |           ).toBe(row.expected.registrationRequestCount);
+          |             ^
+      471 |         } finally {
+      472 |           registrationRequests.stop();
+      473 |         }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:470:13
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: dollar_sign must reach the documented login heading
+
+    expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - dollar_sign must reach the documented login heading with timeout 5000ms
+      - waiting for getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+
+
+      449 |               registration.loginHeading(testCase.expected.loginDestination),
+      450 |               `${row.name} must reach the documented login heading`,
+    > 451 |             ).toBeVisible(),
+          |               ^
+      452 |             expect.soft(
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:451:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: dollar_sign must reach the documented login form
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - dollar_sign must reach the documented login form with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+
+
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+    > 455 |             ).toBeVisible(),
+          |               ^
+      456 |             expect.soft(
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:455:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: dollar_sign login destination must show its email control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - dollar_sign login destination must show its email control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+    > 459 |             ).toBeVisible(),
+          |               ^
+      460 |             expect.soft(
+      461 |               registration.loginPasswordInput(
+      462 |                 testCase.expected.loginDestination,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:459:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: dollar_sign login destination must show its password control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - dollar_sign login destination must show its password control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      463 |               ),
+      464 |               `${row.name} login destination must show its password control`,
+    > 465 |             ).toBeVisible(),
+          |               ^
+      466 |           ]);
+      467 |           expect.soft(
+      468 |             registrationRequests.count(),
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:465:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: dollar_sign must submit exactly one registration request
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      468 |             registrationRequests.count(),
+      469 |             `${row.name} must submit exactly one registration request`,
+    > 470 |           ).toBe(row.expected.registrationRequestCount);
+          |             ^
+      471 |         } finally {
+      472 |           registrationRequests.stop();
+      473 |         }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:470:13
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: exclamation_mark must reach the documented login heading
+
+    expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - exclamation_mark must reach the documented login heading with timeout 5000ms
+      - waiting for getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+
+
+      449 |               registration.loginHeading(testCase.expected.loginDestination),
+      450 |               `${row.name} must reach the documented login heading`,
+    > 451 |             ).toBeVisible(),
+          |               ^
+      452 |             expect.soft(
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:451:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: exclamation_mark must reach the documented login form
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - exclamation_mark must reach the documented login form with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+
+
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+    > 455 |             ).toBeVisible(),
+          |               ^
+      456 |             expect.soft(
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:455:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: exclamation_mark login destination must show its email control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - exclamation_mark login destination must show its email control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+    > 459 |             ).toBeVisible(),
+          |               ^
+      460 |             expect.soft(
+      461 |               registration.loginPasswordInput(
+      462 |                 testCase.expected.loginDestination,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:459:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: exclamation_mark login destination must show its password control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - exclamation_mark login destination must show its password control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      463 |               ),
+      464 |               `${row.name} login destination must show its password control`,
+    > 465 |             ).toBeVisible(),
+          |               ^
+      466 |           ]);
+      467 |           expect.soft(
+      468 |             registrationRequests.count(),
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:465:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: exclamation_mark must submit exactly one registration request
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      468 |             registrationRequests.count(),
+      469 |             `${row.name} must submit exactly one registration request`,
+    > 470 |           ).toBe(row.expected.registrationRequestCount);
+          |             ^
+      471 |         } finally {
+      472 |           registrationRequests.stop();
+      473 |         }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:470:13
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: percent_sign must reach the documented login heading
+
+    expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - percent_sign must reach the documented login heading with timeout 5000ms
+      - waiting for getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+
+
+      449 |               registration.loginHeading(testCase.expected.loginDestination),
+      450 |               `${row.name} must reach the documented login heading`,
+    > 451 |             ).toBeVisible(),
+          |               ^
+      452 |             expect.soft(
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:451:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: percent_sign must reach the documented login form
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - percent_sign must reach the documented login form with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+
+
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+    > 455 |             ).toBeVisible(),
+          |               ^
+      456 |             expect.soft(
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:455:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: percent_sign login destination must show its email control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - percent_sign login destination must show its email control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+    > 459 |             ).toBeVisible(),
+          |               ^
+      460 |             expect.soft(
+      461 |               registration.loginPasswordInput(
+      462 |                 testCase.expected.loginDestination,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:459:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: percent_sign login destination must show its password control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - percent_sign login destination must show its password control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      463 |               ),
+      464 |               `${row.name} login destination must show its password control`,
+    > 465 |             ).toBeVisible(),
+          |               ^
+      466 |           ]);
+      467 |           expect.soft(
+      468 |             registrationRequests.count(),
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:465:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: percent_sign must submit exactly one registration request
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      468 |             registrationRequests.count(),
+      469 |             `${row.name} must submit exactly one registration request`,
+    > 470 |           ).toBe(row.expected.registrationRequestCount);
+          |             ^
+      471 |         } finally {
+      472 |           registrationRequests.stop();
+      473 |         }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:470:13
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: asterisk must reach the documented login heading
+
+    expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - asterisk must reach the documented login heading with timeout 5000ms
+      - waiting for getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+
+
+      449 |               registration.loginHeading(testCase.expected.loginDestination),
+      450 |               `${row.name} must reach the documented login heading`,
+    > 451 |             ).toBeVisible(),
+          |               ^
+      452 |             expect.soft(
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:451:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: asterisk must reach the documented login form
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - asterisk must reach the documented login form with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+
+
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+    > 455 |             ).toBeVisible(),
+          |               ^
+      456 |             expect.soft(
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:455:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: asterisk login destination must show its email control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - asterisk login destination must show its email control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+    > 459 |             ).toBeVisible(),
+          |               ^
+      460 |             expect.soft(
+      461 |               registration.loginPasswordInput(
+      462 |                 testCase.expected.loginDestination,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:459:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: asterisk login destination must show its password control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - asterisk login destination must show its password control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      463 |               ),
+      464 |               `${row.name} login destination must show its password control`,
+    > 465 |             ).toBeVisible(),
+          |               ^
+      466 |           ]);
+      467 |           expect.soft(
+      468 |             registrationRequests.count(),
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:465:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: asterisk must submit exactly one registration request
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      468 |             registrationRequests.count(),
+      469 |             `${row.name} must submit exactly one registration request`,
+    > 470 |           ).toBe(row.expected.registrationRequestCount);
+          |             ^
+      471 |         } finally {
+      472 |           registrationRequests.stop();
+      473 |         }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:470:13
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: question_mark must reach the documented login heading
+
+    expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - question_mark must reach the documented login heading with timeout 5000ms
+      - waiting for getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+
+
+      449 |               registration.loginHeading(testCase.expected.loginDestination),
+      450 |               `${row.name} must reach the documented login heading`,
+    > 451 |             ).toBeVisible(),
+          |               ^
+      452 |             expect.soft(
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:451:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: question_mark must reach the documented login form
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - question_mark must reach the documented login form with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+
+
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+    > 455 |             ).toBeVisible(),
+          |               ^
+      456 |             expect.soft(
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:455:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: question_mark login destination must show its email control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - question_mark login destination must show its email control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+    > 459 |             ).toBeVisible(),
+          |               ^
+      460 |             expect.soft(
+      461 |               registration.loginPasswordInput(
+      462 |                 testCase.expected.loginDestination,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:459:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: question_mark login destination must show its password control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - question_mark login destination must show its password control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      463 |               ),
+      464 |               `${row.name} login destination must show its password control`,
+    > 465 |             ).toBeVisible(),
+          |               ^
+      466 |           ]);
+      467 |           expect.soft(
+      468 |             registrationRequests.count(),
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:465:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: question_mark must submit exactly one registration request
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      468 |             registrationRequests.count(),
+      469 |             `${row.name} must submit exactly one registration request`,
+    > 470 |           ).toBe(row.expected.registrationRequestCount);
+          |             ^
+      471 |         } finally {
+      472 |           registrationRequests.stop();
+      473 |         }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:470:13
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: ampersand must reach the documented login heading
+
+    expect(locator).toBeVisible() failed
+
+    Locator: getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - ampersand must reach the documented login heading with timeout 5000ms
+      - waiting for getByRole('heading', { name: /^\s*Đăng nhập\s*$/i })
+
+
+      449 |               registration.loginHeading(testCase.expected.loginDestination),
+      450 |               `${row.name} must reach the documented login heading`,
+    > 451 |             ).toBeVisible(),
+          |               ^
+      452 |             expect.soft(
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:451:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: ampersand must reach the documented login form
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - ampersand must reach the documented login form with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) })
+
+
+      453 |               registration.loginForm(testCase.expected.loginDestination),
+      454 |               `${row.name} must reach the documented login form`,
+    > 455 |             ).toBeVisible(),
+          |               ^
+      456 |             expect.soft(
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:455:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: ampersand login destination must show its email control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - ampersand login destination must show its email control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Email\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      457 |               registration.loginEmailInput(testCase.expected.loginDestination),
+      458 |               `${row.name} login destination must show its email control`,
+    > 459 |             ).toBeVisible(),
+          |               ^
+      460 |             expect.soft(
+      461 |               registration.loginPasswordInput(
+      462 |                 testCase.expected.loginDestination,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:459:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: ampersand login destination must show its password control
+
+    expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - ampersand login destination must show its password control with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng nhập\s*$/i }) }).locator('label').filter({ hasText: /^\s*Mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      463 |               ),
+      464 |               `${row.name} login destination must show its password control`,
+    > 465 |             ).toBeVisible(),
+          |               ^
+      466 |           ]);
+      467 |           expect.soft(
+      468 |             registrationRequests.count(),
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:465:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    Error: ampersand must submit exactly one registration request
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      468 |             registrationRequests.count(),
+      469 |             `${row.name} must submit exactly one registration request`,
+    > 470 |           ).toBe(row.expected.registrationRequestCount);
+          |             ^
+      471 |         } finally {
+      472 |           registrationRequests.stop();
+      473 |         }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:470:13
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:431:7
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-feda8-the-special-character-rule--firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final/fr01-firefox/features-fr01-registration-feda8-the-special-character-rule--firefox/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-feda8-the-special-character-rule--firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr01-firefox/features-fr01-registration-feda8-the-special-character-rule--firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [firefox] › tests/features/fr01-registration.spec.ts:478:7 › FR-01 account registration — reviewed increment 3 › FR01-TC11 confirmation equal-versus-unequal decision table and error placement. 
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng ký\s*$/i }) }).locator('label').filter({ hasText: /^\s*Xác nhận mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+    Expected: visible
+    Timeout: 5000ms
+    Error: element(s) not found
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('form').filter({ has: getByRole('button', { name: /^\s*Đăng ký\s*$/i }) }).locator('label').filter({ hasText: /^\s*Xác nhận mật khẩu\s*\*?\s*$/i }).locator('..').locator('input')
+
+
+      483 |
+      484 |     await registration.goto(testCase.registrationPath);
+    > 485 |     await expect(registration.confirmationPasswordInput).toBeVisible();
+          |                                                          ^
+      486 |     await expect(registration.confirmationPasswordInput).toHaveAttribute(
+      487 |       'required',
+      488 |       testCase.expected.confirmationControl.requiredAttribute,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:485:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-06247--table-and-error-placement--firefox/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/final/fr01-firefox/features-fr01-registration-06247--table-and-error-placement--firefox/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-06247--table-and-error-placement--firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr01-firefox/features-fr01-registration-06247--table-and-error-placement--firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8) [firefox] › tests/features/fr01-registration.spec.ts:556:7 › FR-01 account registration — reviewed increment 3 › FR01-TC12 unique-email registration followed by duplicate registration through the API. 
+
+    Error: second_duplicate_registration reused email from created id 5; status: 200; response body: {"message":"User registered successfully","id":6}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      634 |       secondResponse.ok(),
+      635 |       `${secondRecord.name} reused email from created id ${firstId}; status: ${secondResponse.status()}; response body: ${secondResponseText}`,
+    > 636 |     ).toBe(testCase.expected.second.successful);
+          |       ^
+      637 |   });
+      638 | });
+      639 |
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr01-registration.spec.ts:636:7
+
+    Error Context: test-results/final/fr01-firefox/features-fr01-registration-bd211-gistration-through-the-API--firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr01-firefox/features-fr01-registration-bd211-gistration-through-the-API--firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr01-firefox/features-fr01-registration-bd211-gistration-through-the-API--firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  8 failed
+    [firefox] › tests/features/fr01-registration.spec.ts:86:7 › FR-01 account registration — reviewed increment 1 › FR01-TC01 valid registration reaches the login destination with compliant registration UI 
+    [firefox] › tests/features/fr01-registration.spec.ts:126:7 › FR-01 account registration — reviewed increment 1 › FR01-TC02 required controls reject blank and one-field omissions with correctly placed application errors 
+    [firefox] › tests/features/fr01-registration.spec.ts:198:7 › FR-01 account registration — reviewed increment 1 › FR01-TC03 email control enforces invalid and valid format partitions without browser-specific wording 
+    [firefox] › tests/features/fr01-registration.spec.ts:248:7 › FR-01 account registration — reviewed increment 1 › FR01-TC04 confirmation and password semantics have one h1 and top-to-bottom keyboard focus order 
+    [firefox] › tests/features/fr01-registration.spec.ts:293:7 › FR-01 account registration — reviewed increment 2 › FR01-TC05 password minimum length rejects seven characters and accepts eight 
+    [firefox] › tests/features/fr01-registration.spec.ts:423:7 › FR-01 account registration — reviewed increment 3 › FR01-TC10 each of @, $, !, %, *, ?, & satisfies the special-character rule. 
+    [firefox] › tests/features/fr01-registration.spec.ts:478:7 › FR-01 account registration — reviewed increment 3 › FR01-TC11 confirmation equal-versus-unequal decision table and error placement. 
+    [firefox] › tests/features/fr01-registration.spec.ts:556:7 › FR-01 account registration — reviewed increment 3 › FR01-TC12 unique-email registration followed by duplicate registration through the API. 
+  4 passed (1.3m)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report playwright-report/final/fr01-firefox[39m
+[36m[39m

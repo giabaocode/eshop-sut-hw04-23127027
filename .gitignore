@@ -1,6 +1,8 @@
 node_modules/
 test-results/
-playwright-report/
+playwright-report/*
+!playwright-report/final/
+!playwright-report/final/**
 blob-report/
 .env
 .env.*

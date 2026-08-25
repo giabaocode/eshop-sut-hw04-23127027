@@ -1,0 +1,301 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: features/fr12-access-control.spec.ts >> FR-12 access control — reviewed increment 3 >> FR12-TC10 coupon access control covers exposed Admin routes and required route discrepancy
+- Location: tests/features/fr12-access-control.spec.ts:1952:7
+
+# Error details
+
+```
+Error: exposed_post_user contract_exposed response; status=200
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: expect(received).toHaveLength(expected)
+
+Expected length: 0
+Received length: 1
+Received array:  [{"code": "FR12TC10POSTUSER23127027", "discount_value": 1003, "expired_at": "2099-12-31", "id": 15, "is_active": 1, "max_uses_per_user": 1, "min_order_amount": 0, "type": "fixed"}]
+```
+
+```
+Error: exposed_delete_user contract_exposed response; status=200
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: "FR12TC10DELUSER23127027"
+Received: undefined
+```
+
+```
+Error: required_post_admin readme_required response; status=404
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+```
+Error: expect(received).toHaveLength(expected)
+
+Expected length: 1
+Received length: 0
+Received array:  []
+```
+
+```
+Error: required_put_admin readme_required response; status=404
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+```
+Error: expect(received).toHaveLength(expected)
+
+Expected length: 1
+Received length: 0
+Received array:  []
+```
+
+```
+Error: required_delete_admin readme_required response; status=404
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+```
+Error: expect(received).toBeUndefined()
+
+Received: {"code": "FR12TC10REQDEL23127027", "discount_value": 1024, "expired_at": "2099-12-31", "id": 22, "is_active": 1, "max_uses_per_user": 1, "min_order_amount": 0, "type": "fixed"}
+```
+
+# Test source
+
+```ts
+  1788 |     request,
+  1789 |     apiBaseUrl,
+  1790 |     {
+  1791 |       method: row.method,
+  1792 |       path: resolveControlledPath(row.path, targetId),
+  1793 |       payload: row.payload,
+  1794 |       authorization: row.authorization,
+  1795 |     },
+  1796 |     tokenForPartition(row.authorization, tokens),
+  1797 |   );
+  1798 |   expect.soft(target.successful, `${row.key} access response`).toBe(
+  1799 |     row.expected.responseSuccessful,
+  1800 |   );
+  1801 | 
+  1802 |   const state = await requestJsonResource(
+  1803 |     request,
+  1804 |     apiBaseUrl,
+  1805 |     categoryMutationAccessMatrixCase.snapshot,
+  1806 |   );
+  1807 |   expect(state.successful && Array.isArray(state.value), `${row.key} state read`).toBe(
+  1808 |     true,
+  1809 |   );
+  1810 |   if (!Array.isArray(state.value)) {
+  1811 |     return;
+  1812 |   }
+  1813 | 
+  1814 |   const expectedName = row.payload?.name ?? row.setup?.payload.name;
+  1815 |   const record = controlledRecordById(state.value, targetId);
+  1816 |   if (row.expected.stateObservation === 'controlled_record_absent') {
+  1817 |     expect.soft(exactMatchingRecords(state.value, 'name', String(expectedName))).toHaveLength(0);
+  1818 |   } else if (row.expected.stateObservation === 'controlled_target_removed') {
+  1819 |     expect.soft(record).toBeUndefined();
+  1820 |   } else if (row.expected.stateObservation === 'controlled_target_unchanged') {
+  1821 |     expect.soft(record?.name).toBe(row.setup?.payload.name);
+  1822 |   } else if (row.expected.stateObservation === 'controlled_target_changed') {
+  1823 |     expect.soft(record?.name).toBe(row.payload?.name);
+  1824 |   } else {
+  1825 |     expect.soft(exactMatchingRecords(state.value, 'name', String(expectedName))).toHaveLength(1);
+  1826 |   }
+  1827 | }
+  1828 | 
+  1829 | async function runCouponMatrixRow(
+  1830 |   request: Parameters<typeof requestJsonResource>[0],
+  1831 |   row: Fr12CouponMatrixRow,
+  1832 |   tokens: { ordinaryUser: string; admin: string; invalid: string },
+  1833 | ): Promise<void> {
+  1834 |   let targetId: number | undefined;
+  1835 |   if (row.setup !== undefined) {
+  1836 |     const setup = await requestJsonResource(
+  1837 |       request,
+  1838 |       apiBaseUrl,
+  1839 |       {
+  1840 |         method: row.setup.method,
+  1841 |         path: row.setup.path,
+  1842 |         payload: row.setup.payload,
+  1843 |         authorization: couponMutationRouteMatrixCase.cleanup.authorization,
+  1844 |       },
+  1845 |       tokens.admin,
+  1846 |     );
+  1847 |     expect(setup.successful, `${row.key} controlled setup failed`).toBe(true);
+  1848 |     targetId = strictPositiveIntegerField(
+  1849 |       setup.value,
+  1850 |       row.setup.responseIdentifierField,
+  1851 |     );
+  1852 |     expect(targetId, `${row.key} setup must return a controlled id`).toBeDefined();
+  1853 |   }
+  1854 | 
+  1855 |   const target = await requestJsonResource(
+  1856 |     request,
+  1857 |     apiBaseUrl,
+  1858 |     {
+  1859 |       method: row.method,
+  1860 |       path: resolveControlledPath(row.path, targetId),
+  1861 |       payload: row.payload,
+  1862 |       authorization: row.authorization,
+  1863 |     },
+  1864 |     tokenForPartition(row.authorization, tokens),
+  1865 |   );
+  1866 |   expect.soft(
+  1867 |     target.successful,
+  1868 |     `${row.key} ${row.routeFamily} response; status=${String(target.status)}`,
+  1869 |   ).toBe(row.expected.responseSuccessful);
+  1870 | 
+  1871 |   const state = await requestJsonResource(
+  1872 |     request,
+  1873 |     apiBaseUrl,
+  1874 |     couponMutationRouteMatrixCase.snapshot,
+  1875 |     tokens.admin,
+  1876 |   );
+  1877 |   expect(state.successful && Array.isArray(state.value), `${row.key} coupon state read`).toBe(
+  1878 |     true,
+  1879 |   );
+  1880 |   if (!Array.isArray(state.value)) {
+  1881 |     return;
+  1882 |   }
+  1883 |   const expectedCode = row.payload?.code ?? row.setup?.payload.code;
+  1884 |   const record = controlledRecordById(state.value, targetId);
+  1885 |   if (row.expected.stateObservation === 'controlled_record_absent') {
+  1886 |     expect.soft(exactMatchingRecords(state.value, 'code', String(expectedCode))).toHaveLength(0);
+  1887 |   } else if (row.expected.stateObservation === 'controlled_target_removed') {
+> 1888 |     expect.soft(record).toBeUndefined();
+       |                         ^ Error: expect(received).toBeUndefined()
+  1889 |   } else if (row.expected.stateObservation === 'controlled_target_unchanged') {
+  1890 |     expect.soft(record?.code).toBe(row.setup?.payload.code);
+  1891 |   } else {
+  1892 |     expect.soft(exactMatchingRecords(state.value, 'code', String(expectedCode))).toHaveLength(1);
+  1893 |   }
+  1894 | }
+  1895 | 
+  1896 | test.describe('FR-12 access control — reviewed increment 3', () => {
+  1897 |   test(`${categoryMutationAccessMatrixCase.id} ${categoryMutationAccessMatrixCase.title}`, async ({
+  1898 |     request,
+  1899 |   }) => {
+  1900 |     test.slow();
+  1901 |     const testCase = categoryMutationAccessMatrixCase;
+  1902 |     expect(testCase.rows).toHaveLength(testCase.expected.rowCount);
+  1903 |     const ordinaryToken = requireAuthenticatedToken(
+  1904 |       await acquireRoleAwareApiIdentity(request, apiBaseUrl, testCase.apiSessions.ordinaryUser),
+  1905 |       { loginSuccessful: true, tokenPresent: true, roleEvidenceMatches: true },
+  1906 |       'TC09 seeded ordinary-user',
+  1907 |     );
+  1908 |     const adminToken = requireAuthenticatedToken(
+  1909 |       await acquireRoleAwareApiIdentity(request, apiBaseUrl, testCase.apiSessions.admin),
+  1910 |       { loginSuccessful: true, tokenPresent: true, roleEvidenceMatches: true },
+  1911 |       'TC09 seeded admin',
+  1912 |     );
+  1913 |     const baseline = await requestJsonResource(request, apiBaseUrl, testCase.snapshot);
+  1914 |     expect(baseline.successful && Array.isArray(baseline.value)).toBe(true);
+  1915 |     const markers = testCase.rows.flatMap((row) => row.cleanupInvariantMarkers);
+  1916 |     let completed = 0;
+  1917 | 
+  1918 |     try {
+  1919 |       for (const row of testCase.rows) {
+  1920 |         await runCategoryMatrixRow(request, row, {
+  1921 |           ordinaryUser: ordinaryToken,
+  1922 |           admin: adminToken,
+  1923 |         });
+  1924 |         completed += 1;
+  1925 |       }
+  1926 |       expect.soft(completed).toBe(testCase.expected.completedTargetResponses);
+  1927 |     } finally {
+  1928 |       const preCleanup = await requestJsonResource(request, apiBaseUrl, testCase.snapshot);
+  1929 |       const cleanup = await cleanupExactMarkerRecords(
+  1930 |         request,
+  1931 |         apiBaseUrl,
+  1932 |         preCleanup.value,
+  1933 |         markers,
+  1934 |         testCase.cleanup,
+  1935 |         adminToken,
+  1936 |       );
+  1937 |       expect.soft(cleanup.discoverySuccessful).toBe(true);
+  1938 |       for (const mutation of cleanup.mutations) {
+  1939 |         expect.soft(mutation.successful, `TC09 cleanup id=${mutation.identifier}`).toBe(true);
+  1940 |       }
+  1941 |       const finalSnapshot = await requestJsonResource(request, apiBaseUrl, testCase.snapshot);
+  1942 |       if (Array.isArray(baseline.value) && Array.isArray(finalSnapshot.value)) {
+  1943 |         expect.soft(normalizedSnapshotsEqual(baseline.value, finalSnapshot.value)).toBe(
+  1944 |           testCase.expected.finalMatchesBaseline,
+  1945 |         );
+  1946 |       } else {
+  1947 |         expect.soft(false, 'TC09 final restoration snapshot unavailable').toBe(true);
+  1948 |       }
+  1949 |     }
+  1950 |   });
+  1951 | 
+  1952 |   test(`${couponMutationRouteMatrixCase.id} ${couponMutationRouteMatrixCase.title}`, async ({
+  1953 |     request,
+  1954 |   }) => {
+  1955 |     test.slow();
+  1956 |     const testCase = couponMutationRouteMatrixCase;
+  1957 |     expect(testCase.rows.filter((row) => row.routeFamily === 'contract_exposed')).toHaveLength(
+  1958 |       testCase.expected.contractExposedRowCount,
+  1959 |     );
+  1960 |     expect(testCase.rows.filter((row) => row.routeFamily === 'readme_required')).toHaveLength(
+  1961 |       testCase.expected.readmeRequiredRowCount,
+  1962 |     );
+  1963 |     const ordinaryToken = requireAuthenticatedToken(
+  1964 |       await acquireRoleAwareApiIdentity(request, apiBaseUrl, testCase.apiSessions.ordinaryUser),
+  1965 |       { loginSuccessful: true, tokenPresent: true, roleEvidenceMatches: true },
+  1966 |       'TC10 seeded ordinary-user',
+  1967 |     );
+  1968 |     const adminToken = requireAuthenticatedToken(
+  1969 |       await acquireRoleAwareApiIdentity(request, apiBaseUrl, testCase.apiSessions.admin),
+  1970 |       { loginSuccessful: true, tokenPresent: true, roleEvidenceMatches: true },
+  1971 |       'TC10 seeded admin',
+  1972 |     );
+  1973 |     const baseline = await requestJsonResource(
+  1974 |       request,
+  1975 |       apiBaseUrl,
+  1976 |       testCase.snapshot,
+  1977 |       adminToken,
+  1978 |     );
+  1979 |     expect(baseline.successful && Array.isArray(baseline.value)).toBe(true);
+  1980 |     const markers = testCase.rows.flatMap((row) => row.cleanupInvariantMarkers);
+  1981 |     let completed = 0;
+  1982 | 
+  1983 |     try {
+  1984 |       for (const row of testCase.rows) {
+  1985 |         await runCouponMatrixRow(request, row, {
+  1986 |           ordinaryUser: ordinaryToken,
+  1987 |           admin: adminToken,
+  1988 |           invalid: testCase.malformedToken,
+```

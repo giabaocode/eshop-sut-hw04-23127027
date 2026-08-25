@@ -1,0 +1,7 @@
+# AI Critique (200–300 words)
+
+AI hỗ trợ biến ma trận truy vết thành Playwright, Page Object và dữ liệu JSON, nhưng các bản nháp đầu tiên chứa giả định nguy hiểm. Ở FR-01, AI dùng `getByLabel` như thể label và input được liên kết đúng chuẩn; DOM thực tế dùng các phần tử cùng cấp nên locator không tìm thấy control. AI cũng điền toàn bộ form trong test định dạng email, khiến test có thể thất bại vì trường xác nhận mật khẩu trước đúng mục tiêu. Ở FR-07, oracle ban đầu trộn trạng thái API với luồng UI và chưa xác định badge tăng từ đâu.
+
+Sai sót nghiêm trọng nhất nằm ở FR-12: AI xem mọi HTTP non-success là bằng chứng access control hoạt động. Với order ID không tồn tại, `404 Order not found` có thể đến từ business handler sau khi lớp phân quyền bị bỏ qua, nên kết luận “đã bị chặn” có thể là false positive. AI bỏ sót vì prompt chưa nêu rõ ranh giới fixture và cách phân biệt authentication, authorization với business validation.
+
+Review thủ công đã sửa locator theo DOM thật, tách dữ liệu và hành động theo từng mục tiêu, dùng snapshot trước/sau, cleanup marker chính xác, và ghi `EVIDENCE MISSING` khi không thể tạo order fixture phục hồi được qua API. Nguyên tắc tôi học được là phải cộng tác với AI theo vòng lặp nhỏ: cung cấp test basis, yêu cầu nêu giả định, kiểm tra source hoặc DOM, chạy increment hẹp, rồi phản biện từng oracle trước khi mở rộng. AI tạo tốc độ, nhưng con người chịu trách nhiệm cuối cùng về tính hợp lệ của bằng chứng.

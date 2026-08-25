@@ -1,0 +1,9 @@
+84cece3 | 2026-08-25T21:22:40+07:00 | test(fr12): complete reviewed access-control coverage
+797da37 | 2026-08-21T10:22:03+07:00 | test(fr12): add reviewed access control increment 1
+c2258d8 | 2026-08-21T08:20:09+07:00 | test(fr07): complete reviewed cart coverage
+e423975 | 2026-08-20T19:17:19+07:00 | test(fr07): add reviewed cart controls increment 2
+d94c79d | 2026-08-20T17:38:38+07:00 | test(fr07): add reviewed cart core increment 1
+d82e328 | 2026-08-20T15:36:26+07:00 | test(fr01): complete reviewed registration coverage
+54aadd0 | 2026-08-20T13:29:32+07:00 | test(fr01): add reviewed password rules increment 2
+f6ab0cd | 2026-08-20T11:55:53+07:00 | test(fr01): add reviewed registration increment 1
+4c2d774 | 2026-08-18T14:24:55+07:00 | test(infra): add Playwright TypeScript foundation

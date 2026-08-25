@@ -1,0 +1,355 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: features/fr12-access-control.spec.ts >> FR-12 access control — reviewed increment 2 >> FR12-TC06 ordinary-user probes cover every Admin route with an explicit order-status evidence boundary
+- Location: tests/features/fr12-access-control.spec.ts:1132:7
+
+# Error details
+
+```
+Error: user_admin_import_products_post authenticated ordinary user must be denied authorization; status: 200; body: {"message":"Import hoàn tất: 1/1 sản phẩm được thêm","inserted":1,"errors":[]}
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: user_admin_coupons_post authenticated ordinary user must be denied authorization; status: 200; body: {"message":"Coupon created","id":14}
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: user_admin_coupons_delete authenticated ordinary user must be denied authorization; status: 200; body: {"message":"Coupon deleted"}
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: user_admin_users_get authenticated ordinary user must be denied authorization; status: 200; body: [{"id":1,"name":"Admin User","email":"admin@eshop.com","role":"admin","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":2,"name":"Test User","email":"test@eshop.com","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":3,"name":"Nguyễn Văn An","email":"fr01-tc12-mt2of5au-yi1-bd9bbbcb5e25461b950b6d651d5d3a61@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":4,"name":"Nguyễn Văn An Duplicate","email":"fr01-tc12-mt2of5au-yi1-bd9bbbcb5e25461b950b6d651d5d3a61@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":5,"name":"Nguyễn Văn An","email":"fr01-tc12-mt2ogskg-ym7-cca3d57b60104f74a9a35d3b3f6d0d2e@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":6,"name":"Nguyễn Văn An Duplicate","email":"fr01-tc12-mt2ogskg-ym7-cca3d57b60104f74a9a35d3b3f6d0d2e@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":7,"name":"Nguyễn Văn An","email":"fr01-tc12-mt2oictr-yt3-bcdb657c58834918be7e4d6b0fbf989d@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":8,"name":"Nguyễn Văn An Duplicate","email":"fr01-tc12-mt2oictr-yt3-bcdb657c58834918be7e4d6b0fbf989d@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null}]
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: user_admin_users_get must not return protected users data
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: user_admin_users_delete authenticated ordinary user must be denied authorization; status: 200; body: {"message":"User deleted"}
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: user_admin_orders_get authenticated ordinary user must be denied authorization; status: 200; body: []
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: user_admin_orders_get must not return protected orders data
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: false
+Received: true
+```
+
+```
+Error: user_admin_orders_status_put EVIDENCE MISSING: For a non-existing order ID, an access-control bypass can reach the business handler and return Order not found, so a generic non-success response plus unchanged snapshots cannot prove ordinary-user authorization denial. Retain the one-shot response and post-target state for human triage, but do not assert an unsupported exact status or wording and do not count this route as a verified denial. Original one-shot target response evidence: status: 404; body: {"error":"Order not found"}
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 0
+Received: 6
+```
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 0
+Received: 2
+```
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 6
+Received: 0
+```
+
+```
+Error: products changed after TC06 ordinary-user probes
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+```
+Error: coupons changed after TC06 ordinary-user probes
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: true
+Received: false
+```
+
+```
+Error: expect(received).toBe(expected) // Object.is equality
+
+Expected: 0
+Received: 2
+```
+
+```
+Error: TC06 ordinary-user original mutation-marker evidence
+
+expect(received).toBe(expected) // Object.is equality
+
+Expected: 0
+Received: 2
+```
+
+# Test source
+
+```ts
+  154 | }
+  155 | 
+  156 | function resolveProductPayload(
+  157 |   payload: Fr12ProductPayload,
+  158 |   referenceToken: string,
+  159 |   categoryId: number,
+  160 | ): Fr12ProductPayload {
+  161 |   expect(payload.category_id).toBe(referenceToken);
+  162 | 
+  163 |   return {
+  164 |     ...payload,
+  165 |     category_id: categoryId,
+  166 |   };
+  167 | }
+  168 | 
+  169 | function matrixTargetRoute(
+  170 |   row: Fr12ProductMatrixRow,
+  171 |   resolvedPayload: Fr12ProductPayload | undefined,
+  172 |   targetId: number | undefined,
+  173 |   protectedResource: Fr12SnapshotResourceName,
+  174 | ): Fr12TargetRouteRecord {
+  175 |   return {
+  176 |     key: row.key,
+  177 |     method: row.method,
+  178 |     path: row.path,
+  179 |     pathParameters:
+  180 |       row.path.includes(':id') && targetId !== undefined
+  181 |         ? { id: String(targetId) }
+  182 |         : undefined,
+  183 |     payload: resolvedPayload,
+  184 |     authorization: row.authorization,
+  185 |     protectedResource,
+  186 |   };
+  187 | }
+  188 | 
+  189 | function productById(
+  190 |   collection: unknown,
+  191 |   identifier: number,
+  192 | ): Record<string, unknown> | undefined {
+  193 |   if (!Array.isArray(collection)) {
+  194 |     return undefined;
+  195 |   }
+  196 | 
+  197 |   return collection.find(
+  198 |     (record): record is Record<string, unknown> =>
+  199 |       typeof record === 'object' &&
+  200 |       record !== null &&
+  201 |       !Array.isArray(record) &&
+  202 |       record.id === identifier,
+  203 |   );
+  204 | }
+  205 | 
+  206 | async function recordInventoryMutationEvidenceAndRestore(
+  207 |   snapshotSession: AdminSnapshotSession,
+  208 |   resources: readonly Fr12SnapshotResource[],
+  209 |   beforeSnapshots: readonly SnapshotAttempt[],
+  210 |   afterSnapshots: readonly SnapshotAttempt[],
+  211 |   markers: readonly string[],
+  212 |   cleanups: readonly Fr12ControlledCleanupDefinition[],
+  213 |   expected: {
+  214 |     snapshotAcquisitionSuccessful: boolean;
+  215 |     finalSnapshotAcquisitionSuccessful: boolean;
+  216 |     changedSnapshotCount: number;
+  217 |     mutationMarkerMatches: number;
+  218 |     cleanupDiscoverySuccessful: boolean;
+  219 |     controlledMarkerMatchesAfterCleanup: number;
+  220 |     finalChangedSnapshotCount: number;
+  221 |   },
+  222 |   partitionName: string,
+  223 | ): Promise<void> {
+  224 |   try {
+  225 |     recordSnapshotAcquisition(
+  226 |       afterSnapshots,
+  227 |       expected.snapshotAcquisitionSuccessful,
+  228 |       `${partitionName} post-probe`,
+  229 |     );
+  230 | 
+  231 |     let changedSnapshotCount = 0;
+  232 |     for (const resource of resources) {
+  233 |       const before = snapshotByResource(beforeSnapshots, resource.name);
+  234 |       const after = snapshotByResource(afterSnapshots, resource.name);
+  235 | 
+  236 |       if (before?.successful && after?.successful) {
+  237 |         const unchanged = normalizedSnapshotsEqual(before.value, after.value);
+  238 |         if (!unchanged) {
+  239 |           changedSnapshotCount += 1;
+  240 |         }
+  241 |         expect.soft(
+  242 |           unchanged,
+  243 |           `${resource.name} changed after ${partitionName} probes`,
+  244 |         ).toBe(true);
+  245 |       }
+  246 |     }
+  247 |     expect.soft(changedSnapshotCount).toBe(expected.changedSnapshotCount);
+  248 |     expect.soft(
+  249 |       countMutationMarkerMatches(
+  250 |         [...beforeSnapshots, ...afterSnapshots],
+  251 |         markers,
+  252 |       ),
+  253 |       `${partitionName} original mutation-marker evidence`,
+> 254 |     ).toBe(expected.mutationMarkerMatches);
+      |       ^ Error: TC06 ordinary-user original mutation-marker evidence
+  255 |   } finally {
+  256 |     try {
+  257 |       const cleanupResults = await snapshotSession.cleanupControlledRecords(
+  258 |         cleanups,
+  259 |         afterSnapshots,
+  260 |       );
+  261 |       expect.soft(cleanupResults).toHaveLength(cleanups.length);
+  262 | 
+  263 |       for (const cleanup of cleanups) {
+  264 |         const result = cleanupResults.find(
+  265 |           (candidate) => candidate.cleanupKey === cleanup.key,
+  266 |         );
+  267 |         expect.soft(
+  268 |           result?.discoverySuccessful ?? false,
+  269 |           `${partitionName} cleanup discovery ${cleanup.key} failed; ` +
+  270 |             `matches: ${String(result?.matchingRecordCount)}; ` +
+  271 |             `error: ${String(result?.error)}`,
+  272 |         ).toBe(expected.cleanupDiscoverySuccessful);
+  273 |         for (const mutation of result?.mutations ?? []) {
+  274 |           expect.soft(
+  275 |             mutation.successful,
+  276 |             `${partitionName} cleanup ${cleanup.key} failed for controlled ` +
+  277 |               `${cleanup.identifierField}=${mutation.identifier}; ` +
+  278 |               `status: ${String(mutation.status)}; ` +
+  279 |               `error: ${String(mutation.error)}`,
+  280 |           ).toBe(cleanup.expected.responseSuccessful);
+  281 |         }
+  282 |       }
+  283 |     } catch (error) {
+  284 |       expect.soft(
+  285 |         false,
+  286 |         `${partitionName} controlled cleanup helper failed: ${errorMessage(error)}`,
+  287 |       ).toBe(true);
+  288 |     } finally {
+  289 |       const finalSnapshots = await captureSnapshotsSafely(
+  290 |         snapshotSession,
+  291 |         resources,
+  292 |         [],
+  293 |         `${partitionName} post-cleanup`,
+  294 |       );
+  295 |       recordSnapshotAcquisition(
+  296 |         finalSnapshots,
+  297 |         expected.finalSnapshotAcquisitionSuccessful,
+  298 |         `${partitionName} post-cleanup`,
+  299 |       );
+  300 |       expect.soft(countControlledRecordMatches(finalSnapshots, cleanups)).toBe(
+  301 |         expected.controlledMarkerMatchesAfterCleanup,
+  302 |       );
+  303 | 
+  304 |       let finalChangedSnapshotCount = 0;
+  305 |       for (const resource of resources) {
+  306 |         const before = snapshotByResource(beforeSnapshots, resource.name);
+  307 |         const final = snapshotByResource(finalSnapshots, resource.name);
+  308 |         if (before?.successful && final?.successful) {
+  309 |           const restored = normalizedSnapshotsEqual(before.value, final.value);
+  310 |           if (!restored) {
+  311 |             finalChangedSnapshotCount += 1;
+  312 |           }
+  313 |           expect.soft(
+  314 |             restored,
+  315 |             `${resource.name} was not restored after ${partitionName} cleanup`,
+  316 |           ).toBe(true);
+  317 |         }
+  318 |       }
+  319 |       expect.soft(finalChangedSnapshotCount).toBe(
+  320 |         expected.finalChangedSnapshotCount,
+  321 |       );
+  322 |     }
+  323 |   }
+  324 | }
+  325 | 
+  326 | test.describe('FR-12 access control — reviewed increment 1', () => {
+  327 |   test(`${adminUiNoTokenCase.id} ${adminUiNoTokenCase.title}`, async ({
+  328 |     page,
+  329 |   }) => {
+  330 |     test.slow();
+  331 |     const testCase = adminUiNoTokenCase;
+  332 |     const admin = new AdminAccessPage(page, testCase.labels);
+  333 |     const mutationRequests = admin.observeMutationRequests(
+  334 |       testCase.requestObservation.mutations,
+  335 |     );
+  336 |     const loginResponses = admin.observeLoginResponses(
+  337 |       testCase.requestObservation.login.method,
+  338 |       testCase.requestObservation.login.path,
+  339 |     );
+  340 |     const dialogs = admin.observeAndDismissDialogs();
+  341 |     const loginSubmitActivations = 0;
+  342 | 
+  343 |     try {
+  344 |       await admin.goto(adminOrigin, testCase.adminEntryPath);
+  345 | 
+  346 |       await recordGuardedVisibility(
+  347 |         admin.loginForm,
+  348 |         testCase.expected.counts.loginForms,
+  349 |         'Admin login form',
+  350 |       );
+  351 |       await recordGuardedVisibility(
+  352 |         admin.loginHeading,
+  353 |         testCase.expected.counts.loginHeadings,
+  354 |         'Admin login heading',
+```

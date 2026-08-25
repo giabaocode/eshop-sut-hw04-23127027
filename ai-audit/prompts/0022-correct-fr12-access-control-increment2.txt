@@ -1,0 +1,105 @@
+Act as a senior Playwright TypeScript test-automation engineer correcting the rejected FR-12 increment 2 proposal for HW04 student 23127027.
+
+Repository root:
+`/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027`
+
+Read before editing:
+
+- `README.md`, especially FR-12, SEC-02, SEC-03, and relevant FR-21 through FR-24 requirements.
+- `docs/hw04-traceability-test-matrix.md`, especially FR12-TC05 through FR12-TC08.
+- `api_specification.md` only as supporting contract.
+- Current:
+  - `tests/data/fr12-access-control.json`
+  - `tests/features/fr12-access-control.spec.ts`
+  - `tests/support/data-loader.ts`
+  - `tests/support/fr12-api.ts`
+- Rejected artifact:
+  - `ai-audit/artifacts/0021-rejected-fr12-increment2/fr12-access-control.json`
+  - `ai-audit/artifacts/0021-rejected-fr12-increment2/fr12-access-control.spec.ts`
+  - `ai-audit/artifacts/0021-rejected-fr12-increment2/data-loader.ts`
+  - `ai-audit/artifacts/0021-rejected-fr12-increment2/fr12-api.ts`
+- Read-only SUT references needed to understand whether an API-only reversible order fixture is possible:
+  - `backend/server.js`
+  - `backend/database.js`
+
+Correct only the rejected FR12-TC05 through FR12-TC08 proposal. Preserve all accepted TC01-TC04 code byte-for-byte relative to HEAD.
+
+The rejection reason is specific:
+
+TC05 and TC06 currently probe `PUT /api/admin/orders/:id/status` with a non-existing safe ID and treat any non-success response plus unchanged snapshots as authentication or authorization denial. If the access-control boundary is bypassed, the business handler can return `404 Order not found`; the current oracle can then pass falsely.
+
+Required correction:
+
+1. Do not treat a generic non-success response from the non-existing order-status target as proof of authentication or authorization denial.
+
+2. First determine from the read-only SUT/API sources whether a controlled existing order can be established and fully restored using supported HTTP APIs only.
+
+3. If an API-only reversible controlled order fixture is possible:
+   - Create it through supported APIs, never by editing SQLite or injecting internal state.
+   - Prove a strict positive-integer controlled order ID and its initial state.
+   - Choose a business-valid transition whose payload differs from the initial state.
+   - Execute each TC05/TC06 order-status target exactly once.
+   - Assert that invalid-token and ordinary-user requests do not change the controlled order.
+   - Record the original target response/state evidence before cleanup.
+   - Restore all controlled state through authenticated Admin APIs in nested `finally`.
+   - Verify the final observable state equals its pre-test baseline.
+
+4. If no fully reversible API-only controlled order fixture exists:
+   - Keep the safe order-status request one-shot and non-mutating.
+   - Add explicit external JSON evidence-boundary data explaining that a non-existing target cannot distinguish access denial from business-handler `not found`.
+   - Do not count generic non-success as a verified denied route.
+   - Produce an explicit guarded `EVIDENCE MISSING` assertion for that route so the test cannot pass falsely.
+   - Keep the response available for later human triage without asserting unsupported exact status or wording.
+   - Do not use skip, fixme, retry, arbitrary waits, mocks, storage injection, direct database access, or fabricated evidence.
+
+5. Ensure aggregate route counters cannot report all seven routes as verified denials when the order-status authorization boundary was not actually proven.
+
+6. Preserve the accepted design elsewhere:
+   - TC05: exactly two invalid-token classes and fourteen one-shot target probes across seven Admin routes per class.
+   - TC06: exactly seven one-shot ordinary-user target probes.
+   - TC07: exactly two GET-only Admin read targets.
+   - TC08: exactly nine POST/PUT/DELETE × missing/user/admin target rows.
+   - Original post-target defect evidence must be recorded before cleanup.
+   - Exact-marker discovery, strict positive-integer IDs, authenticated API cleanup, nested `finally`, and final baseline verification remain.
+   - No raw token or signing material may be logged.
+   - External test-case data remains in JSON; do not introduce inline test-case arrays or objects in the spec.
+
+Permitted automation files:
+
+- `tests/data/fr12-access-control.json`
+- `tests/features/fr12-access-control.spec.ts`
+- `tests/support/data-loader.ts`
+- `tests/support/fr12-api.ts`
+
+Do not modify:
+
+- `tests/pages/admin-access.page.ts`
+- FR01 or FR07 automation
+- SUT source
+- database files
+- README, API specification, traceability matrix, or other documentation
+- Playwright/TypeScript configuration
+- package files or lockfiles
+- evidence
+- existing audit files, prompts, outputs, entries, or rejected artifacts
+
+Validation requirements:
+
+- JSON parses and IDs remain exactly sequential and unique FR12-TC01 through FR12-TC08.
+- Exactly eight FR12 test declarations overall.
+- TC01-TC04 remain byte-identical to HEAD.
+- TC05-TC08 Playwright discovery lists exactly four tests for Chromium.
+- Run `npm run typecheck`.
+- Run Playwright only with `--list`; do not execute browser or API tests.
+- Check one-shot target counts, evidence-before-cleanup ordering, guarded observations, forbidden patterns, trailing whitespace, and `git diff --check`.
+- Confirm prohibited files are unchanged.
+
+In the final response, state:
+
+- the exact files changed;
+- whether an API-only reversible order fixture was possible;
+- how the false-pass order-status oracle was eliminated;
+- TC05 through TC08 structure and action counts;
+- cleanup and evidence boundaries;
+- static validation performed;
+- that no browser/API test ran and no prohibited file changed.

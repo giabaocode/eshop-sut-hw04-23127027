@@ -1,0 +1,942 @@
+
+Running 12 tests using 1 worker
+
+  ✓   1 [firefox] › tests/features/fr12-access-control.spec.ts:327:7 › FR-12 access control — reviewed increment 1 › FR12-TC01 fresh unauthenticated visitor sees only the Admin login boundary (625ms)
+  ✓   2 [firefox] › tests/features/fr12-access-control.spec.ts:399:7 › FR-12 access control — reviewed increment 1 › FR12-TC02 valid ordinary-user credentials are denied Admin UI authorization (255ms)
+  ✓   3 [firefox] › tests/features/fr12-access-control.spec.ts:489:7 › FR-12 access control — reviewed increment 1 › FR12-TC03 valid seeded admin reaches the protected Dashboard (243ms)
+  ✓   4 [firefox] › tests/features/fr12-access-control.spec.ts:569:7 › FR-12 access control — reviewed increment 1 › FR12-TC04 every documented Admin route rejects a missing token without mutation (44ms)
+  ✘   5 [firefox] › tests/features/fr12-access-control.spec.ts:904:7 › FR-12 access control — reviewed increment 2 › FR12-TC05 invalid-token probes cover every Admin route with an explicit order-status evidence boundary (63ms)
+  ✘   6 [firefox] › tests/features/fr12-access-control.spec.ts:1132:7 › FR-12 access control — reviewed increment 2 › FR12-TC06 ordinary-user probes cover every Admin route with an explicit order-status evidence boundary (81ms)
+  ✓   7 [firefox] › tests/features/fr12-access-control.spec.ts:1313:7 › FR-12 access control — reviewed increment 2 › FR12-TC07 valid seeded-admin token reads protected Admin user and order collections (26ms)
+  ✘   8 [firefox] › tests/features/fr12-access-control.spec.ts:1410:7 › FR-12 access control — reviewed increment 2 › FR12-TC08 product POST PUT DELETE enforce missing-user-admin access partitions (81ms)
+  ✘   9 [firefox] › tests/features/fr12-access-control.spec.ts:1897:7 › FR-12 access control — reviewed increment 3 › FR12-TC09 category POST PUT DELETE enforce missing-user-admin access partitions (86ms)
+  ✘  10 [firefox] › tests/features/fr12-access-control.spec.ts:1952:7 › FR-12 access control — reviewed increment 3 › FR12-TC10 coupon access control covers exposed Admin routes and required route discrepancy (110ms)
+  ✘  11 [firefox] › tests/features/fr12-access-control.spec.ts:2135:7 › FR-12 access control — reviewed increment 3 › FR12-TC11 ordinary user profile update cannot elevate persisted or effective role (36ms)
+  ✘  12 [firefox] › tests/features/fr12-access-control.spec.ts:2141:7 › FR-12 access control — reviewed increment 3 › FR12-TC12 admin self-profile update cannot demote persisted or effective role (36ms)
+
+
+  1) [firefox] › tests/features/fr12-access-control.spec.ts:904:7 › FR-12 access control — reviewed increment 2 › FR12-TC05 invalid-token probes cover every Admin route with an explicit order-status evidence boundary 
+
+    Error: malformed_admin_orders_status_put EVIDENCE MISSING: For a non-existing order ID, an access-control bypass can reach the business handler and return Order not found, so a generic non-success response plus unchanged snapshots cannot prove invalid-token rejection. Retain the one-shot response and post-target state for human triage, but do not assert an unsupported exact status or wording and do not count this route as a verified denial. Original one-shot target response evidence: status: 403; body: {"error":"Forbidden"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       `${boundary.oracleConstraint} Original one-shot target response evidence: ` +
+      899 |       originalResponseEvidence,
+    > 900 |   ).toBe(true);
+          |     ^
+      901 | }
+      902 |
+      903 | test.describe('FR-12 access control — reviewed increment 2', () => {
+        at recordEvidenceMissingRouteObservation (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:900:5)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1086:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1032:9
+
+    Error: expired_admin_orders_status_put EVIDENCE MISSING: For a non-existing order ID, an access-control bypass can reach the business handler and return Order not found, so a generic non-success response plus unchanged snapshots cannot prove invalid-token rejection. Retain the one-shot response and post-target state for human triage, but do not assert an unsupported exact status or wording and do not count this route as a verified denial. Original one-shot target response evidence: status: 403; body: {"error":"Forbidden"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       `${boundary.oracleConstraint} Original one-shot target response evidence: ` +
+      899 |       originalResponseEvidence,
+    > 900 |   ).toBe(true);
+          |     ^
+      901 | }
+      902 |
+      903 | test.describe('FR-12 access control — reviewed increment 2', () => {
+        at recordEvidenceMissingRouteObservation (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:900:5)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1086:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1032:9
+
+    Error Context: test-results/final/fr12-firefox/features-fr12-access-contr-be694-er-status-evidence-boundary-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr12-firefox/features-fr12-access-contr-be694-er-status-evidence-boundary-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr12-firefox/features-fr12-access-contr-be694-er-status-evidence-boundary-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  2) [firefox] › tests/features/fr12-access-control.spec.ts:1132:7 › FR-12 access control — reviewed increment 2 › FR12-TC06 ordinary-user probes cover every Admin route with an explicit order-status evidence boundary 
+
+    Error: user_admin_import_products_post authenticated ordinary user must be denied authorization; status: 200; body: {"message":"Import hoàn tất: 1/1 sản phẩm được thêm","inserted":1,"errors":[]}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1251 |                   `${route.key} authenticated ordinary user must be denied authorization; ` +
+      1252 |                     responseDiagnostics(attempt.response),
+    > 1253 |                 ).toBe(testCase.expected.responseSuccessful);
+           |                   ^
+      1254 |                 expect.soft(
+      1255 |                   protectedDataReturned,
+      1256 |                   `${route.key} must not return protected ${route.protectedResource} data`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1253:19
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1217:9
+
+    Error: user_admin_coupons_post authenticated ordinary user must be denied authorization; status: 200; body: {"message":"Coupon created","id":14}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1251 |                   `${route.key} authenticated ordinary user must be denied authorization; ` +
+      1252 |                     responseDiagnostics(attempt.response),
+    > 1253 |                 ).toBe(testCase.expected.responseSuccessful);
+           |                   ^
+      1254 |                 expect.soft(
+      1255 |                   protectedDataReturned,
+      1256 |                   `${route.key} must not return protected ${route.protectedResource} data`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1253:19
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1217:9
+
+    Error: user_admin_coupons_delete authenticated ordinary user must be denied authorization; status: 200; body: {"message":"Coupon deleted"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1251 |                   `${route.key} authenticated ordinary user must be denied authorization; ` +
+      1252 |                     responseDiagnostics(attempt.response),
+    > 1253 |                 ).toBe(testCase.expected.responseSuccessful);
+           |                   ^
+      1254 |                 expect.soft(
+      1255 |                   protectedDataReturned,
+      1256 |                   `${route.key} must not return protected ${route.protectedResource} data`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1253:19
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1217:9
+
+    Error: user_admin_users_get authenticated ordinary user must be denied authorization; status: 200; body: [{"id":1,"name":"Admin User","email":"admin@eshop.com","role":"admin","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":2,"name":"Test User","email":"test@eshop.com","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":3,"name":"Nguyễn Văn An","email":"fr01-tc12-mt2of5au-yi1-bd9bbbcb5e25461b950b6d651d5d3a61@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":4,"name":"Nguyễn Văn An Duplicate","email":"fr01-tc12-mt2of5au-yi1-bd9bbbcb5e25461b950b6d651d5d3a61@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":5,"name":"Nguyễn Văn An","email":"fr01-tc12-mt2ogskg-ym7-cca3d57b60104f74a9a35d3b3f6d0d2e@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":6,"name":"Nguyễn Văn An Duplicate","email":"fr01-tc12-mt2ogskg-ym7-cca3d57b60104f74a9a35d3b3f6d0d2e@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":7,"name":"Nguyễn Văn An","email":"fr01-tc12-mt2oictr-yt3-bcdb657c58834918be7e4d6b0fbf989d@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null},{"id":8,"name":"Nguyễn Văn An Duplicate","email":"fr01-tc12-mt2oictr-yt3-bcdb657c58834918be7e4d6b0fbf989d@example.test","role":"user","login_attempts":0,"locked_until":null,"shipping_address":null}]
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1251 |                   `${route.key} authenticated ordinary user must be denied authorization; ` +
+      1252 |                     responseDiagnostics(attempt.response),
+    > 1253 |                 ).toBe(testCase.expected.responseSuccessful);
+           |                   ^
+      1254 |                 expect.soft(
+      1255 |                   protectedDataReturned,
+      1256 |                   `${route.key} must not return protected ${route.protectedResource} data`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1253:19
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1217:9
+
+    Error: user_admin_users_get must not return protected users data
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1255 |                   protectedDataReturned,
+      1256 |                   `${route.key} must not return protected ${route.protectedResource} data`,
+    > 1257 |                 ).toBe(testCase.expected.protectedDataReturned);
+           |                   ^
+      1258 |                 if (!attempt.response.successful && !protectedDataReturned) {
+      1259 |                   verifiedDenialProbeResponses += 1;
+      1260 |                 }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1257:19
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1217:9
+
+    Error: user_admin_users_delete authenticated ordinary user must be denied authorization; status: 200; body: {"message":"User deleted"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1251 |                   `${route.key} authenticated ordinary user must be denied authorization; ` +
+      1252 |                     responseDiagnostics(attempt.response),
+    > 1253 |                 ).toBe(testCase.expected.responseSuccessful);
+           |                   ^
+      1254 |                 expect.soft(
+      1255 |                   protectedDataReturned,
+      1256 |                   `${route.key} must not return protected ${route.protectedResource} data`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1253:19
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1217:9
+
+    Error: user_admin_orders_get authenticated ordinary user must be denied authorization; status: 200; body: []
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1251 |                   `${route.key} authenticated ordinary user must be denied authorization; ` +
+      1252 |                     responseDiagnostics(attempt.response),
+    > 1253 |                 ).toBe(testCase.expected.responseSuccessful);
+           |                   ^
+      1254 |                 expect.soft(
+      1255 |                   protectedDataReturned,
+      1256 |                   `${route.key} must not return protected ${route.protectedResource} data`,
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1253:19
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1217:9
+
+    Error: user_admin_orders_get must not return protected orders data
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1255 |                   protectedDataReturned,
+      1256 |                   `${route.key} must not return protected ${route.protectedResource} data`,
+    > 1257 |                 ).toBe(testCase.expected.protectedDataReturned);
+           |                   ^
+      1258 |                 if (!attempt.response.successful && !protectedDataReturned) {
+      1259 |                   verifiedDenialProbeResponses += 1;
+      1260 |                 }
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1257:19
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1217:9
+
+    Error: user_admin_orders_status_put EVIDENCE MISSING: For a non-existing order ID, an access-control bypass can reach the business handler and return Order not found, so a generic non-success response plus unchanged snapshots cannot prove ordinary-user authorization denial. Retain the one-shot response and post-target state for human triage, but do not assert an unsupported exact status or wording and do not count this route as a verified denial. Original one-shot target response evidence: status: 404; body: {"error":"Order not found"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      898 |       `${boundary.oracleConstraint} Original one-shot target response evidence: ` +
+      899 |       originalResponseEvidence,
+    > 900 |   ).toBe(true);
+          |     ^
+      901 | }
+      902 |
+      903 | test.describe('FR-12 access control — reviewed increment 2', () => {
+        at recordEvidenceMissingRouteObservation (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:900:5)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1267:15
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1217:9
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 6
+
+      1279 |         testCase.expected.completedProbeResponses,
+      1280 |       );
+    > 1281 |       expect.soft(successfulProbeResponses).toBe(
+           |                                             ^
+      1282 |         testCase.expected.successfulProbeResponses,
+      1283 |       );
+      1284 |       expect.soft(protectedDataResponses).toBe(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1281:45
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 2
+
+      1282 |         testCase.expected.successfulProbeResponses,
+      1283 |       );
+    > 1284 |       expect.soft(protectedDataResponses).toBe(
+           |                                           ^
+      1285 |         testCase.expected.protectedDataResponses,
+      1286 |       );
+      1287 |       expect.soft(evidenceMissingProbeResponses).toBe(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1284:43
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 6
+    Received: 0
+
+      1288 |         testCase.expected.evidenceMissingProbeResponses,
+      1289 |       );
+    > 1290 |       expect.soft(verifiedDenialProbeResponses).toBe(
+           |                                                 ^
+      1291 |         testCase.expected.verifiedDenialProbeResponses,
+      1292 |       );
+      1293 |     } finally {
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1290:49
+
+    Error: products changed after TC06 ordinary-user probes
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      242 |           unchanged,
+      243 |           `${resource.name} changed after ${partitionName} probes`,
+    > 244 |         ).toBe(true);
+          |           ^
+      245 |       }
+      246 |     }
+      247 |     expect.soft(changedSnapshotCount).toBe(expected.changedSnapshotCount);
+        at recordInventoryMutationEvidenceAndRestore (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:244:11)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1300:13
+
+    Error: coupons changed after TC06 ordinary-user probes
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      242 |           unchanged,
+      243 |           `${resource.name} changed after ${partitionName} probes`,
+    > 244 |         ).toBe(true);
+          |           ^
+      245 |       }
+      246 |     }
+      247 |     expect.soft(changedSnapshotCount).toBe(expected.changedSnapshotCount);
+        at recordInventoryMutationEvidenceAndRestore (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:244:11)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1300:13
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 2
+
+      245 |       }
+      246 |     }
+    > 247 |     expect.soft(changedSnapshotCount).toBe(expected.changedSnapshotCount);
+          |                                       ^
+      248 |     expect.soft(
+      249 |       countMutationMarkerMatches(
+      250 |         [...beforeSnapshots, ...afterSnapshots],
+        at recordInventoryMutationEvidenceAndRestore (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:247:39)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1300:13
+
+    Error: TC06 ordinary-user original mutation-marker evidence
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 0
+    Received: 2
+
+      252 |       ),
+      253 |       `${partitionName} original mutation-marker evidence`,
+    > 254 |     ).toBe(expected.mutationMarkerMatches);
+          |       ^
+      255 |   } finally {
+      256 |     try {
+      257 |       const cleanupResults = await snapshotSession.cleanupControlledRecords(
+        at recordInventoryMutationEvidenceAndRestore (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:254:7)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1300:13
+
+    Error Context: test-results/final/fr12-firefox/features-fr12-access-contr-2558c-er-status-evidence-boundary-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr12-firefox/features-fr12-access-contr-2558c-er-status-evidence-boundary-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr12-firefox/features-fr12-access-contr-2558c-er-status-evidence-boundary-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  3) [firefox] › tests/features/fr12-access-control.spec.ts:1410:7 › FR-12 access control — reviewed increment 2 › FR12-TC08 product POST PUT DELETE enforce missing-user-admin access partitions 
+
+    Error: post_missing_token authentication_denied; status: 200; body: {"message":"Product created","id":23}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1606 |                 `${row.key} ${row.expected.accessObservation}; ` +
+      1607 |                   responseDiagnostics(attempt.response),
+    > 1608 |               ).toBe(row.expected.responseSuccessful);
+           |                 ^
+      1609 |             }
+      1610 |
+      1611 |             const stateAttempt = await requestJsonResource(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1608:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 1
+    Received array:  [{"category_id": 1, "description": "FR12 TC08 POST missing token", "id": 23, "imageUrl": "https://example.test/fr12-tc08-post-missing.png", "name": "FR12_TC08_POST_MISSING_23127027", "price": 128011}]
+
+      1638 |
+      1639 |             if (row.expected.stateObservation === 'controlled_product_absent') {
+    > 1640 |               expect.soft(markerMatches).toHaveLength(0);
+           |                                          ^
+      1641 |             } else if (
+      1642 |               row.expected.stateObservation === 'controlled_target_removed'
+      1643 |             ) {
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1640:42
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: post_ordinary_user authorization_denied; status: 200; body: {"message":"Product created","id":24}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1606 |                 `${row.key} ${row.expected.accessObservation}; ` +
+      1607 |                   responseDiagnostics(attempt.response),
+    > 1608 |               ).toBe(row.expected.responseSuccessful);
+           |                 ^
+      1609 |             }
+      1610 |
+      1611 |             const stateAttempt = await requestJsonResource(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1608:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 1
+    Received array:  [{"category_id": 1, "description": "FR12 TC08 POST ordinary user", "id": 24, "imageUrl": "https://example.test/fr12-tc08-post-user.png", "name": "FR12_TC08_POST_USER_23127027", "price": 128012}]
+
+      1638 |
+      1639 |             if (row.expected.stateObservation === 'controlled_product_absent') {
+    > 1640 |               expect.soft(markerMatches).toHaveLength(0);
+           |                                          ^
+      1641 |             } else if (
+      1642 |               row.expected.stateObservation === 'controlled_target_removed'
+      1643 |             ) {
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1640:42
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: put_missing_token authentication_denied; status: 200; body: {"message":"Product updated"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1606 |                 `${row.key} ${row.expected.accessObservation}; ` +
+      1607 |                   responseDiagnostics(attempt.response),
+    > 1608 |               ).toBe(row.expected.responseSuccessful);
+           |                 ^
+      1609 |             }
+      1610 |
+      1611 |             const stateAttempt = await requestJsonResource(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1608:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: put_missing_token state must satisfy controlled_target_unchanged
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1658 |                   recordMatchesExpectedFields(targetRecord, expectedProduct),
+      1659 |                 `${row.key} state must satisfy ${row.expected.stateObservation}`,
+    > 1660 |               ).toBe(true);
+           |                 ^
+      1661 |             }
+      1662 |           },
+      1663 |         );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1660:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: put_ordinary_user authorization_denied; status: 200; body: {"message":"Product updated"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1606 |                 `${row.key} ${row.expected.accessObservation}; ` +
+      1607 |                   responseDiagnostics(attempt.response),
+    > 1608 |               ).toBe(row.expected.responseSuccessful);
+           |                 ^
+      1609 |             }
+      1610 |
+      1611 |             const stateAttempt = await requestJsonResource(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1608:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: put_ordinary_user state must satisfy controlled_target_unchanged
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1658 |                   recordMatchesExpectedFields(targetRecord, expectedProduct),
+      1659 |                 `${row.key} state must satisfy ${row.expected.stateObservation}`,
+    > 1660 |               ).toBe(true);
+           |                 ^
+      1661 |             }
+      1662 |           },
+      1663 |         );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1660:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: delete_missing_token authentication_denied; status: 200; body: {"message":"Product deleted"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1606 |                 `${row.key} ${row.expected.accessObservation}; ` +
+      1607 |                   responseDiagnostics(attempt.response),
+    > 1608 |               ).toBe(row.expected.responseSuccessful);
+           |                 ^
+      1609 |             }
+      1610 |
+      1611 |             const stateAttempt = await requestJsonResource(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1608:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: delete_missing_token state must satisfy controlled_target_unchanged
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1658 |                   recordMatchesExpectedFields(targetRecord, expectedProduct),
+      1659 |                 `${row.key} state must satisfy ${row.expected.stateObservation}`,
+    > 1660 |               ).toBe(true);
+           |                 ^
+      1661 |             }
+      1662 |           },
+      1663 |         );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1660:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: delete_ordinary_user authorization_denied; status: 200; body: {"message":"Product deleted"}
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1606 |                 `${row.key} ${row.expected.accessObservation}; ` +
+      1607 |                   responseDiagnostics(attempt.response),
+    > 1608 |               ).toBe(row.expected.responseSuccessful);
+           |                 ^
+      1609 |             }
+      1610 |
+      1611 |             const stateAttempt = await requestJsonResource(
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1608:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error: delete_ordinary_user state must satisfy controlled_target_unchanged
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1658 |                   recordMatchesExpectedFields(targetRecord, expectedProduct),
+      1659 |                 `${row.key} state must satisfy ${row.expected.stateObservation}`,
+    > 1660 |               ).toBe(true);
+           |                 ^
+      1661 |             }
+      1662 |           },
+      1663 |         );
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1660:17
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1568:9
+
+    Error Context: test-results/final/fr12-firefox/features-fr12-access-contr-f833d-ser-admin-access-partitions-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr12-firefox/features-fr12-access-contr-f833d-ser-admin-access-partitions-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr12-firefox/features-fr12-access-contr-f833d-ser-admin-access-partitions-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  4) [firefox] › tests/features/fr12-access-control.spec.ts:1897:7 › FR-12 access control — reviewed increment 3 › FR12-TC09 category POST PUT DELETE enforce missing-user-admin access partitions 
+
+    Error: post_ordinary_user access response
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1796 |     tokenForPartition(row.authorization, tokens),
+      1797 |   );
+    > 1798 |   expect.soft(target.successful, `${row.key} access response`).toBe(
+           |                                                                ^
+      1799 |     row.expected.responseSuccessful,
+      1800 |   );
+      1801 |
+        at runCategoryMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1798:64)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1920:9
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 1
+    Received array:  [{"id": 12, "name": "FR12_TC09_POST_USER_23127027"}]
+
+      1815 |   const record = controlledRecordById(state.value, targetId);
+      1816 |   if (row.expected.stateObservation === 'controlled_record_absent') {
+    > 1817 |     expect.soft(exactMatchingRecords(state.value, 'name', String(expectedName))).toHaveLength(0);
+           |                                                                                  ^
+      1818 |   } else if (row.expected.stateObservation === 'controlled_target_removed') {
+      1819 |     expect.soft(record).toBeUndefined();
+      1820 |   } else if (row.expected.stateObservation === 'controlled_target_unchanged') {
+        at runCategoryMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1817:82)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1920:9
+
+    Error: put_ordinary_user access response
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1796 |     tokenForPartition(row.authorization, tokens),
+      1797 |   );
+    > 1798 |   expect.soft(target.successful, `${row.key} access response`).toBe(
+           |                                                                ^
+      1799 |     row.expected.responseSuccessful,
+      1800 |   );
+      1801 |
+        at runCategoryMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1798:64)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1920:9
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "FR12_TC09_PUT_USER_BASE_23127027"
+    Received: "FR12_TC09_PUT_USER_TARGET_23127027"
+
+      1819 |     expect.soft(record).toBeUndefined();
+      1820 |   } else if (row.expected.stateObservation === 'controlled_target_unchanged') {
+    > 1821 |     expect.soft(record?.name).toBe(row.setup?.payload.name);
+           |                               ^
+      1822 |   } else if (row.expected.stateObservation === 'controlled_target_changed') {
+      1823 |     expect.soft(record?.name).toBe(row.payload?.name);
+      1824 |   } else {
+        at runCategoryMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1821:31)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1920:9
+
+    Error: delete_ordinary_user access response
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1796 |     tokenForPartition(row.authorization, tokens),
+      1797 |   );
+    > 1798 |   expect.soft(target.successful, `${row.key} access response`).toBe(
+           |                                                                ^
+      1799 |     row.expected.responseSuccessful,
+      1800 |   );
+      1801 |
+        at runCategoryMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1798:64)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1920:9
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "FR12_TC09_DELETE_USER_23127027"
+    Received: undefined
+
+      1819 |     expect.soft(record).toBeUndefined();
+      1820 |   } else if (row.expected.stateObservation === 'controlled_target_unchanged') {
+    > 1821 |     expect.soft(record?.name).toBe(row.setup?.payload.name);
+           |                               ^
+      1822 |   } else if (row.expected.stateObservation === 'controlled_target_changed') {
+      1823 |     expect.soft(record?.name).toBe(row.payload?.name);
+      1824 |   } else {
+        at runCategoryMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1821:31)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1920:9
+
+    Error Context: test-results/final/fr12-firefox/features-fr12-access-contr-c07bd-ser-admin-access-partitions-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr12-firefox/features-fr12-access-contr-c07bd-ser-admin-access-partitions-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr12-firefox/features-fr12-access-contr-c07bd-ser-admin-access-partitions-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  5) [firefox] › tests/features/fr12-access-control.spec.ts:1952:7 › FR-12 access control — reviewed increment 3 › FR12-TC10 coupon access control covers exposed Admin routes and required route discrepancy 
+
+    Error: exposed_post_user contract_exposed response; status=200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1867 |     target.successful,
+      1868 |     `${row.key} ${row.routeFamily} response; status=${String(target.status)}`,
+    > 1869 |   ).toBe(row.expected.responseSuccessful);
+           |     ^
+      1870 |
+      1871 |   const state = await requestJsonResource(
+      1872 |     request,
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1869:5)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 0
+    Received length: 1
+    Received array:  [{"code": "FR12TC10POSTUSER23127027", "discount_value": 1003, "expired_at": "2099-12-31", "id": 15, "is_active": 1, "max_uses_per_user": 1, "min_order_amount": 0, "type": "fixed"}]
+
+      1884 |   const record = controlledRecordById(state.value, targetId);
+      1885 |   if (row.expected.stateObservation === 'controlled_record_absent') {
+    > 1886 |     expect.soft(exactMatchingRecords(state.value, 'code', String(expectedCode))).toHaveLength(0);
+           |                                                                                  ^
+      1887 |   } else if (row.expected.stateObservation === 'controlled_target_removed') {
+      1888 |     expect.soft(record).toBeUndefined();
+      1889 |   } else if (row.expected.stateObservation === 'controlled_target_unchanged') {
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1886:82)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error: exposed_delete_user contract_exposed response; status=200
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+      1867 |     target.successful,
+      1868 |     `${row.key} ${row.routeFamily} response; status=${String(target.status)}`,
+    > 1869 |   ).toBe(row.expected.responseSuccessful);
+           |     ^
+      1870 |
+      1871 |   const state = await requestJsonResource(
+      1872 |     request,
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1869:5)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: "FR12TC10DELUSER23127027"
+    Received: undefined
+
+      1888 |     expect.soft(record).toBeUndefined();
+      1889 |   } else if (row.expected.stateObservation === 'controlled_target_unchanged') {
+    > 1890 |     expect.soft(record?.code).toBe(row.setup?.payload.code);
+           |                               ^
+      1891 |   } else {
+      1892 |     expect.soft(exactMatchingRecords(state.value, 'code', String(expectedCode))).toHaveLength(1);
+      1893 |   }
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1890:31)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error: required_post_admin readme_required response; status=404
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1867 |     target.successful,
+      1868 |     `${row.key} ${row.routeFamily} response; status=${String(target.status)}`,
+    > 1869 |   ).toBe(row.expected.responseSuccessful);
+           |     ^
+      1870 |
+      1871 |   const state = await requestJsonResource(
+      1872 |     request,
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1869:5)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      1890 |     expect.soft(record?.code).toBe(row.setup?.payload.code);
+      1891 |   } else {
+    > 1892 |     expect.soft(exactMatchingRecords(state.value, 'code', String(expectedCode))).toHaveLength(1);
+           |                                                                                  ^
+      1893 |   }
+      1894 | }
+      1895 |
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1892:82)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error: required_put_admin readme_required response; status=404
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1867 |     target.successful,
+      1868 |     `${row.key} ${row.routeFamily} response; status=${String(target.status)}`,
+    > 1869 |   ).toBe(row.expected.responseSuccessful);
+           |     ^
+      1870 |
+      1871 |   const state = await requestJsonResource(
+      1872 |     request,
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1869:5)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 0
+    Received array:  []
+
+      1890 |     expect.soft(record?.code).toBe(row.setup?.payload.code);
+      1891 |   } else {
+    > 1892 |     expect.soft(exactMatchingRecords(state.value, 'code', String(expectedCode))).toHaveLength(1);
+           |                                                                                  ^
+      1893 |   }
+      1894 | }
+      1895 |
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1892:82)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error: required_delete_admin readme_required response; status=404
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1867 |     target.successful,
+      1868 |     `${row.key} ${row.routeFamily} response; status=${String(target.status)}`,
+    > 1869 |   ).toBe(row.expected.responseSuccessful);
+           |     ^
+      1870 |
+      1871 |   const state = await requestJsonResource(
+      1872 |     request,
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1869:5)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error: expect(received).toBeUndefined()
+
+    Received: {"code": "FR12TC10REQDEL23127027", "discount_value": 1024, "expired_at": "2099-12-31", "id": 22, "is_active": 1, "max_uses_per_user": 1, "min_order_amount": 0, "type": "fixed"}
+
+      1886 |     expect.soft(exactMatchingRecords(state.value, 'code', String(expectedCode))).toHaveLength(0);
+      1887 |   } else if (row.expected.stateObservation === 'controlled_target_removed') {
+    > 1888 |     expect.soft(record).toBeUndefined();
+           |                         ^
+      1889 |   } else if (row.expected.stateObservation === 'controlled_target_unchanged') {
+      1890 |     expect.soft(record?.code).toBe(row.setup?.payload.code);
+      1891 |   } else {
+        at runCouponMatrixRow (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1888:25)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:1985:9
+
+    Error Context: test-results/final/fr12-firefox/features-fr12-access-contr-0c36c--required-route-discrepancy-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr12-firefox/features-fr12-access-contr-0c36c--required-route-discrepancy-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr12-firefox/features-fr12-access-contr-0c36c--required-route-discrepancy-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  6) [firefox] › tests/features/fr12-access-control.spec.ts:2135:7 › FR-12 access control — reviewed increment 3 › FR12-TC11 ordinary user profile update cannot elevate persisted or effective role 
+
+    Error: FR12-TC11 persisted role must reject or ignore client role assignment
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2093 |           postRecord?.[testCase.roleField] === testCase.expectedOriginalRole,
+      2094 |           `${testCase.id} persisted role must reject or ignore client role assignment`,
+    > 2095 |         ).toBe(testCase.expected.roleUnchanged);
+           |           ^
+      2096 |
+      2097 |         const freshIdentity = await acquireRoleAwareApiIdentity(
+      2098 |           request,
+        at runProfileRoleInjection (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:2095:11)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:2138:5
+
+    Error: FR12-TC11 fresh-session effective role must remain unchanged
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2103 |           freshIdentity.observedRole === testCase.expectedEffectiveRole,
+      2104 |           `${testCase.id} fresh-session effective role must remain unchanged`,
+    > 2105 |         ).toBe(testCase.expected.freshLoginRoleUnchanged);
+           |           ^
+      2106 |       } finally {
+      2107 |         const restoration = await requestJsonResource(
+      2108 |           request,
+        at runProfileRoleInjection (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:2105:11)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:2138:5
+
+    Error Context: test-results/final/fr12-firefox/features-fr12-access-contr-d23aa-persisted-or-effective-role-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr12-firefox/features-fr12-access-contr-d23aa-persisted-or-effective-role-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr12-firefox/features-fr12-access-contr-d23aa-persisted-or-effective-role-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7) [firefox] › tests/features/fr12-access-control.spec.ts:2141:7 › FR-12 access control — reviewed increment 3 › FR12-TC12 admin self-profile update cannot demote persisted or effective role 
+
+    Error: FR12-TC12 persisted role must reject or ignore client role assignment
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2093 |           postRecord?.[testCase.roleField] === testCase.expectedOriginalRole,
+      2094 |           `${testCase.id} persisted role must reject or ignore client role assignment`,
+    > 2095 |         ).toBe(testCase.expected.roleUnchanged);
+           |           ^
+      2096 |
+      2097 |         const freshIdentity = await acquireRoleAwareApiIdentity(
+      2098 |           request,
+        at runProfileRoleInjection (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:2095:11)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:2144:5
+
+    Error: FR12-TC12 fresh-session effective role must remain unchanged
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      2103 |           freshIdentity.observedRole === testCase.expectedEffectiveRole,
+      2104 |           `${testCase.id} fresh-session effective role must remain unchanged`,
+    > 2105 |         ).toBe(testCase.expected.freshLoginRoleUnchanged);
+           |           ^
+      2106 |       } finally {
+      2107 |         const restoration = await requestJsonResource(
+      2108 |           request,
+        at runProfileRoleInjection (/Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:2105:11)
+        at /Users/phamngocgiabao/HW04/eshop-sut-hw04-23127027/tests/features/fr12-access-control.spec.ts:2144:5
+
+    Error Context: test-results/final/fr12-firefox/features-fr12-access-contr-440e4-persisted-or-effective-role-firefox/error-context.md
+
+    attachment #2: trace (application/zip) ─────────────────────────────────────────────────────────
+    test-results/final/fr12-firefox/features-fr12-access-contr-440e4-persisted-or-effective-role-firefox/trace.zip
+    Usage:
+
+        npx playwright show-trace test-results/final/fr12-firefox/features-fr12-access-contr-440e4-persisted-or-effective-role-firefox/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  7 failed
+    [firefox] › tests/features/fr12-access-control.spec.ts:904:7 › FR-12 access control — reviewed increment 2 › FR12-TC05 invalid-token probes cover every Admin route with an explicit order-status evidence boundary 
+    [firefox] › tests/features/fr12-access-control.spec.ts:1132:7 › FR-12 access control — reviewed increment 2 › FR12-TC06 ordinary-user probes cover every Admin route with an explicit order-status evidence boundary 
+    [firefox] › tests/features/fr12-access-control.spec.ts:1410:7 › FR-12 access control — reviewed increment 2 › FR12-TC08 product POST PUT DELETE enforce missing-user-admin access partitions 
+    [firefox] › tests/features/fr12-access-control.spec.ts:1897:7 › FR-12 access control — reviewed increment 3 › FR12-TC09 category POST PUT DELETE enforce missing-user-admin access partitions 
+    [firefox] › tests/features/fr12-access-control.spec.ts:1952:7 › FR-12 access control — reviewed increment 3 › FR12-TC10 coupon access control covers exposed Admin routes and required route discrepancy 
+    [firefox] › tests/features/fr12-access-control.spec.ts:2135:7 › FR-12 access control — reviewed increment 3 › FR12-TC11 ordinary user profile update cannot elevate persisted or effective role 
+    [firefox] › tests/features/fr12-access-control.spec.ts:2141:7 › FR-12 access control — reviewed increment 3 › FR12-TC12 admin self-profile update cannot demote persisted or effective role 
+  5 passed (3.7s)
+
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report playwright-report/final/fr12-firefox[39m
+[36m[39m
