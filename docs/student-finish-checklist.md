@@ -15,6 +15,6 @@ These actions require the student's own voice, identity, accounts, or final judg
 11. [x] Export/review the Markdown reports as PDF after adding the video URL and final self-assessment.
 12. [x] Commit the final test changes and regenerate `git-commit-log.txt`; the history now contains nine qualifying test-script commits.
 13. [x] Push the final branch and confirm the public repository exposes scripts, JSON data, skill, nine HTML reports, Markdown/PDF documents, Git log, and issue screenshots.
-14. [ ] Create the final archive using the exact name `23127027_HW04_AI_Automation_096.zip`.
+14. [x] Create the final archive using the exact name `23127027_HW04_AI_Automation_096.zip`.
 15. [ ] Personally open the ZIP once and verify all required files.
 16. [ ] Upload `23127027_HW04_AI_Automation_096.zip` to Moodle.
