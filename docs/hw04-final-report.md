@@ -5,6 +5,8 @@
 - Student ID: **23127027**
 - SUT: EShop, baseline commit `85af3ba875c88283615e22cb108f13e2fccaf0e9`
 - Repository: https://github.com/giabaocode/eshop-sut-hw04-23127027
+- Demo video: [Kiểm thử FR12 và Agent Skill](https://youtu.be/HcIpzc9_xR4) — unlisted, 14:57
+- Self-assessed grade: **96/100** (archive token `096`)
 - Selected features: FR-01 Account registration, FR-07 Shopping cart, FR-12 Access control
 - Framework: Playwright 1.62.1 with TypeScript
 - Browsers: Chromium, Firefox, WebKit
@@ -17,7 +19,7 @@ The traceability matrix defines exactly 36 logical cases: 12 for each selected f
 
 The suite uses more than three assertion patterns per feature, including semantic role/text checks, DOM attributes and structure, navigation/focus, computed visual state, API response classes, state deltas, denial-with-no-mutation checks, and independent read-back. Tests use one worker, no retries, no fixed sleeps, screenshots only on failure, and retained traces on failure.
 
-Mutation tests capture controlled state and clean up exact markers in `finally`. The database was restored from the verified pre-HW04 backup after final execution. No SUT source was changed to make a test pass.
+FR-12 controlled mutation matrices capture baseline state, clean up exact markers in `finally`, and verify restoration. FR-01 uses collision-safe registration identities, and browser cart state is isolated by fresh contexts. The final SUT database was restored byte-for-byte from the verified pre-HW04 backup. No SUT source was changed to make a test pass.
 
 ## 3. Human review and corrections
 
@@ -56,6 +58,8 @@ FR-12 passed TC01–TC04 and TC07 in every browser. TC08–TC12 verified missing
 
 The consolidated 16 root-cause groups and reproduction evidence are in `docs/bug-report.md`. The student published all 16 GitHub Issues with screenshots and the report links each issue directly.
 
+The later read-only Agent Skill review also identified residual limitations that are retained transparently: committed trace packages can contain seeded-login authentication material; some non-existing-ID denial probes can conflate business-level `404` responses with access rejection; several increment-3 helpers do not fully distinguish transport failure from HTTP denial; static mutation markers and use of the seed admin reduce rerun isolation; and the FR-12 trace source predates the move of JWT signing material from JSON to an environment variable. The reports remain genuine, unedited evidence of the recorded execution, but are not claimed to be an exact-source replay of the final refactor. These limitations informed the student's 6/10 Agent Skill self-assessment.
+
 ## 6. Deliverable inventory
 
 - Automation: `tests/features`, `tests/pages`, `tests/support`
@@ -68,7 +72,8 @@ The consolidated 16 root-cause groups and reproduction evidence are in `docs/bug
 - AI audit: `ai-audit/AI_AUDIT.md`
 - Test-script commit log: `git-commit-log.txt`
 - Reusable Agent Skill: `skills/hw04-playwright-workflow`
+- Narrated demo video: https://youtu.be/HcIpzc9_xR4
 
 ## 7. Items that require student authorship
 
-The narrated demo video and skill demonstration are intentionally not fabricated and remain student-only work. The student has completed GitHub Issue publication. The remaining completion steps are listed in `docs/student-finish-checklist.md`.
+The student recorded and reviewed the combined narrated automation/skill demo, confirmed voice, `whoami`/`hostname`, three browsers and HTML report, accepted the Agent Skill output, and selected a self-assessed score of 96. GitHub Issue publication is complete. Only personal inspection of the final ZIP and Moodle upload remain student-only actions; they are listed in `docs/student-finish-checklist.md`.

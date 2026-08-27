@@ -1,0 +1,1 @@
+$hw04-playwright-workflow Hãy review read-only workflow hoàn chỉnh của FR12 trong repo hiện tại: traceability, external JSON data, missing/user/admin access partitions, mutation cleanup, EVIDENCE MISSING và quy trình tạo evidence trên Chromium, Firefox, WebKit. Không sửa file, không chạy test và không ghi đè final evidence.

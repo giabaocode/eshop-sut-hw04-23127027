@@ -10,7 +10,7 @@
 - Confirmed root-cause bug groups: **16**
 - Inconclusive automation boundaries: FR12-TC05 and FR12-TC06 order-status probes (no reversible API-only order fixture)
 - Public repository: https://github.com/giabaocode/eshop-sut-hw04-23127027
-- Demo video: **PENDING — student must record and add the unlisted YouTube URL**
+- Demo video: [Kiểm thử FR12 và Agent Skill](https://youtu.be/HcIpzc9_xR4) — unlisted, 14:57
 - Main report: [`docs/hw04-final-report.md`](docs/hw04-final-report.md)
 - AI critique: [`docs/ai-critique.md`](docs/ai-critique.md)
 - AI audit: [`ai-audit/AI_AUDIT.md`](ai-audit/AI_AUDIT.md)
@@ -42,11 +42,11 @@ npm test
 | Task 1 — Feature A (FR-01) | 25 | 25 |
 | Task 1 — Feature B (FR-07) | 25 | 25 |
 | Task 1 — Feature C (FR-12) | 25 | 25 |
-| Task 2 — Demo video | 15 | 0 (pending student recording) |
-| Agent Skill | 10 | 0 (skill complete; demonstration video pending) |
-| **Total** | **100** | **75** |
+| Task 2 — Demo video | 15 | 15 |
+| Agent Skill | 10 | 6 |
+| **Total** | **100** | **96** |
 
-Provisional archive grade token: `075`. Update both video-dependent rows, total, demo URL, and archive filename after recording and demonstrating the skill.
+Final self-assessed archive grade token: `096`. The student selected 96 after reviewing the unlisted demo: 75/75 for the three feature automations, 15/15 for the narrated video, and 6/10 for the Agent Skill demonstration.
 
 # EShop — Phiên bản dành cho Kiểm thử Phần mềm
 
